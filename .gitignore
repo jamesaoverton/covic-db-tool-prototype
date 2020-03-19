@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__/
+_venv/
+build/
+data/
+junk/
+shell.nix
+temp/

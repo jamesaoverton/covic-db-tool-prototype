@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}CoVIC-DB Data Prototype{% endblock %}
+
+{% block content %}
+<p>This is an early prototype for storing and working with CoVIC-DB data.</p>
+
+<table class="table table-sm table-borderless">
+  {% for field in data.fields %}
+  <tr>
+    <td><strong>{{ field.field }}</strong></td>
+    <td>{% if field.iri %}<a href="{{ field.iri }}">{{ field.label }}</a>{% else %}{{ field.label }}{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<table class="table">
+  <tr>
+    {% for key in data.assays[0].keys() %}<th>{{ key }}</th>{% endfor %}
+  </tr>
+  {% for assay in data.assays %}
+  <tr>
+    {% for value in assay.values() %}<td>{{ value }}</td>{% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}
