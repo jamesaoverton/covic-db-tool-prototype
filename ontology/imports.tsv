@@ -1,5 +1,16 @@
 id	label	type	parent
 ID	LABEL	TYPE	C %
-NCBITaxon:10090	Mus musculus	owl:Class
+BFO:0000040	material entity	owl:Class
+OBI:0100026	organism	owl:Class	material entity
+NCBITaxon:10239	Virus	owl:Class	organism
+NCBITaxon:11118	Coronavirus	owl:Class	Virus
+NCBITaxon:694009	Severe acute respiratory syndrome-related coronavirus protein	owl:Class	Coronavirus
+NCBITaxon:2697049	Severe acute respiratory syndrome coronavirus 2 protein	owl:Class	Severe acute respiratory syndrome-related coronavirus protein
+NCBITaxon:7742 	Vertebrata	owl:Class	organism
+NCBITaxon:9606	Homo sapiens	owl:Class	Vertebrata
+NCBITaxon:10090	Mus musculus	owl:Class	Vertebrata
 ONTIE:0000001	Mus musculus BALB/C	owl:Class	Mus musculus
-OBI:0001643	neutralization|biological activity	owl:Class
+BFO:0000015	process	owl:Class
+OBI:0000011	planned process	owl:Class	process
+OBI:0000070	assay	owl:Class	planned process
+OBI:0001643	neutralization|biological activity	owl:Class	assay

@@ -1,0 +1,864 @@
+@prefix : <https://ontology.iedb.org/ontology/protein-tree.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://ontology.iedb.org/ontology/protein-tree.owl> .
+
+<https://ontology.iedb.org/ontology/protein-tree.owl> rdf:type owl:Ontology ;
+                                                       owl:versionIRI <https://ontology.iedb.org/ontology/2020-03-20/protein-tree.owl> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://iedb.org/browser-link
+<http://iedb.org/browser-link> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-accession
+<http://iedb.org/has-accession> rdf:type owl:AnnotationProperty ;
+                                rdfs:label "has accession" .
+
+
+###  http://iedb.org/has-accession-iri
+<http://iedb.org/has-accession-iri> rdf:type owl:AnnotationProperty ;
+                                    rdfs:label "has accession IRI" .
+
+
+###  http://iedb.org/has-category
+<http://iedb.org/has-category> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-end-position
+<http://iedb.org/has-end-position> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-sort-name
+<http://iedb.org/has-sort-name> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-source-database
+<http://iedb.org/has-source-database> rdf:type owl:AnnotationProperty ;
+                                      rdfs:label "has source database" .
+
+
+###  http://iedb.org/has-species-iri
+<http://iedb.org/has-species-iri> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-start-position
+<http://iedb.org/has-start-position> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-taxon-id
+<http://iedb.org/has-taxon-id> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-taxonomic-level
+<http://iedb.org/has-taxonomic-level> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/has-taxonomic-rank
+<http://iedb.org/has-taxonomic-rank> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/is-active
+<http://iedb.org/is-active> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/is-reviewed
+<http://iedb.org/is-reviewed> rdf:type owl:AnnotationProperty .
+
+
+###  http://iedb.org/protein-synonym
+<http://iedb.org/protein-synonym> rdf:type owl:AnnotationProperty ;
+                                  rdfs:label "has synonym" .
+
+
+###  http://purl.obolibrary.org/obo/NCBITaxon_browser_link
+<http://purl.obolibrary.org/obo/NCBITaxon_browser_link> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym
+<http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.geneontology.org/formats/oboInOwl#hasExactSynonym
+<http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym
+<http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.geneontology.org/formats/oboInOwl#hasSynonymType
+<http://www.geneontology.org/formats/oboInOwl#hasSynonymType> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://iedb.org/taxon-protein/10239
+<http://iedb.org/taxon-protein/10239> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://purl.obolibrary.org/obo/PRO_000000001> ;
+                                      <http://iedb.org/browser-link> <http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=10239> ;
+                                      <http://iedb.org/has-taxon-id> "10239" ;
+                                      <http://iedb.org/has-taxonomic-rank> "superkingdom" ;
+                                      <http://iedb.org/is-active> "True" ;
+                                      <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "Viruses" ;
+                                      <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> "Vira" ,
+                                                                                                       "Viridae" ,
+                                                                                                       "viruses" ;
+                                      rdfs:label "Virus protein" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/10239> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "Viruses" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "scientific name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/10239> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "Vira" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/10239> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "Viridae" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/10239> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "viruses" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "blast name"
+ ] .
+
+
+###  http://iedb.org/taxon-protein/11118
+<http://iedb.org/taxon-protein/11118> rdf:type owl:Class ;
+                                      rdfs:subClassOf <http://iedb.org/taxon-protein/10239> ;
+                                      <http://iedb.org/browser-link> <http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=11118> ;
+                                      <http://iedb.org/has-taxon-id> "11118" ;
+                                      <http://iedb.org/has-taxonomic-rank> "family" ;
+                                      <http://iedb.org/is-active> "True" ;
+                                      <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "Coronaviridae" ;
+                                      rdfs:label "Coronavirus protein" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/11118> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "Coronaviridae" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "scientific name"
+ ] .
+
+
+###  http://iedb.org/taxon-protein/2697049
+<http://iedb.org/taxon-protein/2697049> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/694009> ;
+                                        <http://iedb.org/browser-link> <http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2697049> ;
+                                        <http://iedb.org/has-species-iri> <http://iedb.org/taxon-protein/694009> ;
+                                        <http://iedb.org/has-taxon-id> "2697049" ;
+                                        <http://iedb.org/has-taxonomic-level> ":species" ;
+                                        <http://iedb.org/has-taxonomic-rank> "no rank" ,
+                                                                             "species" ;
+                                        <http://purl.obolibrary.org/obo/NCBITaxon_browser_link> "http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=2697049" ;
+                                        <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> "SARS-CoV-2" ,
+                                                                                                       "SARS2" ;
+                                        <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "2019-nCoV" ,
+                                                                                                       "COVID-19" ,
+                                                                                                       "COVID-19 virus" ,
+                                                                                                       "Severe acute respiratory syndrome coronavirus 2" ,
+                                                                                                       "Wuhan coronavirus" ,
+                                                                                                       "Wuhan seafood market pneumonia virus" ;
+                                        rdfs:label "Severe acute respiratory syndrome coronavirus 2 (2019-nCoV) protein" ,
+                                                   "Severe acute respiratory syndrome coronavirus 2 protein" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "COVID-19 virus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "equivalent name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "Severe acute respiratory syndrome coronavirus 2" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "scientific name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "Wuhan coronavirus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "equivalent name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "Wuhan seafood market pneumonia virus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "equivalent name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> ;
+   owl:annotatedTarget "SARS-CoV-2" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "GenBank acronym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> ;
+   owl:annotatedTarget "SARS2" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "acronym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "2019-nCoV" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "equivalent name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/2697049> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "COVID-19" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "equivalent name"
+ ] .
+
+
+###  http://iedb.org/taxon-protein/694009
+<http://iedb.org/taxon-protein/694009> rdf:type owl:Class ;
+                                       rdfs:subClassOf <http://iedb.org/taxon-protein/11118> ;
+                                       <http://iedb.org/browser-link> <http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=694009> ;
+                                       <http://iedb.org/has-species-iri> <http://iedb.org/taxon-protein/694009> ;
+                                       <http://iedb.org/has-taxon-id> "694009" ;
+                                       <http://iedb.org/has-taxonomic-rank> "species" ;
+                                       <http://iedb.org/is-active> "True" ;
+                                       <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> "HCoV-SARS" ,
+                                                                                                      "SARS" ,
+                                                                                                      "SARSr-CoV" ,
+                                                                                                      "SARSrCoV" ;
+                                       <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> "Severe acute respiratory syndrome-related coronavirus" ;
+                                       <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> "Human coronavirus (strain SARS)" ,
+                                                                                                        "SARS coronavirus" ,
+                                                                                                        "SARS virus" ,
+                                                                                                        "SARS-like coronavirus" ,
+                                                                                                        "SARS-related coronavirus" ,
+                                                                                                        "Severe acute respiratory syndrome coronavirus" ;
+                                       rdfs:label "Severe acute respiratory syndrome-related coronavirus protein" .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> ;
+   owl:annotatedTarget "HCoV-SARS" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "acronym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> ;
+   owl:annotatedTarget "SARS" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "acronym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> ;
+   owl:annotatedTarget "SARSr-CoV" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "acronym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasBroadSynonym> ;
+   owl:annotatedTarget "SARSrCoV" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "acronym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasExactSynonym> ;
+   owl:annotatedTarget "Severe acute respiratory syndrome-related coronavirus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "scientific name"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "Human coronavirus (strain SARS)" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "SARS coronavirus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "SARS virus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "SARS-like coronavirus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "SARS-related coronavirus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource <http://iedb.org/taxon-protein/694009> ;
+   owl:annotatedProperty <http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym> ;
+   owl:annotatedTarget "Severe acute respiratory syndrome coronavirus" ;
+   <http://www.geneontology.org/formats/oboInOwl#hasSynonymType> "synonym"
+ ] .
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000040
+<http://purl.obolibrary.org/obo/BFO_0000040> rdf:type owl:Class ;
+                                             <http://iedb.org/browser-link> "http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1" ;
+                                             <http://iedb.org/has-taxon-id> "1" ;
+                                             <http://iedb.org/has-taxonomic-level> ":upper" ;
+                                             rdfs:label "material entity" .
+
+
+###  http://purl.obolibrary.org/obo/PRO_000000001
+<http://purl.obolibrary.org/obo/PRO_000000001> rdf:type owl:Class ;
+                                               rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> ;
+                                               <http://iedb.org/has-taxonomic-level> ":upper" ;
+                                               rdfs:label "protein" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449619
+<http://www.uniprot.org/annotation/PRO_0000449619> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 180 ;
+                                                   <http://iedb.org/has-sort-name> "1 Host translation inhibitor nsp1 (1-180)" ;
+                                                   <http://iedb.org/has-start-position> 1 ;
+                                                   rdfs:label "Host translation inhibitor nsp1 (1-180)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449620
+<http://www.uniprot.org/annotation/PRO_0000449620> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 818 ;
+                                                   <http://iedb.org/has-sort-name> "2 Non-structural protein 2 (181-818)" ;
+                                                   <http://iedb.org/has-start-position> 181 ;
+                                                   rdfs:label "Non-structural protein 2 (181-818)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449621
+<http://www.uniprot.org/annotation/PRO_0000449621> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 2763 ;
+                                                   <http://iedb.org/has-sort-name> "3 Papain-like proteinase (819-2763)" ;
+                                                   <http://iedb.org/has-start-position> 819 ;
+                                                   rdfs:label "Papain-like proteinase (819-2763)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449622
+<http://www.uniprot.org/annotation/PRO_0000449622> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3263 ;
+                                                   <http://iedb.org/has-sort-name> "4 Non-structural protein 4 (2764-3263)" ;
+                                                   <http://iedb.org/has-start-position> 2764 ;
+                                                   rdfs:label "Non-structural protein 4 (2764-3263)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449623
+<http://www.uniprot.org/annotation/PRO_0000449623> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3569 ;
+                                                   <http://iedb.org/has-sort-name> "5 3C-like proteinase (3264-3569)" ;
+                                                   <http://iedb.org/has-start-position> 3264 ;
+                                                   rdfs:label "3C-like proteinase (3264-3569)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449624
+<http://www.uniprot.org/annotation/PRO_0000449624> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3859 ;
+                                                   <http://iedb.org/has-sort-name> "6 Non-structural protein 6 (3570-3859)" ;
+                                                   <http://iedb.org/has-start-position> 3570 ;
+                                                   rdfs:label "Non-structural protein 6 (3570-3859)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449625
+<http://www.uniprot.org/annotation/PRO_0000449625> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3942 ;
+                                                   <http://iedb.org/has-sort-name> "7 Non-structural protein 7 (3860-3942)" ;
+                                                   <http://iedb.org/has-start-position> 3860 ;
+                                                   rdfs:label "Non-structural protein 7 (3860-3942)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449626
+<http://www.uniprot.org/annotation/PRO_0000449626> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4140 ;
+                                                   <http://iedb.org/has-sort-name> "8 Non-structural protein 8 (3943-4140)" ;
+                                                   <http://iedb.org/has-start-position> 3943 ;
+                                                   rdfs:label "Non-structural protein 8 (3943-4140)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449627
+<http://www.uniprot.org/annotation/PRO_0000449627> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4253 ;
+                                                   <http://iedb.org/has-sort-name> "9 Non-structural protein 9 (4141-4253)" ;
+                                                   <http://iedb.org/has-start-position> 4141 ;
+                                                   rdfs:label "Non-structural protein 9 (4141-4253)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449628
+<http://www.uniprot.org/annotation/PRO_0000449628> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4392 ;
+                                                   <http://iedb.org/has-sort-name> "10 Non-structural protein 10 (4254-4392)" ;
+                                                   <http://iedb.org/has-start-position> 4254 ;
+                                                   rdfs:label "Non-structural protein 10 (4254-4392)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449629
+<http://www.uniprot.org/annotation/PRO_0000449629> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 5324 ;
+                                                   <http://iedb.org/has-sort-name> "11 RNA-directed RNA polymerase (4393-5324)" ;
+                                                   <http://iedb.org/has-start-position> 4393 ;
+                                                   rdfs:label "RNA-directed RNA polymerase (4393-5324)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449630
+<http://www.uniprot.org/annotation/PRO_0000449630> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 5925 ;
+                                                   <http://iedb.org/has-sort-name> "12 Helicase (5325-5925)" ;
+                                                   <http://iedb.org/has-start-position> 5325 ;
+                                                   rdfs:label "Helicase (5325-5925)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449631
+<http://www.uniprot.org/annotation/PRO_0000449631> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 6452 ;
+                                                   <http://iedb.org/has-sort-name> "13 Guanine-N7 methyltransferase (5926-6452)" ;
+                                                   <http://iedb.org/has-start-position> 5926 ;
+                                                   rdfs:label "Guanine-N7 methyltransferase (5926-6452)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449632
+<http://www.uniprot.org/annotation/PRO_0000449632> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 6798 ;
+                                                   <http://iedb.org/has-sort-name> "14 Uridylate-specific endoribonuclease (6453-6798)" ;
+                                                   <http://iedb.org/has-start-position> 6453 ;
+                                                   rdfs:label "Uridylate-specific endoribonuclease (6453-6798)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449633
+<http://www.uniprot.org/annotation/PRO_0000449633> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 7096 ;
+                                                   <http://iedb.org/has-sort-name> "15 2'-O-methyltransferase (6799-7096)" ;
+                                                   <http://iedb.org/has-start-position> 6799 ;
+                                                   rdfs:label "2'-O-methyltransferase (6799-7096)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449635
+<http://www.uniprot.org/annotation/PRO_0000449635> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 180 ;
+                                                   <http://iedb.org/has-sort-name> "1 Non-structural protein 1 (1-180)" ;
+                                                   <http://iedb.org/has-start-position> 1 ;
+                                                   rdfs:label "Non-structural protein 1 (1-180)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449636
+<http://www.uniprot.org/annotation/PRO_0000449636> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 818 ;
+                                                   <http://iedb.org/has-sort-name> "2 Non-structural protein 2 (181-818)" ;
+                                                   <http://iedb.org/has-start-position> 181 ;
+                                                   rdfs:label "Non-structural protein 2 (181-818)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449637
+<http://www.uniprot.org/annotation/PRO_0000449637> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 2763 ;
+                                                   <http://iedb.org/has-sort-name> "3 Non-structural protein 3 (819-2763)" ;
+                                                   <http://iedb.org/has-start-position> 819 ;
+                                                   rdfs:label "Non-structural protein 3 (819-2763)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449638
+<http://www.uniprot.org/annotation/PRO_0000449638> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3263 ;
+                                                   <http://iedb.org/has-sort-name> "4 Non-structural protein 4 (2764-3263)" ;
+                                                   <http://iedb.org/has-start-position> 2764 ;
+                                                   rdfs:label "Non-structural protein 4 (2764-3263)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449639
+<http://www.uniprot.org/annotation/PRO_0000449639> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3569 ;
+                                                   <http://iedb.org/has-sort-name> "5 3C-like proteinase (3264-3569)" ;
+                                                   <http://iedb.org/has-start-position> 3264 ;
+                                                   rdfs:label "3C-like proteinase (3264-3569)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449640
+<http://www.uniprot.org/annotation/PRO_0000449640> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3859 ;
+                                                   <http://iedb.org/has-sort-name> "6 Non-structural protein 6 (3570-3859)" ;
+                                                   <http://iedb.org/has-start-position> 3570 ;
+                                                   rdfs:label "Non-structural protein 6 (3570-3859)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449641
+<http://www.uniprot.org/annotation/PRO_0000449641> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 3942 ;
+                                                   <http://iedb.org/has-sort-name> "7 Non-structural protein 7 (3860-3942)" ;
+                                                   <http://iedb.org/has-start-position> 3860 ;
+                                                   rdfs:label "Non-structural protein 7 (3860-3942)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449642
+<http://www.uniprot.org/annotation/PRO_0000449642> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4140 ;
+                                                   <http://iedb.org/has-sort-name> "8 Non-structural protein 8 (3943-4140)" ;
+                                                   <http://iedb.org/has-start-position> 3943 ;
+                                                   rdfs:label "Non-structural protein 8 (3943-4140)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449643
+<http://www.uniprot.org/annotation/PRO_0000449643> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4253 ;
+                                                   <http://iedb.org/has-sort-name> "9 Non-structural protein 9 (4141-4253)" ;
+                                                   <http://iedb.org/has-start-position> 4141 ;
+                                                   rdfs:label "Non-structural protein 9 (4141-4253)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449644
+<http://www.uniprot.org/annotation/PRO_0000449644> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4392 ;
+                                                   <http://iedb.org/has-sort-name> "10 Non-structural protein 10 (4254-4392)" ;
+                                                   <http://iedb.org/has-start-position> 4254 ;
+                                                   rdfs:label "Non-structural protein 10 (4254-4392)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449645
+<http://www.uniprot.org/annotation/PRO_0000449645> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 4405 ;
+                                                   <http://iedb.org/has-sort-name> "11 Non-structural protein 11 (4393-4405)" ;
+                                                   <http://iedb.org/has-start-position> 4393 ;
+                                                   rdfs:label "Non-structural protein 11 (4393-4405)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449647
+<http://www.uniprot.org/annotation/PRO_0000449647> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC2> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 685 ;
+                                                   <http://iedb.org/has-sort-name> "2 Spike protein S1 (14-685)" ;
+                                                   <http://iedb.org/has-start-position> 14 ;
+                                                   rdfs:label "Spike protein S1 (14-685)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449648
+<http://www.uniprot.org/annotation/PRO_0000449648> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC2> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 1273 ;
+                                                   <http://iedb.org/has-sort-name> "3 Spike protein S2 (686-1273)" ;
+                                                   <http://iedb.org/has-start-position> 686 ;
+                                                   rdfs:label "Spike protein S2 (686-1273)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449649
+<http://www.uniprot.org/annotation/PRO_0000449649> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC2> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 1273 ;
+                                                   <http://iedb.org/has-sort-name> "4 Spike protein S2' (816-1273)" ;
+                                                   <http://iedb.org/has-start-position> 816 ;
+                                                   rdfs:label "Spike protein S2' (816-1273)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449654
+<http://www.uniprot.org/annotation/PRO_0000449654> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC7> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 121 ;
+                                                   <http://iedb.org/has-sort-name> "2 mature protein (16-121)" ;
+                                                   <http://iedb.org/has-start-position> 16 ;
+                                                   rdfs:label "mature protein (16-121)" .
+
+
+###  http://www.uniprot.org/annotation/PRO_0000449655
+<http://www.uniprot.org/annotation/PRO_0000449655> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC8> ;
+                                                   <http://iedb.org/has-category> "protein feature" ;
+                                                   <http://iedb.org/has-end-position> 121 ;
+                                                   <http://iedb.org/has-sort-name> "2 mature protein (16-121)" ;
+                                                   <http://iedb.org/has-start-position> 16 ;
+                                                   rdfs:label "mature protein (16-121)" .
+
+
+###  http://www.uniprot.org/uniprot/A0A663DJA2
+<http://www.uniprot.org/uniprot/A0A663DJA2> rdf:type owl:Class ;
+                                            rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                            <http://iedb.org/has-accession> "A0A663DJA2" ;
+                                            <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/A0A663DJA2> ;
+                                            <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                            <http://iedb.org/has-source-database> "UniProt" ;
+                                            <http://iedb.org/is-reviewed> "false"^^xsd:boolean ;
+                                            <http://iedb.org/protein-synonym> "A0A663DJA2_9BETC" ;
+                                            rdfs:label "ORF10 protein" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC1
+<http://www.uniprot.org/uniprot/P0DTC1> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC1" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC1> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "R1A_WCPV" ;
+                                        rdfs:label "Replicase polyprotein 1a" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC2
+<http://www.uniprot.org/uniprot/P0DTC2> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC2" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC2> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "SPIKE_WCPV" ;
+                                        rdfs:label "Spike glycoprotein" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC3
+<http://www.uniprot.org/uniprot/P0DTC3> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC3" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC3> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "AP3A_WCPV" ;
+                                        rdfs:label "Protein 3a" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC4
+<http://www.uniprot.org/uniprot/P0DTC4> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC4" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC4> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "VEMP_WCPV" ;
+                                        rdfs:label "Envelope small membrane protein" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC5
+<http://www.uniprot.org/uniprot/P0DTC5> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC5" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC5> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "VME1_WCPV" ;
+                                        rdfs:label "Membrane protein" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC6
+<http://www.uniprot.org/uniprot/P0DTC6> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC6" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC6> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "NS6_WCPV" ;
+                                        rdfs:label "Non-structural protein 6" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC7
+<http://www.uniprot.org/uniprot/P0DTC7> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC7" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC7> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "NS7A_WCPV" ;
+                                        rdfs:label "Protein 7a" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC8
+<http://www.uniprot.org/uniprot/P0DTC8> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC8" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC8> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "NS8_WCPV" ;
+                                        rdfs:label "Non-structural protein 8" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC9
+<http://www.uniprot.org/uniprot/P0DTC9> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTC9" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTC9> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "NCAP_WCPV" ;
+                                        rdfs:label "Nucleoprotein" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTD1
+<http://www.uniprot.org/uniprot/P0DTD1> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTD1" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTD1> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "R1AB_WCPV" ;
+                                        rdfs:label "Replicase polyprotein 1ab" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTD2
+<http://www.uniprot.org/uniprot/P0DTD2> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTD2" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTD2> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "ORF9B_WCPV" ;
+                                        rdfs:label "Protein 9b" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTD3
+<http://www.uniprot.org/uniprot/P0DTD3> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTD3" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTD3> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "Y14_WCPV" ;
+                                        rdfs:label "Uncharacterized protein 14" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTD8
+<http://www.uniprot.org/uniprot/P0DTD8> rdf:type owl:Class ;
+                                        rdfs:subClassOf <http://iedb.org/taxon-protein/2697049> ;
+                                        <http://iedb.org/has-accession> "P0DTD8" ;
+                                        <http://iedb.org/has-accession-iri> <http://www.uniprot.org/uniprot/P0DTD8> ;
+                                        <http://iedb.org/has-category> "uniprot-reviewed-protein" ;
+                                        <http://iedb.org/has-source-database> "UniProt" ;
+                                        <http://iedb.org/is-reviewed> "true"^^xsd:boolean ;
+                                        <http://iedb.org/protein-synonym> "NS7B_WCPV" ;
+                                        rdfs:label "Protein non-structural 7b" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC2#SIP68D6B622D1141D1D
+<http://www.uniprot.org/uniprot/P0DTC2#SIP68D6B622D1141D1D> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC2> ;
+                                                            <http://iedb.org/has-category> "protein feature" ;
+                                                            <http://iedb.org/has-end-position> 13 ;
+                                                            <http://iedb.org/has-sort-name> "1 signal peptide (1-13)" ;
+                                                            <http://iedb.org/has-start-position> 1 ;
+                                                            rdfs:label "signal peptide (1-13)" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC7#SIP43670172F2116CBD
+<http://www.uniprot.org/uniprot/P0DTC7#SIP43670172F2116CBD> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC7> ;
+                                                            <http://iedb.org/has-category> "protein feature" ;
+                                                            <http://iedb.org/has-end-position> 15 ;
+                                                            <http://iedb.org/has-sort-name> "1 signal peptide (1-15)" ;
+                                                            <http://iedb.org/has-start-position> 1 ;
+                                                            rdfs:label "signal peptide (1-15)" .
+
+
+###  http://www.uniprot.org/uniprot/P0DTC8#SIPFC5EA3FC3341AB35
+<http://www.uniprot.org/uniprot/P0DTC8#SIPFC5EA3FC3341AB35> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <http://www.uniprot.org/uniprot/P0DTC8> ;
+                                                            <http://iedb.org/has-category> "protein feature" ;
+                                                            <http://iedb.org/has-end-position> 15 ;
+                                                            <http://iedb.org/has-sort-name> "1 signal peptide (1-15)" ;
+                                                            <http://iedb.org/has-start-position> 1 ;
+                                                            rdfs:label "signal peptide (1-15)" .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

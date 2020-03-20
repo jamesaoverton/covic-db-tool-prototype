@@ -37,10 +37,12 @@ ROBOT := java -jar build/robot.jar
 build/robot.jar: | build
 	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/master/lastSuccessfulBuild/artifact/bin/robot.jar
 
+build/robot-tree.jar: | build
+	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/tree-view/lastSuccessfulBuild/artifact/bin/robot.jar
 
 ### General Tasks
 
-VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html
+VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html build/ontology.html
 
 .PHONY: all
 all: $(VIEWS)
@@ -48,11 +50,11 @@ all: $(VIEWS)
 .PHONY: tidy
 tidy:
 	rm -rf build/datasets
-	rm -f build/*.html build/*.tsv
+	rm -f build/*.tsv $(VIEWS)
 
 .PHONY: clobber
 clobber: tidy
-	rm -f build/CoVID-DB.xlsx $(SHEET_TSVS)
+	rm -f build/CoVIC-DB.xlsx $(SHEET_TSVS)
 
 .PHONY: clean
 clean:
@@ -88,6 +90,17 @@ build/labels.tsv: ontology/imports.tsv | build
 	> $@
 
 
+### Ontology
+
+build/ontology/imports.owl: ontology/imports.tsv | build/robot.jar
+	$(ROBOT) template --template $< --output $@
+
+build/ontology.owl: build/ontology/imports.owl ontology/protein-tree.owl | build/robot.jar
+	$(ROBOT) merge \
+	$(foreach o, $^, --input $(o)) \
+	--output $@
+
+
 ### Views
 
 build/datasets/%/dataset.html: src/view-dataset.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
@@ -99,3 +112,8 @@ build/summary.html: src/view-summary.py templates/summary.html ontology/prefixes
 
 build/index.html: src/build-index.py templates/index.html | build
 	python $^ $@
+
+build/ontology.html: build/ontology.owl | build/robot-tree.jar
+	java -jar build/robot-tree.jar tree \
+	--input $< \
+	--tree $@
