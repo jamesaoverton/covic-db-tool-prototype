@@ -15,7 +15,10 @@ from collections import OrderedDict
 def read_data(prefixes_tsv_path, labels_tsv_path, antibodies_tsv_path, dataset_path):
     prefixes = names.read_prefixes(prefixes_tsv_path)
     id_to_label = names.read_labels(labels_tsv_path)
-    ab_map = antibodies.read_antibodies(prefixes, id_to_label, antibodies_tsv_path)
+    ab_list = antibodies.read_antibodies(id_to_label, antibodies_tsv_path)
+    ab_map = OrderedDict()
+    for ab in ab_list:
+        ab_map[ab["ab_id"]] = ab
 
     for root, dirs, files in os.walk(dataset_path):
         for name in files:
@@ -25,9 +28,13 @@ def read_data(prefixes_tsv_path, labels_tsv_path, antibodies_tsv_path, dataset_p
                     if row["Antibody"] in ab_map:
                         for key, value in row.items():
                             if key != "Antibody":
-                                ab_map[row["Antibody"]][key] = {"label": value}
+                                ab_map[row["Antibody"]][key] = value
 
-    return {"rows": list(ab_map.values())}
+    ab_list = list(ab_map.values())
+    return {
+        "message": "This is the public view with all antibodies (blinded) and assays.",
+        "rows": names.table_to_fields(prefixes, ab_list),
+    }
 
 
 if __name__ == "__main__":

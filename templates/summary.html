@@ -3,7 +3,7 @@
 {% block title %}CoVIC-DB Data Prototype{% endblock %}
 
 {% block content %}
-<p>This is an early prototype for storing and working with CoVIC-DB data.</p>
+<p>{{ message }}</p>
 
 <table class="table">
   <tr>
@@ -11,7 +11,7 @@
   </tr>
   {% for row in rows %}
   <tr>
-    {% for cell in row.values() %}<td>{% if cell.iri %}<a href="{{ cell.iri }}">{{ cell.label }}</a>{% else %}{{ cell.label }}{% endif %}</td>{% endfor %}
+    {% for cell in row.values() %}<td>{% if cell.iri %}<a href="{{ cell.iri }}">{{ cell.label }}</a>{% else %}{{ cell.value }}{% endif %}</td>{% endfor %}
   </tr>
   {% endfor %}
 </table>
