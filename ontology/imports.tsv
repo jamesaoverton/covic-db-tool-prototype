@@ -1,0 +1,4 @@
+id	label	type	parent
+ID	LABEL	TYPE	C %
+ONTIE:0000001	Mus musculus BALB/C	owl:Class
+OBI:0001643	neutralization|biological activity	owl:Class

@@ -1,0 +1,8 @@
+prefix	base
+NCBITaxon        http://purl.obolibrary.org/obo/NCBITaxon_
+OBI      http://purl.obolibrary.org/obo/OBI_
+ONTIE    https://ontology.iedb.org/ontology/ONTIE_
+CoVIC    https://cvdb.ontodev.com/antibody/
+ds       https://cvdb.ontodev.com/dataset/
+org      https://cvdb.ontodev.com/organization/
+user     https://cvdb.ontodev.com/user/
