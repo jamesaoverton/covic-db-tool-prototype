@@ -42,7 +42,7 @@ build/robot-tree.jar: | build
 
 ### General Tasks
 
-VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html build/ontology.html
+VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html build/antibodies.html build/ontology.html
 
 .PHONY: all
 all: $(VIEWS)
@@ -103,11 +103,14 @@ build/ontology.owl: build/ontology/imports.owl ontology/protein-tree.owl | build
 
 ### Views
 
-build/datasets/%/dataset.html: src/view-dataset.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
+build/antibodies.html: src/antibodies.py templates/summary.html ontology/prefixes.tsv build/labels.tsv data/antibodies.tsv | build
+	python $^ $@
+
+build/datasets/%/dataset.html: src/datasets.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
 	mkdir -p build/datasets/$*
 	python $^ $@
 
-build/summary.html: src/view-summary.py templates/summary.html ontology/prefixes.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
+build/summary.html: src/summaries.py templates/summary.html ontology/prefixes.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
 	python $^ $@
 
 build/index.html: src/build-index.py templates/index.html | build

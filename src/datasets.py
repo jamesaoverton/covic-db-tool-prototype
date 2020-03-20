@@ -6,22 +6,7 @@ import yaml
 
 import names
 import tables
-
-from jinja2 import Environment, FileSystemLoader
-
-
-def is_id(prefixes, i):
-    for prefix in prefixes.keys():
-        if i.startswith(prefix + ":"):
-            return True
-    return False
-
-
-def id_to_iri(prefixes, i):
-    for prefix, base in prefixes.items():
-        if i.startswith(prefix + ":"):
-            return i.replace(prefix + ":", base)
-    return i
+import templates
 
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
@@ -50,14 +35,6 @@ def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
     return {"dataset": dataset, "fields": fields, "assays": assays}
 
 
-def write_html(data, template, output):
-    env = Environment(loader=FileSystemLoader(os.path.dirname(template)))
-    template = env.get_template(os.path.basename(template))
-
-    with open(output, "w") as w:
-        w.write(template.render(data=data))
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert dataset text files to HTML")
     parser.add_argument("template", type=str, help="The template to use")
@@ -67,4 +44,6 @@ if __name__ == "__main__":
     parser.add_argument("output", type=str, help="The output file")
     args = parser.parse_args()
 
-    write_html(read_data(args.prefixes, args.labels, args.dataset), args.template, args.output)
+    templates.write_html(
+        args.template, read_data(args.prefixes, args.labels, args.dataset), args.output
+    )
