@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
-import csv
 import os
 import yaml
+
+import names
+import tables
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -23,17 +25,8 @@ def id_to_iri(prefixes, i):
 
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
-    prefixes = {}
-    with open(prefixes_tsv_path, "r") as f:
-        rows = csv.DictReader(f, delimiter="\t")
-        for row in rows:
-            prefixes[row["prefix"]] = row["base"]
-
-    id_to_label = {}
-    with open(labels_tsv_path, "r") as f:
-        rows = csv.DictReader(f, delimiter="\t")
-        for row in rows:
-            id_to_label[row["id"]] = row["label"]
+    prefixes = names.read_prefixes(prefixes_tsv_path)
+    id_to_label = names.read_labels(labels_tsv_path)
 
     dataset_yaml_path = os.path.join(dataset_path, "dataset.yml")
     with open(dataset_yaml_path, "r") as f:
@@ -42,8 +35,8 @@ def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
     fields = []
     for key, value in dataset.items():
         iri = None
-        if is_id(prefixes, value):
-            iri = id_to_iri(prefixes, value)
+        if names.is_id(prefixes, value):
+            iri = names.id_to_iri(prefixes, value)
         label = value
         if value in id_to_label:
             label = value + " " + id_to_label[value]
@@ -51,10 +44,8 @@ def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
 
     assays_tsv_path = os.path.join(dataset_path, "assays.tsv")
     assays = []
-    with open(assays_tsv_path, "r") as f:
-        rows = csv.DictReader(f, delimiter="\t")
-        for row in rows:
-            assays.append(row)
+    for row in tables.read_tsv(assays_tsv_path):
+        assays.append(row)
 
     return {"dataset": dataset, "fields": fields, "assays": assays}
 

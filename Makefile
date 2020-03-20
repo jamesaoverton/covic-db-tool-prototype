@@ -1,22 +1,100 @@
+### CoVIC-DB Tool Prototype Makefile
+#
+# James A. Overton <james@overton.ca>
+#
+# Usually you want to run:
+#
+#     make tidy all
+#
+# Requirements:
+#
+# - GNU Make
+# - Python 3
+# - Java
+# - ROBOT <http://github.com/ontodev/robot>
+
+### Configuration
+#
+# These are standard options to make Make sane:
+# <http://clarkgrubb.com/makefile-style-guide#toc2>
+
+MAKEFLAGS += --warn-undefined-variables
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail -c
+.DEFAULT_GOAL := all
+.DELETE_ON_ERROR:
+.SUFFIXES:
+.SECONDARY:
+.PHONY: all
+
+ROBOT := java -jar build/robot.jar
+
+
+### ROBOT
+#
+# We use development versions of ROBOT for this project.
+
+build/robot.jar: | build
+	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/master/lastSuccessfulBuild/artifact/bin/robot.jar
+
+
+### General Tasks
+
+VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html
 
 .PHONY: all
-all: build/datasets/1/dataset.html build/index.html
+all: $(VIEWS)
 
 .PHONY: tidy
 tidy:
 	rm -rf build/datasets
-	rm -f build/index.html build/labels.tsv
+	rm -f build/*.html build/*.tsv
+
+.PHONY: clobber
+clobber: tidy
+	rm -f build/CoVID-DB.xlsx $(SHEET_TSVS)
+
+.PHONY: clean
+clean:
+	rm -rf build
+
+.PHONY: update
+update:
+	make clobber all
+
+
+### Set Up
 
 build build/datasets:
 	mkdir -p $@
 
-build/labels.tsv: ontology/imports.tsv
+
+### Tables
+#
+# These tables are stored in Google Sheets, and downloaded as TSV files.
+
+SHEETS = prefixes imports fields
+SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
+
+build/CoVIC-DB.xlsx: | build
+	curl -L -o $@ "https://docs.google.com/spreadsheets/d/11ItLLoXY7_r2lDazY4prMERHMb-7czrim91UABnvbYM/export?format=xlsx"
+
+$(SHEET_TSVS): build/CoVIC-DB.xlsx
+	xlsx2csv --delimiter tab --sheetname $(basename $(notdir $@)) $< > $@
+
+build/labels.tsv: ontology/imports.tsv | build
 	sed '2d' $< \
 	| cut -f1-2 \
 	> $@
 
-build/datasets/%/dataset.html: src/view-dataset.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/% | build/datasets
+
+### Views
+
+build/datasets/%/dataset.html: src/view-dataset.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
 	mkdir -p build/datasets/$*
+	python $^ $@
+
+build/summary.html: src/view-summary.py templates/summary.html ontology/prefixes.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
 	python $^ $@
 
 build/index.html: src/build-index.py templates/index.html | build
