@@ -11,7 +11,7 @@ import templates
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
     prefixes = names.read_prefixes(prefixes_tsv_path)
-    id_to_label = names.read_labels(labels_tsv_path)
+    labels = names.read_labels(labels_tsv_path)
 
     dataset_yaml_path = os.path.join(dataset_path, "dataset.yml")
     with open(dataset_yaml_path, "r") as f:
@@ -23,8 +23,8 @@ def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
         if names.is_id(prefixes, value):
             iri = names.id_to_iri(prefixes, value)
         label = value
-        if value in id_to_label:
-            label = value + " " + id_to_label[value]
+        if value in labels:
+            label = value + " " + labels[value]
         fields.append({"field": key, "iri": iri, "label": label, "value": value})
 
     assays_tsv_path = os.path.join(dataset_path, "assays.tsv")

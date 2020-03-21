@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}CoVIC-DB Data Prototype{% endblock %}
+
+{% block content %}
+<p>{{ message }}</p>
+
+<table class="table">
+  {% if headers %}
+  <thead>
+    {% for row in headers %}
+    <tr>
+      {% for cell in row %}<th>{% if cell.iri %}<a href="{{ cell.iri }}">{{ cell.label }}</a>{% else %}{{ cell.label }}{% endif %}</th>{% endfor %}
+    </tr>
+    {% endfor %}
+  </thead>
+  {% endif %}
+  <tbody>
+  {% for row in rows %}
+  <tr>
+    {% for cell in row %}<td>{% if cell.iri %}<a href="{{ cell.iri }}">{{ cell.label }}</a>{% else %}{{ cell.label }}{% endif %}</td>{% endfor %}
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

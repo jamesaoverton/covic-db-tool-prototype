@@ -27,18 +27,6 @@ SHELL := bash
 .SECONDARY:
 .PHONY: all
 
-ROBOT := java -jar build/robot.jar
-
-
-### ROBOT
-#
-# We use development versions of ROBOT for this project.
-
-build/robot.jar: | build
-	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/master/lastSuccessfulBuild/artifact/bin/robot.jar
-
-build/robot-tree.jar: | build
-	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/tree-view/lastSuccessfulBuild/artifact/bin/robot.jar
 
 ### General Tasks
 
@@ -64,12 +52,32 @@ clean:
 update:
 	make clobber all
 
+.PHONY: test
+test:
+	pytest src/*.py
+
+.PHONY: format
+format:
+	black src/*.py
+
 
 ### Set Up
 
 build build/datasets:
 	mkdir -p $@
 
+
+### ROBOT
+#
+# We use development versions of ROBOT for this project.
+
+ROBOT := java -jar build/robot.jar
+
+build/robot.jar: | build
+	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/master/lastSuccessfulBuild/artifact/bin/robot.jar
+
+build/robot-tree.jar: | build
+	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/tree-view/lastSuccessfulBuild/artifact/bin/robot.jar
 
 ### Tables
 #
@@ -103,14 +111,14 @@ build/ontology.owl: build/ontology/imports.owl ontology/protein-tree.owl | build
 
 ### Views
 
-build/antibodies.html: src/antibodies.py templates/summary.html ontology/prefixes.tsv build/labels.tsv data/antibodies.tsv | build
+build/antibodies.html: src/antibodies.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv | build
 	python $^ $@
 
 build/datasets/%/dataset.html: src/datasets.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
 	mkdir -p build/datasets/$*
 	python $^ $@
 
-build/summary.html: src/summaries.py templates/summary.html ontology/prefixes.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
+build/summary.html: src/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
 	python $^ $@
 
 build/index.html: src/build-index.py templates/index.html | build
