@@ -54,11 +54,11 @@ update:
 
 .PHONY: test
 test:
-	pytest src/*.py
+	pytest
 
 .PHONY: format
 format:
-	black src/*.py
+	black src/covicdbtools/*.py tests/*.py
 
 
 ### Set Up

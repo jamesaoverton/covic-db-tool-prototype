@@ -4,13 +4,9 @@ import argparse
 import os
 import yaml
 
-import names
-import tables
-import grids
-import antibodies
-import templates
-
 from collections import OrderedDict
+
+from covicdbtools import names, tables, grids, templates, antibodies
 
 
 def read_data(

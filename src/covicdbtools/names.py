@@ -9,10 +9,10 @@
 # and MAY have "iri", "label", and other keys.
 
 import re
-import tables
 
 from collections import OrderedDict
 
+from covicdbtools import tables
 
 ### Prefixes
 #
@@ -28,17 +28,15 @@ def read_prefixes(prefixes_tsv_path):
     return prefixes
 
 
+def split_id(i):
+    return i.split(":", maxsplit=1)
+
+
 def is_id(prefixes, i):
     """Given the prefixes map and an ID string,
     return True if the string starts with a known prefix, False otherwise"""
-    for prefix in prefixes.keys():
-        if i.startswith(prefix + ":"):
-            return True
-    return False
-
-
-def split_id(i):
-    return i.split(":", maxsplit=1)
+    prefix, localname = split_id(i)
+    return prefix in prefixes
 
 
 def increment_id(i):
@@ -51,21 +49,10 @@ def increment_id(i):
 
 def id_to_iri(prefixes, i):
     """Given the prefixes map and an ID string, return an IRI string."""
-    for prefix, base in prefixes.items():
-        if i.startswith(prefix + ":"):
-            return re.compile("^" + prefix + ":").sub(base, i)
+    prefix, localname = split_id(i)
+    if prefix in prefixes:
+        return prefixes[prefix] + localname
     return i
-
-
-def test_prefixes():
-    prefixes = {"ex": "http://example.com/"}
-    assert id_to_iri(prefixes, "ex:bar") == "http://example.com/bar"
-
-    prefix, localname = split_id("ex:bar")
-    assert prefix == "ex"
-    assert localname == "bar"
-
-    assert increment_id("ex:1") == "ex:2"
 
 
 ### Fields
@@ -119,17 +106,6 @@ def is_concise_table(concise_table):
     if validate_concise_table(concise_table):
         return False
     return True
-
-
-def test_concise_table():
-    table = [OrderedDict({"foo": "bar"})]
-    assert is_concise_table(table) == True
-
-    table = [OrderedDict({"foo_id": "bar"})]
-    assert is_concise_table(table) == True
-
-    table = [OrderedDict({"foo_label": "bar"})]
-    assert is_concise_table(table) == False
 
 
 ### Labelled Tables
@@ -206,20 +182,3 @@ def unlabel_table(table):
             if key.endswith("label"):
                 del row[key]
     return table
-
-
-def test_labelled_table():
-    table = [OrderedDict({"foo": "bar"})]
-    assert is_labelled_table(table) == True
-
-    table = [OrderedDict({"foo_id": "bar"})]
-    assert is_labelled_table(table) == False
-
-    table = [OrderedDict({"foo_id": "bar", "foo_label": "Bar"})]
-    assert is_labelled_table(table) == True
-
-    labels = {"bar": "Bar"}
-    concise_table = [OrderedDict({"foo_id": "bar"})]
-    labelled_table = [OrderedDict({"foo_id": "bar", "foo_label": "Bar"})]
-    assert label_table(labels, concise_table) == labelled_table
-    assert unlabel_table(labelled_table) == concise_table

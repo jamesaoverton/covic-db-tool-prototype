@@ -5,10 +5,10 @@
 # A "cell" is a dictionary which MUST have a "value" key,
 # and MAY have "iri", "label", and other keys.
 
-import names
 import json
 
 from collections import OrderedDict
+from covicdbtools import names
 
 
 ### Cells
@@ -128,40 +128,6 @@ def table_to_grid(prefixes, fields, table):
     return grid
 
 
-def test_grid():
-    grid = "Foo"
-    assert is_grid(grid) == False
-
-    grid = {}
-    assert is_grid(grid) == False
-
-    grid = {"rows": {}}
-    assert is_grid(grid) == False
-
-    grid = {"rows": []}
-    assert is_grid(grid) == False
-
-    grid = {"rows": ["Foo"]}
-    assert is_grid(grid) == False
-
-    grid = {"rows": [{"value": "foo"}]}
-    assert is_grid(grid) == False
-
-    grid = {"headers": "Foo", "rows": ["Foo"]}
-    assert is_grid(grid) == False
-
-    prefixes = {"ex": "http://example.com/"}
-    fields = {"foo_id": {"label": "Foo"}}
-    labelled_table = [OrderedDict({"foo_id": "ex:bar", "foo_label": "Bar"})]
-    grid = {
-        "headers": [[{"label": "Foo", "value": "foo_id"}]],
-        "rows": [
-            [{"iri": "http://example.com/bar", "label": "Bar", "value": "ex:bar"}]
-        ],
-    }
-    assert table_to_grid(prefixes, fields, labelled_table) == grid
-
-
 ### HTML Output
 
 
@@ -217,25 +183,3 @@ def grid_to_html(grid):
         lines.append("  </tbody>")
     lines.append("</table>")
     return "\n".join(lines)
-
-
-def test_grid_to_html():
-    grid = {
-        "headers": [[{"label": "Foo", "value": "foo_id"}]],
-        "rows": [
-            [{"iri": "http://example.com/bar", "label": "Bar", "value": "ex:bar"}]
-        ],
-    }
-    html = """<table class="table">
-  <thead>
-    <tr>
-      <th>Foo</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="http://example.com/bar">Bar</a></td>
-    </tr>
-  </tbody>
-</table>"""
-    assert grid_to_html(grid) == html

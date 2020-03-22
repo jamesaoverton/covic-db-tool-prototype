@@ -46,26 +46,6 @@ def is_table(table):
     return True
 
 
-def test_is_table():
-    table = "Foo"
-    assert is_table(table) == False
-
-    table = []
-    assert is_table(table) == False
-
-    table = [{"foo": "bar"}]
-    assert is_table(table) == False
-
-    table = [OrderedDict({"foo": "bar"}), OrderedDict({"zoo": "baz"})]
-    assert is_table(table) == False
-
-    table = [OrderedDict({"foo": 1})]
-    assert is_table(table) == False
-
-    table = [OrderedDict({"foo": "bar"}), OrderedDict({"foo": "baz"})]
-    assert is_table(table) == True
-
-
 ### Reading and Writing
 
 
@@ -101,18 +81,6 @@ def table_to_tsv_string(table):
     w = io.StringIO()
     write_tsv_io(w, table)
     return w.getvalue()
-
-
-def test_tsv_string():
-    table = [
-        OrderedDict({"foo": "bar", "a": "1"}),
-        OrderedDict({"foo": "baz", "a": "2"}),
-    ]
-    string = """foo	a
-bar	1
-baz	2
-"""
-    assert table_to_tsv_string(table) == string
 
 
 def print_tsv(table):

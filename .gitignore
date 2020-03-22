@@ -1,8 +1,14 @@
+*.egg
+*.egg-info/
+*.py[cod]
+*.so
+*~
 .DS_Store
 __pycache__/
 _venv/
 build/
 data/
+dist/
 junk/
 shell.nix
 temp/

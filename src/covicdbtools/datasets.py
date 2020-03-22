@@ -4,9 +4,7 @@ import argparse
 import os
 import yaml
 
-import names
-import tables
-import templates
+from covicdbtools import names, tables, templates
 
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):

@@ -1,10 +1,10 @@
-import tables
-
 from collections import OrderedDict
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font, PatternFill, Color
 from openpyxl.comments import Comment
+
+from covicdbtools import tables
 
 MIN_COLUMN_WIDTH = 15
 

@@ -4,13 +4,9 @@ import argparse
 import datetime
 import os
 
-import tables
-import names
-import grids
-import templates
-import workbooks
-
 from collections import OrderedDict
+
+from covicdbtools import names, tables, grids, workbooks, templates
 
 
 def read_antibodies(id_to_label, antibodies_tsv_path):
