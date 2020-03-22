@@ -124,37 +124,90 @@ def validate_submission(table):
     return None
 
 
+### Validate Excel
+#
+# These validation methods read Excel (.xlsx) files
+# and return a response dictionary that looks like an HTML reponse
+# with some extra fields:
+#
+# {"status": 400,
+#  "message": "There some sort of error",
+#  "errors": ["List of errors"],
+#  "exception": FooException,
+#  "grid": {"headers": [[...]], "rows": [[...]]},
+#  "table": [OrderedDict(...)],
+#  "path": "/absolute/path/to/result.xlsx"
+#  "body": "<div>an HTML fragment</div>",
+# }
+
+
+def add_html(response):
+    lines = ["<div>"]
+    if "message" in response:
+        lines.append("  <p>{0}</p>".format(response["message"]))
+    if "exception" in response:
+        lines.append("  <p>{0}</p>".format(str(response["exception"])))
+    if "errors" in response:
+        lines.append("  <p>Errors</p>")
+        lines.append("  <ul>")
+        for error in response["errors"]:
+            lines.append("    <li>{0}</li>".format(error))
+        lines.append("  </ul>")
+    if "grid" in response:
+        lines.append(grids.grid_to_html(response["grid"]))
+    elif "table" in response:
+        lines.append(grids.grid_to_html(grids.table_to_grid({}, {}, response["table"])))
+    lines.append("</div>")
+    response["body"] = "\n".join(lines)
+    return response
+
+
 def validate_xlsx(submitter_id, submitter_label, path):
+    """Given a submitted_id string, a submitter_label string, and an XLSX file path,
+    validate it the file and return a response dictionary."""
     try:
         table = workbooks.read_xlsx(path)
     except Exception as e:
-        return {"status": 400, "message": "Could not create XLSX file", "exception": e}
+        return add_html(
+            {"status": 400, "message": "Could not create XLSX file", "exception": e}
+        )
 
-    result = validate_submission(table)
-    if result and "errors" in result and len(result["errors"]) > 0:
-        result.update({"status": 400, "message": "Submitted table contains errors."})
-        return result
+    grid = validate_submission(table)
+    if grid:
+        errors = grid["errors"]
+        del grid["errors"]
+        return add_html(
+            {
+                "status": 400,
+                "message": "Submitted table contains errors.",
+                "errors": errors,
+                "grid": grid,
+            }
+        )
 
-    result = store_submission(submitter_id, submitter_label, table)
-    return result
+    table = store_submission(submitter_id, submitter_label, table)
+    return add_html({"status": 200, "message": "Success", "table": table})
 
 
 def validate_request(submitter_id, submitter_label, request_files):
-    """Given a Django request.FILES object, store it in a temporary file,
-    validate it, and return a message."""
+    """Given a submitted_id string, a submitter_label string,
+    and Django request.FILES object with one file,
+    store it in a temporary file, validate it, and return a response dictionary."""
     if len(request_files.keys()) > 0:
-        return {"status": 400, "message": "Multiple upload files not allowed"}
+        return add_html({"status": 400, "message": "Multiple upload files not allowed"})
 
     datestamp = datetime.utcnow().strftime("%Y%m%d-%H%M%S-%f")  # 20200322-084530-123456
     temp = os.path.join("temp", datestamp)
     try:
         os.makedirs(temp)
     except Exception as e:
-        return {
-            "status": 400,
-            "message": "Could not create temp directory",
-            "exception": e,
-        }
+        return add_html(
+            {
+                "status": 400,
+                "message": "Could not create temp directory",
+                "exception": e,
+            }
+        )
 
     path = None
     try:
@@ -165,9 +218,68 @@ def validate_request(submitter_id, submitter_label, request_files):
                     f.write(chunk)
             paths.append(path)
     except Exception as e:
-        return {"status": 400, "message": "Invalid upload", "exception": e}
+        return add_html({"status": 400, "message": "Invalid upload", "exception": e})
 
     return validate_xlsx(submitter_id, submitter_label, path)
+
+
+def examples():
+    """Write and test some examples."""
+    submitter_id = "org:1"
+    submitter_label = "Acme Corp."
+    fields = names.read_fields("ontology/fields.tsv")
+    prefixes = names.read_prefixes("ontology/prefixes.tsv")
+
+    path = "examples/antibodies-submission-valid.xlsx"
+    write_xlsx(path)
+
+    path = "examples/antibodies-submission-valid.xlsx"
+    grid = {
+        "headers": [
+            [{"label": "Antibody name"}, {"label": "Host"}, {"label": "Isoform"}]
+        ],
+        "rows": [
+            [{"label": "Acme mAb 1"}, {"label": "Homo sapiens"}, {"label": "foo"}]
+        ],
+    }
+    sheets = [["Antibodies", grid]]
+    workbooks.write_xlsx(sheets, path)
+
+    path = "examples/antibodies-submission-invalid.xlsx"
+    grid = {
+        "headers": [
+            [{"label": "Antibody name"}, {"label": "Host"}, {"label": "Isoform"}]
+        ],
+        "rows": [
+            [{"label": "Acme mAb 1"}, {"label": "Homo sapiens"}, {"label": "foo"}],
+            [{"label": ""}, {"label": "Martian"}, {"label": ""}],
+        ],
+    }
+    sheets = [["Antibodies", grid]]
+    workbooks.write_xlsx(sheets, path)
+
+    path = "examples/antibodies-submission-invalid-highlighted.xlsx"
+    response = validate_xlsx(submitter_id, submitter_label, path)
+    print(path)
+    print(response)
+    sheets = [["Antibodies", response["grid"]]]
+    workbooks.write_xlsx(sheets, path)
+
+    path = "examples/antibodies-submission-invalid.xlsx"
+    response = validate_xlsx(submitter_id, submitter_label, path)
+    print(path)
+    print(response)
+    path = "build/antibodies-submission-invalid-highlighted.html"
+    templates.write_html("templates/grid.html", {"html": response["body"]}, path)
+
+    path = "examples/antibodies-submission-valid.xlsx"
+    response = validate_xlsx(submitter_id, submitter_label, path)
+    print(path)
+    print(response)
+    path = "build/antibodies-submission-valid-expanded.tsv"
+    tables.write_tsv(response["table"], path)
+    path = "build/antibodies-submission-valid-expanded.html"
+    templates.write_html("templates/grid.html", {"html": response["body"]}, path)
 
 
 if __name__ == "__main__":

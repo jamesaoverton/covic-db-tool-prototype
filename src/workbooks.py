@@ -60,7 +60,6 @@ def write_xlsx(sheets, path):
         ws.freeze_panes = ws.cell(column=1, row=i + 1)
         if "rows" in grid:
             for row in grid["rows"]:
-                print("ROW", row)
                 for j in range(0, len(row)):
                     c = row[j]
                     cell = ws.cell(column=j + 1, row=i + 1)
