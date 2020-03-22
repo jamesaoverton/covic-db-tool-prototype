@@ -133,11 +133,12 @@ def validate_submission(table):
 #  "grid": {"headers": [[...]], "rows": [[...]]},
 #  "table": [OrderedDict(...)],
 #  "path": "/absolute/path/to/result.xlsx"
-#  "body": "<div>an HTML fragment</div>",
 # }
+#
+# The response_to_html() function will render the response into nice HTML.
 
 
-def add_html(response):
+def response_to_html(response):
     lines = ["<div>"]
     if "message" in response:
         lines.append("  <p>{0}</p>".format(response["message"]))
@@ -154,8 +155,7 @@ def add_html(response):
     elif "table" in response:
         lines.append(grids.grid_to_html(grids.table_to_grid({}, {}, response["table"])))
     lines.append("</div>")
-    response["body"] = "\n".join(lines)
-    return response
+    return "\n".join(lines)
 
 
 def validate_xlsx(submitter_id, submitter_label, path):
@@ -164,25 +164,21 @@ def validate_xlsx(submitter_id, submitter_label, path):
     try:
         table = workbooks.read_xlsx(path)
     except Exception as e:
-        return add_html(
-            {"status": 400, "message": "Could not create XLSX file", "exception": e}
-        )
+        return {"status": 400, "message": "Could not create XLSX file", "exception": e}
 
     grid = validate_submission(table)
     if grid:
         errors = grid["errors"]
         del grid["errors"]
-        return add_html(
-            {
-                "status": 400,
-                "message": "Submitted table contains errors.",
-                "errors": errors,
-                "grid": grid,
-            }
-        )
+        return {
+            "status": 400,
+            "message": "Submitted table contains errors.",
+            "errors": errors,
+            "grid": grid,
+        }
 
     table = store_submission(submitter_id, submitter_label, table)
-    return add_html({"status": 200, "message": "Success", "table": table})
+    return {"status": 200, "message": "Success", "table": table}
 
 
 def validate_request(submitter_id, submitter_label, request_files):
@@ -190,20 +186,18 @@ def validate_request(submitter_id, submitter_label, request_files):
     and Django request.FILES object with one file,
     store it in a temporary file, validate it, and return a response dictionary."""
     if len(request_files.keys()) > 0:
-        return add_html({"status": 400, "message": "Multiple upload files not allowed"})
+        return {"status": 400, "message": "Multiple upload files not allowed"}
 
     datestamp = datetime.utcnow().strftime("%Y%m%d-%H%M%S-%f")  # 20200322-084530-123456
     temp = os.path.join("temp", datestamp)
     try:
         os.makedirs(temp)
     except Exception as e:
-        return add_html(
-            {
-                "status": 400,
-                "message": "Could not create temp directory",
-                "exception": e,
-            }
-        )
+        return {
+            "status": 400,
+            "message": "Could not create temp directory",
+            "exception": e,
+        }
 
     path = None
     try:
@@ -214,7 +208,7 @@ def validate_request(submitter_id, submitter_label, request_files):
                     f.write(chunk)
             paths.append(path)
     except Exception as e:
-        return add_html({"status": 400, "message": "Invalid upload", "exception": e})
+        return {"status": 400, "message": "Invalid upload", "exception": e}
 
     return validate_xlsx(submitter_id, submitter_label, path)
 
