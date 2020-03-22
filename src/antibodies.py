@@ -138,22 +138,6 @@ def validate_xlsx(submitter_id, submitter_label, path):
     result = store_submission(submitter_id, submitter_label, table)
     return result
 
-# build/antibodies-submission-valid-expanded.html
-result = validate_xlsx(
-    "org:1", "Acme Corp.", "examples/antibodies-submission-valid.xlsx"
-)
-print(result)
-prefixes = names.read_prefixes("ontology/prefixes.tsv")
-fields = names.read_fields("ontology/fields.tsv")
-path = "build/antibodies-submission-valid-expanded.tsv"
-tables.write_tsv(result, path)
-grid = grids.table_to_grid(prefixes, fields, result)
-path = "build/antibodies-submission-valid-expanded.html"
-templates.write_html(
-    "templates/grid.html",
-    {"html": grids.grid_to_html(grid)},
-    path
-)
 
 def validate_request(submitter_id, submitter_label, request_files):
     """Given a Django request.FILES object, store it in a temporary file,
