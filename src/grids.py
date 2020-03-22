@@ -6,6 +6,7 @@
 # and MAY have "iri", "label", and other keys.
 
 import names
+import json
 
 from collections import OrderedDict
 
@@ -173,16 +174,26 @@ def cell_to_html(cell, header=False):
         label = cell["value"]
 
     if "iri" in cell:
-        output = """<a href="{0}">{1}</a>""".format(cell["iri"], label)
+        content = """<a href="{0}">{1}</a>""".format(cell["iri"], label)
     else:
-        output = label
+        content = label
+
+    classes = []
+    if "status" in cell:
+        if cell["status"] == "ERROR":
+            classes.append("table-danger")
+
+    attrs = ""
+    if len(classes) > 0:
+        attrs += ' class="{0}"'.format(" ".join(classes))
+    if "comment" in cell:
+        comment = json.dumps(cell["comment"])  # escape quotes
+        attrs += ' data-toggle="popover" data-content={0}'.format(comment)
 
     if header:
-        output = "<th>{0}</th>".format(output)
+        return "<th{0}>{1}</th>".format(attrs, content)
     else:
-        output = "<td>{0}</td>".format(output)
-
-    return output
+        return "<td{0}>{1}</td>".format(attrs, content)
 
 
 def grid_to_html(grid):

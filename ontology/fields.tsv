@@ -1,4 +1,5 @@
 field	label
 ab_id	Antibody
+submitter_id	Submitter
 host_type_id	Host
 isotype	Isotype
