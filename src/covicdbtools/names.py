@@ -35,6 +35,12 @@ def split_id(i):
 def is_id(prefixes, i):
     """Given the prefixes map and an ID string,
     return True if the string starts with a known prefix, False otherwise"""
+    if not i:
+        return False
+    if type(i) is not str:
+        return False
+    if not ":" in i:
+        return False
     prefix, localname = split_id(i)
     return prefix in prefixes
 

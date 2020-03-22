@@ -111,17 +111,17 @@ build/ontology.owl: build/ontology/imports.owl ontology/protein-tree.owl | build
 
 ### Views
 
-build/antibodies.html: src/antibodies.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv | build
+build/antibodies.html: src/covicdbtools/antibodies.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv | build
 	python $^ $@
 
-build/datasets/%/dataset.html: src/datasets.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
+build/datasets/%/dataset.html: src/covicdbtools/datasets.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
 	mkdir -p build/datasets/$*
 	python $^ $@
 
-build/summary.html: src/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
+build/summary.html: src/covicdbtools/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
 	python $^ $@
 
-build/index.html: src/build-index.py templates/index.html | build
+build/index.html: src/covicdbtools/build-index.py templates/index.html | build
 	python $^ $@
 
 build/ontology.html: build/ontology.owl | build/robot-tree.jar

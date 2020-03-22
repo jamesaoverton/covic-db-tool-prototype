@@ -260,7 +260,8 @@ def examples():
     print(path)
     print(response)
     path = "build/antibodies-submission-invalid-highlighted.html"
-    templates.write_html("templates/grid.html", {"html": response["body"]}, path)
+    html = response_to_html(response)
+    templates.write_html("templates/grid.html", {"html": html}, path)
 
     path = "examples/antibodies-submission-valid.xlsx"
     response = validate_xlsx(submitter_id, submitter_label, path)
@@ -269,7 +270,8 @@ def examples():
     path = "build/antibodies-submission-valid-expanded.tsv"
     tables.write_tsv(response["table"], path)
     path = "build/antibodies-submission-valid-expanded.html"
-    templates.write_html("templates/grid.html", {"html": response["body"]}, path)
+    html = response_to_html(response)
+    templates.write_html("templates/grid.html", {"html": html}, path)
 
 
 if __name__ == "__main__":
