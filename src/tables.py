@@ -5,8 +5,13 @@
 # and stored as a TSV file.
 
 import csv
+import io
 
 from collections import OrderedDict
+from tabulate import tabulate
+
+
+### Tables
 
 
 def validate_table(table):
@@ -41,23 +46,6 @@ def is_table(table):
     return True
 
 
-def read_tsv(path):
-    """Given a path, read a TSV file
-    and return a list of OrderedDicts."""
-    with open(path, "r") as f:
-        return list(csv.DictReader(f, delimiter="\t"))
-
-
-def write_tsv(odicts, path):
-    """Given list of OrderedDicts and a path,
-    and return a list of OrderedDicts."""
-    with open(path, "w") as f:
-        w = csv.writer(f, delimiter="\t")
-        w.writerow(odicts[0].keys())
-        for row in odicts:
-            w.writerow(row.values())
-
-
 def test_is_table():
     table = "Foo"
     assert is_table(table) == False
@@ -76,3 +64,57 @@ def test_is_table():
 
     table = [OrderedDict({"foo": "bar"}), OrderedDict({"foo": "baz"})]
     assert is_table(table) == True
+
+
+### Reading and Writing
+
+
+def read_tsv(path):
+    """Given a path, read a TSV file
+    and return a list of OrderedDicts."""
+    with open(path, "r") as f:
+        return list(csv.DictReader(f, delimiter="\t"))
+
+
+def table_to_lists(table):
+    """Given a list of OrderedDicts of strings,
+    return a list of lists of strings."""
+    lists = [list(table[0].keys())]
+    for row in table:
+        lists.append(list(row.values()))
+    return lists
+
+
+def write_tsv_io(f, table):
+    w = csv.writer(f, delimiter="\t", lineterminator="\n")
+    w.writerows(table_to_lists(table))
+
+
+def write_tsv(table, path):
+    """Given list of OrderedDicts and a path,
+    and return a list of OrderedDicts."""
+    with open(path, "w") as f:
+        write_tsv_io(f, table)
+
+
+def table_to_tsv_string(table):
+    w = io.StringIO()
+    write_tsv_io(w, table)
+    return w.getvalue()
+
+
+def test_tsv_string():
+    table = [
+        OrderedDict({"foo": "bar", "a": "1"}),
+        OrderedDict({"foo": "baz", "a": "2"}),
+    ]
+    string = """foo	a
+bar	1
+baz	2
+"""
+    assert table_to_tsv_string(table) == string
+
+
+def print_tsv(table):
+    lists = table_to_lists(table)
+    print(tabulate(lists[1:], lists[0]))

@@ -6,6 +6,7 @@ import yaml
 
 import names
 import tables
+import grids
 import antibodies
 import templates
 
@@ -38,7 +39,7 @@ def read_data(
                                 ab_map[row["Antibody"]][key] = value
 
     ab_list = list(ab_map.values())
-    grid = names.table_to_grid(prefixes, fields, ab_list)
+    grid = grids.table_to_grid(prefixes, fields, ab_list)
     grid["message"]: "This is the public view with all antibodies (blinded) and assays."
     return grid
 
