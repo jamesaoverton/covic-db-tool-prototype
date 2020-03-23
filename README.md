@@ -21,7 +21,7 @@ IRIs are globally unique, but can be inconveniently long, so we use the [CURIE](
 
 We define a list of all our prefixes in `ontology/prefixes.tsv`. We use IDs wherever possible. If a column of a table contains an ID, we adopt the convention of appending '_id'. If a column contains the ID for a class, we append '_type_id'.
 
-| ab_id | host_type_id    | isoform |
+| ab_id | host_type_id    | isotype |
 |-------|-----------------|---------|
 | ab:1  | NCBITaxon:10090 | foo     |
 
@@ -29,7 +29,7 @@ Our convention is to store tables as TSV on the filesystem. In Python, we use th
 
 We usually want to associate a human-readable label with each ID. We define functions for adding '_label' columns, with results like this:
 
-| ab_id | ab_label | host_type_id    | host_type_label    | isoform |
+| ab_id | ab_label | host_type_id    | host_type_label    | isotype |
 |-------|----------|-----------------|--------------------|---------|
 | ab:1  | mAb 1    | NCBITaxon:10090 | Mus musculus       | foo     |
 
@@ -42,13 +42,13 @@ To help display tables as pretty HTML and Excel, we define a "grid", consisting 
     <tr>
       <th>Antibody</th>
       <th>Host</th>
-      <th>isoform</th>
+      <th>Isotype</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><a href="ab:1">mAb 1</a></td>
-      <td><a href="NCBITaxon:10090">Mus musculus</a></td>
+      <td><a href="#ab_1">mAb 1</a></td>
+      <td><a href="http://purl.obolibrary.org/obo/NCBITaxon_10090">Mus musculus</a></td>
       <td>foo</td>
     </tr>
   </tbody>
