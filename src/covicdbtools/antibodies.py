@@ -138,7 +138,7 @@ def validate_submission(table):
 # The response_to_html() function will render the response into nice HTML.
 
 
-def response_to_html(response):
+def response_to_html(response, prefixes={}, fields={}):
     lines = ["<div>"]
     if "message" in response:
         lines.append("  <p>{0}</p>".format(response["message"]))
@@ -153,7 +153,7 @@ def response_to_html(response):
     if "grid" in response:
         lines.append(grids.grid_to_html(response["grid"]))
     elif "table" in response:
-        lines.append(grids.grid_to_html(grids.table_to_grid({}, {}, response["table"])))
+        lines.append(grids.grid_to_html(grids.table_to_grid(fields, fields, response["table"])))
     lines.append("</div>")
     return "\n".join(lines)
 
@@ -260,7 +260,7 @@ def examples():
     print(path)
     print(response)
     path = "build/antibodies-submission-invalid-highlighted.html"
-    html = response_to_html(response)
+    html = response_to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
     path = "examples/antibodies-submission-valid.xlsx"
@@ -270,7 +270,7 @@ def examples():
     path = "build/antibodies-submission-valid-expanded.tsv"
     tables.write_tsv(response["table"], path)
     path = "build/antibodies-submission-valid-expanded.html"
-    html = response_to_html(response)
+    html = response_to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
 
