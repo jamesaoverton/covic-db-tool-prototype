@@ -33,6 +33,29 @@ def is_cell(cell):
     return True
 
 
+def value_cell(value):
+    return {"label": value, "value": value}
+
+
+def value_cells(values):
+    cells = []
+    for value in values:
+        cells.append(value_cell(value))
+    return cells
+
+
+def comment_cell(value, comment):
+    cell = value_cell(value)
+    cell["comment"] = comment
+    return cell
+
+
+def error_cell(value, comment):
+    cell = comment_cell(value, comment)
+    cell["status"] = "ERROR"
+    return cell
+
+
 ### Grids
 #
 # A grid is a dictionary that MUST have a "rows" key and MAY have a "headers" key.

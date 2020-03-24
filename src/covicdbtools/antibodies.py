@@ -5,8 +5,71 @@ import datetime
 import os
 
 from collections import OrderedDict
+from copy import deepcopy
 
 from covicdbtools import names, tables, grids, workbooks, templates
+
+### Hardcoded fields
+# TODO: Make this configurable
+
+instructions = """CoVIC-DB Antibodies Submission
+
+Add your antibodies to the 'Antibodies' sheet. Do not edit the other sheets.
+
+Columns:
+- Antibody name: Your institutions preferred name for the antibody.
+- Host: The name of the host species that is the source of the antibody.
+- Isotype: The name of the isotype of the antibody's heavy chain.
+"""
+
+hosts = ["Homo sapiens", "Mus musculus"]
+
+isotypes = [
+    "IgA",
+    "IgA1",
+    "IgA2",
+    "IgD",
+    "IgE",
+    "IgG",
+    "IgG1",
+    "IgG2",
+    "IgG2a",
+    "IgG2b",
+    "IgG2c",
+    "IgG3",
+    "IgG4",
+    "IgM",
+    "sIgA",
+]
+
+
+headers = [
+    {"label": "Antibody name", "value": "ab_label", "locked": True},
+    {
+        "label": "Host",
+        "value": "host_label",
+        "locked": True,
+        "validations": [
+            {
+                "type": "list",
+                "formula1": "=Terminology!A2:A{0}".format(len(hosts) + 1),
+                "allow_blank": True,
+            }
+        ],
+    },
+    {
+        "label": "Isotype",
+        "value": "isotype",
+        "locked": True,
+        "validations": [
+            {
+                "type": "list",
+                "formula1": "=Terminology!B2:B{0}".format(len(isotypes) + 1),
+                "allow_blank": True,
+            }
+        ],
+    },
+]
 
 
 def read_antibodies(id_to_label, antibodies_tsv_path):
@@ -23,26 +86,35 @@ def read_data(prefixes_tsv_path, fields_tsv_path, labels_tsv_path, antibodies_ts
     return grid
 
 
-# TODO: Make this configurable
-headers = [
-    {"label": "Antibody name", "value": "ab_label"},
-    {"label": "Host", "value": "host_label"},
-    {"label": "Isoform", "value": "isoform"},
-]
+def write_xlsx(path, rows=[]):
+    """Write the antibodies submission template."""
+    instructions_rows = []
+    for line in instructions.strip().splitlines():
+        instructions_rows.append([grids.value_cell(line)])
+    instructions_rows[0][0]["bold"] = True
 
+    terminology_table = []
+    for i in range(0, max(len(hosts), len(isotypes))):
+        host = hosts[i] if i < len(hosts) else ""
+        isotype = isotypes[i] if i < len(isotypes) else ""
+        terminology_table.append(OrderedDict({"Host": host, "Isotype": isotype}))
+    terminology_grid = grids.table_to_grid({}, {}, terminology_table)
+    terminology_grid["title"] = "Terminology"
+    terminology_grid["locked"] = True
 
-def write_xlsx(path):
-    grid = {"headers": [headers]}
-    sheets = [["Antibodies", grid]]
-    workbooks.write_xlsx(sheets, path)
+    submission_grids = [
+        {"title": "Instructions", "locked": True, "rows": instructions_rows},
+        {
+            "title": "Antibodies",
+            "active": True,
+            "activeCell": "A2",
+            "headers": [headers],
+            "rows": rows,
+        },
+        terminology_grid,
+    ]
 
-
-def value_cell(value):
-    return {"label": value, "value": value}
-
-
-def error_cell(value, comment):
-    return {"label": value, "value": value, "status": "ERROR", "comment": comment}
+    workbooks.write_xlsx(submission_grids, path)
 
 
 # TODO: Make this configurable
@@ -65,7 +137,7 @@ def store_submission(submitter_id, submitter_label, table):
         newrow["submitter_label"] = submitter_label
         newrow["host_type_id"] = ids[row["Host"]]
         newrow["host_type_label"] = row["Host"]
-        newrow["isoform"] = row["Isoform"]
+        newrow["isotype"] = row["Isotype"]
         submission.append(newrow)
 
     # TODO: actually store the data!
@@ -86,31 +158,35 @@ def validate_submission(table):
 
         if not "Antibody name" in row or row["Antibody name"].strip() == "":
             comment = "Missing required value 'Antibody name'"
-            cell = error_cell("", comment)
+            cell = grids.error_cell("", comment)
             errors.append("Error in row {0}: {1}".format(i + 1, comment))
         else:
-            cell = value_cell(row["Antibody name"])
+            cell = grids.value_cell(row["Antibody name"])
         newrow.append(cell)
 
         if not "Host" in row or row["Host"].strip() == "":
             comment = "Missing required value 'Host'"
-            cell = error_cell("", comment)
+            cell = grids.error_cell("", comment)
             errors.append("Error in row {0}: {1}".format(i + 1, comment))
         # TODO: Make this configurable.
-        elif row["Host"] not in ["Homo sapiens", "Mus musculus"]:
+        elif row["Host"] not in hosts:
             comment = "'{0}' is not a recognized host".format(row["Host"])
-            cell = error_cell(row["Host"], comment)
+            cell = grids.error_cell(row["Host"], comment)
             errors.append("Error in row {0}: {1}".format(i + 1, comment))
         else:
-            cell = value_cell(row["Host"])
+            cell = grids.value_cell(row["Host"])
         newrow.append(cell)
 
-        if not "Isoform" in row or row["Isoform"].strip() == "":
-            comment = "Missing required value 'Isoform'"
-            cell = error_cell("", comment)
+        if not "Isotype" in row or row["Isotype"].strip() == "":
+            comment = "Missing required value 'Isotype'"
+            cell = grids.error_cell("", comment)
+            errors.append("Error in row {0}: {1}".format(i + 1, comment))
+        elif row["Isotype"] not in isotypes:
+            comment = "'{0}' is not a recognized isotype".format(row["Isotype"])
+            cell = grids.error_cell(row["Isotype"], comment)
             errors.append("Error in row {0}: {1}".format(i + 1, comment))
         else:
-            cell = value_cell(row["Isoform"])
+            cell = grids.value_cell(row["Isotype"])
         newrow.append(cell)
 
         rows.append(newrow)
@@ -153,7 +229,9 @@ def response_to_html(response, prefixes={}, fields={}):
     if "grid" in response:
         lines.append(grids.grid_to_html(response["grid"]))
     elif "table" in response:
-        lines.append(grids.grid_to_html(grids.table_to_grid(fields, fields, response["table"])))
+        lines.append(
+            grids.grid_to_html(grids.table_to_grid(fields, fields, response["table"]))
+        )
     lines.append("</div>")
     return "\n".join(lines)
 
@@ -162,7 +240,7 @@ def validate_xlsx(submitter_id, submitter_label, path):
     """Given a submitted_id string, a submitter_label string, and an XLSX file path,
     validate it the file and return a response dictionary."""
     try:
-        table = workbooks.read_xlsx(path)
+        table = workbooks.read_xlsx(path, sheet="Antibodies")
     except Exception as e:
         return {"status": 400, "message": "Could not create XLSX file", "exception": e}
 
@@ -220,53 +298,56 @@ def examples():
     fields = names.read_fields("ontology/fields.tsv")
     prefixes = names.read_prefixes("ontology/prefixes.tsv")
 
+    valid_data = [
+        ["Acme mAb 1", "Homo sapiens", "IgA"],
+        ["Acme mAb 2", "Homo sapiens", "IgD"],
+        ["Acme mAb 3", "Mus musculus", "IgG"],
+        ["Acme mAb 4", "Homo sapiens", "IgG2a"],
+        ["Acme mAb 5", "Mus musculus", "IgA1"],
+        ["Acme mAb 6", "Mus musculus", "IgA"],
+        ["Acme mAb 7", "Homo sapiens", "IgE"],
+        ["Acme mAb 8", "Mus musculus", "IgA2"],
+        ["Acme mAb 9", "Homo sapiens", "IgG1"],
+        ["Acme mAb 10", "Mus musculus", "IgM"],
+    ]
+    valid_data_table = []
+    for row in valid_data:
+        a, h, i = row
+        valid_data_table.append(
+            OrderedDict({"Antibody name": a, "Host": h, "Isotype": i})
+        )
+    valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
+
+    invalid_data_table = deepcopy(valid_data_table)
+    invalid_data_table[1]["Antibody name"] = ""
+    invalid_data_table[3]["Host"] = ""
+    invalid_data_table[4]["Host"] = "Mu musculus"
+    invalid_data_table[5]["Host"] = "Coronavirus"
+    invalid_data_table[7]["Isotype"] = ""
+    invalid_data_table[8]["Isotype"] = "Ig"
+    invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
+
     path = "examples/antibodies-submission-valid.xlsx"
     write_xlsx(path)
 
     path = "examples/antibodies-submission-valid.xlsx"
-    grid = {
-        "headers": [
-            [{"label": "Antibody name"}, {"label": "Host"}, {"label": "Isoform"}]
-        ],
-        "rows": [
-            [{"label": "Acme mAb 1"}, {"label": "Homo sapiens"}, {"label": "foo"}]
-        ],
-    }
-    sheets = [["Antibodies", grid]]
-    workbooks.write_xlsx(sheets, path)
+    write_xlsx(path, valid_data_grid["rows"])
 
     path = "examples/antibodies-submission-invalid.xlsx"
-    grid = {
-        "headers": [
-            [{"label": "Antibody name"}, {"label": "Host"}, {"label": "Isoform"}]
-        ],
-        "rows": [
-            [{"label": "Acme mAb 1"}, {"label": "Homo sapiens"}, {"label": "foo"}],
-            [{"label": ""}, {"label": "Martian"}, {"label": ""}],
-        ],
-    }
-    sheets = [["Antibodies", grid]]
-    workbooks.write_xlsx(sheets, path)
+    write_xlsx(path, invalid_data_grid["rows"])
 
+    response = validate_xlsx(submitter_id, submitter_label, path)
+    print("INVALID", response)
     path = "examples/antibodies-submission-invalid-highlighted.xlsx"
-    response = validate_xlsx(submitter_id, submitter_label, path)
-    print(path)
-    print(response)
-    sheets = [["Antibodies", response["grid"]]]
-    workbooks.write_xlsx(sheets, path)
+    write_xlsx(path, response["grid"]["rows"])
 
-    path = "examples/antibodies-submission-invalid.xlsx"
-    response = validate_xlsx(submitter_id, submitter_label, path)
-    print(path)
-    print(response)
     path = "build/antibodies-submission-invalid-highlighted.html"
     html = response_to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
     path = "examples/antibodies-submission-valid.xlsx"
     response = validate_xlsx(submitter_id, submitter_label, path)
-    print(path)
-    print(response)
+    print("VALID", response)
     path = "build/antibodies-submission-valid-expanded.tsv"
     tables.write_tsv(response["table"], path)
     path = "build/antibodies-submission-valid-expanded.html"
