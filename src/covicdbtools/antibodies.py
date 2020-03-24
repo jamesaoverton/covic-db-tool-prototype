@@ -279,7 +279,7 @@ def validate_request(submitter_id, submitter_label, request_files):
 
     path = None
     try:
-        for filename, upload_file in request_files:
+        for filename, upload_file in request_files.items():
             path = os.path.join(temp, filename)
             with open(path, "wb+") as f:
                 for chunk in upload_file.chunks():
