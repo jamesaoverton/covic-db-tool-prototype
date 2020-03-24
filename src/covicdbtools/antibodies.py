@@ -284,7 +284,6 @@ def validate_request(submitter_id, submitter_label, request_files):
             with open(path, "wb+") as f:
                 for chunk in upload_file.chunks():
                     f.write(chunk)
-            paths.append(path)
     except Exception as e:
         return {"status": 400, "message": "Invalid upload", "exception": e}
 
