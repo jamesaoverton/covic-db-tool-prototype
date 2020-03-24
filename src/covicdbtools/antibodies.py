@@ -123,15 +123,10 @@ ids = {"Homo sapiens": "NCBITaxon:9606", "Mus musculus": "NCBITaxon:10090"}
 
 def store_submission(submitter_id, submitter_label, table):
     """Given the IDs map, a submitter label, and a (validated!) antibody submission table,
-    assign IDs return a table of submission."""
-    antibodies = tables.read_tsv("data/antibodies.tsv")
-    current_id = antibodies[-1]["ab_id"]
-
+    return a table of the submission."""
     submission = []
     for row in table:
         newrow = OrderedDict()
-        current_id = names.increment_id(current_id)
-        newrow["ab_id"] = current_id
         newrow["ab_label"] = row["Antibody name"]
         newrow["submitter_id"] = submitter_id
         newrow["submitter_label"] = submitter_label
