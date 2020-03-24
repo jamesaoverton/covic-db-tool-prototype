@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
-import datetime
 import os
 
 from collections import OrderedDict
 from copy import deepcopy
+from datetime import datetime
 
 from covicdbtools import names, tables, grids, workbooks, templates
 
