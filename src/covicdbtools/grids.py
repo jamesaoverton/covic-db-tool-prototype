@@ -120,7 +120,7 @@ def table_to_grid(prefixes, fields, table):
 
     headers = []
     for key in table[0].keys():
-        if not key.endswith("_label"):
+        if not (key.endswith("_label") and names.label_key_to_id_key(key) in table[0]):
             label = key
             if key in fields:
                 label = fields[key]["label"]
@@ -139,7 +139,7 @@ def table_to_grid(prefixes, fields, table):
                 if label_key in row and row[label_key] and row[label_key].strip() != "":
                     label = row[label_key]
                 cell = {"iri": iri, "label": label, "value": value}
-            elif key.endswith("_label"):
+            elif key.endswith("_label") and names.label_key_to_id_key(key) in row:
                 pass
             else:
                 cell = {"label": value, "value": value}

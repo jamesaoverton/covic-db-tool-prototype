@@ -1,7 +1,12 @@
 # Examples
 
-- `antibody-submission.xlsx`: The template for submitting new antibodies.
-- `antibody-submission-valid.xlsx`: The `antibody-submission.xlsx` template filled by a user with valid data.
-- `antibody-submission-invalid.xlsx`: The `antibody-submission.xlsx` template filled by a user, with some valid and invalid entries.
-- `antibody-submission-invalid-highlighted.xlsx`: The result of failed validation of `antibody-submission-invalid.xlsx`, highlighting invalid entries.
+Submission templates:
 
+- `antibody-submission.xlsx`: The template for submitting new antibodies.
+- `neutralization-submission.xlsx`: The template for submitting a neutralization assay dataset.
+
+Valid and invalid examples:
+
+- `*-submission-valid.xlsx`: The `*-submission.xlsx` template filled by a user with valid data.
+- `*-submission-invalid.xlsx`: The `*-submission.xlsx` template filled by a user, with some valid and invalid entries.
+- `*-submission-invalid-highlighted.xlsx`: The result of failed validation of `*-submission-invalid.xlsx`, highlighting invalid entries.

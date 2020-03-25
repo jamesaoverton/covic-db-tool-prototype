@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
 
 from collections import OrderedDict
 from copy import deepcopy
-from datetime import datetime
 
-from covicdbtools import names, tables, grids, workbooks, templates
+from covicdbtools import names, tables, grids, workbooks, templates, responses
 
 ### Hardcoded fields
 # TODO: Make this configurable
@@ -17,7 +15,7 @@ instructions = """CoVIC-DB Antibodies Submission
 Add your antibodies to the 'Antibodies' sheet. Do not edit the other sheets.
 
 Columns:
-- Antibody name: Your institutions preferred name for the antibody.
+- Antibody name: Your institution's preferred name for the antibody.
 - Host: The name of the host species that is the source of the antibody.
 - Isotype: The name of the isotype of the antibody's heavy chain.
 """
@@ -158,7 +156,6 @@ def validate_submission(table):
             comment = "Missing required value 'Host'"
             cell = grids.error_cell("", comment)
             errors.append("Error in row {0}: {1}".format(i + 1, comment))
-        # TODO: Make this configurable.
         elif row["Host"] not in hosts:
             comment = "'{0}' is not a recognized host".format(row["Host"])
             cell = grids.error_cell(row["Host"], comment)
@@ -190,40 +187,7 @@ def validate_submission(table):
 #
 # These validation methods read Excel (.xlsx) files
 # and return a response dictionary that looks like an HTML reponse
-# with some extra fields:
-#
-# {"status": 400,
-#  "message": "There some sort of error",
-#  "errors": ["List of errors"],
-#  "exception": FooException,
-#  "grid": {"headers": [[...]], "rows": [[...]]},
-#  "table": [OrderedDict(...)],
-#  "path": "/absolute/path/to/result.xlsx"
-# }
-#
-# The response_to_html() function will render the response into nice HTML.
-
-
-def response_to_html(response, prefixes={}, fields={}):
-    lines = ["<div>"]
-    if "message" in response:
-        lines.append("  <p>{0}</p>".format(response["message"]))
-    if "exception" in response:
-        lines.append("  <p>{0}</p>".format(str(response["exception"])))
-    if "errors" in response:
-        lines.append("  <p>Errors</p>")
-        lines.append("  <ul>")
-        for error in response["errors"]:
-            lines.append("    <li>{0}</li>".format(error))
-        lines.append("  </ul>")
-    if "grid" in response:
-        lines.append(grids.grid_to_html(response["grid"]))
-    elif "table" in response:
-        lines.append(
-            grids.grid_to_html(grids.table_to_grid(fields, fields, response["table"]))
-        )
-    lines.append("</div>")
-    return "\n".join(lines)
+# with some extra fields. See the `responses` module.
 
 
 def validate_xlsx(submitter_id, submitter_label, path):
@@ -253,29 +217,9 @@ def validate_request(submitter_id, submitter_label, request_files):
     """Given a submitted_id string, a submitter_label string,
     and Django request.FILES object with one file,
     store it in a temporary file, validate it, and return a response dictionary."""
-    if len(request_files.keys()) > 1:
-        return {"status": 400, "message": "Multiple upload files not allowed"}
-
-    datestamp = datetime.utcnow().strftime("%Y%m%d-%H%M%S-%f")  # 20200322-084530-123456
-    temp = os.path.join("temp", datestamp)
-    try:
-        os.makedirs(temp)
-    except Exception as e:
-        return {
-            "status": 400,
-            "message": "Could not create temp directory",
-            "exception": e,
-        }
-
-    path = None
-    try:
-        for upload_file in request_files.values():
-            path = os.path.join(temp, upload_file.name)
-            with open(path, "wb+") as f:
-                for chunk in upload_file.chunks():
-                    f.write(chunk)
-    except Exception as e:
-        return {"status": 400, "message": "Invalid upload", "exception": e}
+    result = requests.store_file(request_files)
+    if result:
+        return result
 
     return validate_xlsx(submitter_id, submitter_label, path)
 
@@ -317,7 +261,7 @@ def examples():
     invalid_data_table[9]["Isotype"] = "Ig"
     invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
 
-    path = "examples/antibodies-submission-valid.xlsx"
+    path = "examples/antibodies-submission.xlsx"
     write_xlsx(path)
 
     path = "examples/antibodies-submission-valid.xlsx"
@@ -332,7 +276,7 @@ def examples():
     write_xlsx(path, response["grid"]["rows"])
 
     path = "build/antibodies-submission-invalid-highlighted.html"
-    html = response_to_html(response, prefixes=prefixes, fields=fields)
+    html = responses.to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
     path = "examples/antibodies-submission-valid.xlsx"
@@ -341,7 +285,7 @@ def examples():
     path = "build/antibodies-submission-valid-expanded.tsv"
     tables.write_tsv(response["table"], path)
     path = "build/antibodies-submission-valid-expanded.html"
-    html = response_to_html(response, prefixes=prefixes, fields=fields)
+    html = responses.to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
 
