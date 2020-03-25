@@ -1,0 +1,5 @@
+id	label	type	parent
+ID	LABEL	TYPE	C %
+NCBITaxon:9606	Homo sapiens	owl:Class	Vertebrata
+NCBITaxon:10090	Mus musculus	owl:Class	Vertebrata
+ONTIE:0000001	Mus musculus BALB/C	owl:Class	Mus musculus

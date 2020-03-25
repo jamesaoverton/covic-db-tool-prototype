@@ -38,7 +38,7 @@ all: $(VIEWS)
 .PHONY: tidy
 tidy:
 	rm -rf build/datasets
-	rm -f build/*.tsv $(VIEWS)
+	rm -f build/*.tsv build/*.owl $(VIEWS)
 
 .PHONY: clobber
 clobber: tidy
@@ -71,7 +71,7 @@ build build/datasets:
 #
 # We use development versions of ROBOT for this project.
 
-ROBOT := java -jar build/robot.jar
+ROBOT := java -jar build/robot.jar --prefix "ONTIE: https://ontology.iedb.org/ontology/ONTIE_"
 
 build/robot.jar: | build
 	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/master/lastSuccessfulBuild/artifact/bin/robot.jar
@@ -83,7 +83,8 @@ build/robot-tree.jar: | build
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
 
-SHEETS = prefixes imports fields
+ONTOLOGY_SHEETS = core hosts assays isotypes
+SHEETS = prefixes $(ONTOLOGY_SHEETS) fields
 SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
 
 build/CoVIC-DB.xlsx: | build
@@ -92,21 +93,24 @@ build/CoVIC-DB.xlsx: | build
 $(SHEET_TSVS): build/CoVIC-DB.xlsx
 	xlsx2csv --delimiter tab --sheetname $(basename $(notdir $@)) $< > $@
 
-build/labels.tsv: ontology/imports.tsv | build
-	sed '2d' $< \
-	| cut -f1-2 \
-	> $@
-
 
 ### Ontology
 
-build/ontology/imports.owl: ontology/imports.tsv | build/robot.jar
-	$(ROBOT) template --template $< --output $@
-
-build/ontology.owl: build/ontology/imports.owl ontology/protein-tree.owl | build/robot.jar
-	$(ROBOT) merge \
-	$(foreach o, $^, --input $(o)) \
+build/imports.owl: $(foreach o,$(ONTOLOGY_SHEETS),ontology/$(o).tsv) | build/robot.jar
+	$(ROBOT) template \
+	$(foreach o,$(ONTOLOGY_SHEETS),--template ontology/$(o).tsv) \
 	--output $@
+
+build/ontology.owl: build/imports.owl ontology/protein-tree.owl | build/robot.jar
+	$(ROBOT) merge \
+	$(foreach o,$^,--input $(o)) \
+	--output $@
+
+build/labels.tsv: build/imports.owl | build
+	$(ROBOT) export \
+	--input $< \
+	--header "ID|LABEL" \
+	--export $@
 
 
 ### Views

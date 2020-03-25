@@ -1,0 +1,3 @@
+id	label	type	parent
+ID	LABEL	TYPE	C %
+OBI:0001643	neutralization|biological activity	owl:Class	assay

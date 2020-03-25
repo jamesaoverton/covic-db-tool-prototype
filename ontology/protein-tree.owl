@@ -103,7 +103,7 @@
 
 ###  http://iedb.org/taxon-protein/10239
 <http://iedb.org/taxon-protein/10239> rdf:type owl:Class ;
-                                      rdfs:subClassOf <http://purl.obolibrary.org/obo/PRO_000000001> ;
+                                      rdfs:subClassOf <http://purl.obolibrary.org/obo/PR_000000001> ;
                                       <http://iedb.org/browser-link> <http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=10239> ;
                                       <http://iedb.org/has-taxon-id> "10239" ;
                                       <http://iedb.org/has-taxonomic-rank> "superkingdom" ;
@@ -346,8 +346,8 @@
                                              rdfs:label "material entity" .
 
 
-###  http://purl.obolibrary.org/obo/PRO_000000001
-<http://purl.obolibrary.org/obo/PRO_000000001> rdf:type owl:Class ;
+###  http://purl.obolibrary.org/obo/PR_000000001
+<http://purl.obolibrary.org/obo/PR_000000001> rdf:type owl:Class ;
                                                rdfs:subClassOf <http://purl.obolibrary.org/obo/BFO_0000040> ;
                                                <http://iedb.org/has-taxonomic-level> ":upper" ;
                                                rdfs:label "protein" .

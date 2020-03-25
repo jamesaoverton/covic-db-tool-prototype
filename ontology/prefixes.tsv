@@ -1,6 +1,8 @@
 prefix	base
+BFO	http://purl.obolibrary.org/obo/BFO_
 NCBITaxon	http://purl.obolibrary.org/obo/NCBITaxon_
 OBI	http://purl.obolibrary.org/obo/OBI_
+PR	http://purl.obolibrary.org/obo/PR_
 ONTIE	https://ontology.iedb.org/ontology/ONTIE_
 CoVIC	https://cvdb.ontodev.com/antibody/
 ds	https://cvdb.ontodev.com/dataset/

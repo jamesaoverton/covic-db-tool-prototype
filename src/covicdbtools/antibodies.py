@@ -22,26 +22,11 @@ Columns:
 - Isotype: The name of the isotype of the antibody's heavy chain.
 """
 
-hosts = ["Homo sapiens", "Mus musculus"]
+hosts_table = tables.read_tsv("ontology/hosts.tsv")
+hosts = [h["label"] for h in hosts_table[1:]]
 
-isotypes = [
-    "IgA",
-    "IgA1",
-    "IgA2",
-    "IgD",
-    "IgE",
-    "IgG",
-    "IgG1",
-    "IgG2",
-    "IgG2a",
-    "IgG2b",
-    "IgG2c",
-    "IgG3",
-    "IgG4",
-    "IgM",
-    "sIgA",
-]
-
+isotypes_table = tables.read_tsv("ontology/isotypes.tsv")
+isotypes = [i["label"] for i in isotypes_table[1:]]
 
 headers = [
     {"label": "Antibody name", "value": "ab_label", "locked": True},

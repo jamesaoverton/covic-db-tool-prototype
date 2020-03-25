@@ -85,7 +85,7 @@ def read_labels(labels_tsv_path):
     """Read the labels table and return the labels map."""
     labels = {}
     for row in tables.read_tsv(labels_tsv_path):
-        labels[row["id"]] = row["label"]
+        labels[row["ID"]] = row["LABEL"]
     return labels
 
 
