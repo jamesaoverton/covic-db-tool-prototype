@@ -145,6 +145,7 @@ def validate_submission(table):
     and an "errors" key with a list of errors."""
     errors = []
     rows = []
+    names = []
 
     for i in range(0, len(table)):
         row = table[i]
@@ -155,8 +156,17 @@ def validate_submission(table):
             comment = "Missing required value 'Antibody name'"
             cell = grids.error_cell("", comment)
             errors.append("Error in row {0}: {1}".format(i + 1, comment))
+            names.append("")
+        elif row["Antibody name"] in names:
+            name = row["Antibody name"]
+            comment = "Duplicate antibody name '{0}' is not allowed".format(name)
+            cell = grids.error_cell(row["Antibody name"], comment)
+            errors.append("Error in row {0}: {1}".format(i + 1, comment))
+            names.append(name)
         else:
-            cell = grids.value_cell(row["Antibody name"])
+            name = row["Antibody name"]
+            cell = grids.value_cell(name)
+            names.append(name)
         newrow.append(cell)
 
         if not "Host" in row or row["Host"].strip() == "":
@@ -314,11 +324,12 @@ def examples():
 
     invalid_data_table = deepcopy(valid_data_table)
     invalid_data_table[1]["Antibody name"] = ""
-    invalid_data_table[3]["Host"] = ""
-    invalid_data_table[4]["Host"] = "Mu musculus"
-    invalid_data_table[5]["Host"] = "Coronavirus"
-    invalid_data_table[7]["Isotype"] = ""
-    invalid_data_table[8]["Isotype"] = "Ig"
+    invalid_data_table[2]["Antibody name"] = "Acme mAb 1"
+    invalid_data_table[4]["Host"] = ""
+    invalid_data_table[5]["Host"] = "Mu musculus"
+    invalid_data_table[6]["Host"] = "Coronavirus"
+    invalid_data_table[8]["Isotype"] = ""
+    invalid_data_table[9]["Isotype"] = "Ig"
     invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
 
     path = "examples/antibodies-submission-valid.xlsx"
