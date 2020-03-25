@@ -34,7 +34,7 @@ headers = {
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!A2:A{0}".format(len(qualitative_measures) + 1),
+                "formula1": "=Terminology!$A$2:$A${0}".format(len(qualitative_measures) + 1),
                 "allow_blank": True,
             }
         ],

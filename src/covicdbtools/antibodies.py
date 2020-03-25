@@ -35,7 +35,7 @@ headers = [
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!A2:A{0}".format(len(hosts) + 1),
+                "formula1": "=Terminology!$A$2:$A${0}".format(len(hosts) + 1),
                 "allow_blank": True,
             }
         ],
@@ -47,7 +47,7 @@ headers = [
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!B2:B{0}".format(len(isotypes) + 1),
+                "formula1": "=Terminology!$B$2:$B${0}".format(len(isotypes) + 1),
                 "allow_blank": True,
             }
         ],
