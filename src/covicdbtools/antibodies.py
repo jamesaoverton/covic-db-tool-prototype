@@ -5,33 +5,42 @@ import argparse
 from collections import OrderedDict
 from copy import deepcopy
 
-from covicdbtools import names, tables, grids, workbooks, templates, responses
+from covicdbtools import (
+    names,
+    tables,
+    grids,
+    workbooks,
+    templates,
+    responses,
+    submissions,
+)
 
 ### Hardcoded fields
 # TODO: Make this configurable
-
-instructions = """CoVIC-DB Antibodies Submission
-
-Add your antibodies to the 'Antibodies' sheet. Do not edit the other sheets.
-
-Columns:
-- Antibody name: Your institution's preferred name for the antibody.
-- Host: The name of the host species that is the source of the antibody.
-- Isotype: The name of the isotype of the antibody's heavy chain.
-"""
 
 hosts_table = tables.read_tsv("ontology/hosts.tsv")
 hosts = [h["label"] for h in hosts_table[1:]]
 
 isotypes_table = tables.read_tsv("ontology/isotypes.tsv")
-isotypes = [i["label"] for i in isotypes_table[1:]]
+heavy_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "heavy"]
+light_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "light"]
 
 headers = [
-    {"label": "Antibody name", "value": "ab_label", "locked": True},
     {
-        "label": "Host",
-        "value": "host_label",
+        "value": "ab_label",
+        "label": "Antibody name",
+        "description": "Your institution's preferred name for the antibody.",
         "locked": True,
+        "required": True,
+        "unique": True,
+    },
+    {
+        "value": "host_label",
+        "label": "Host",
+        "description": "The name of the host species that is the source of the antibody.",
+        "locked": True,
+        "required": True,
+        "terminology": hosts,
         "validations": [
             {
                 "type": "list",
@@ -41,13 +50,16 @@ headers = [
         ],
     },
     {
+        "value": "isotype_label",
         "label": "Isotype",
-        "value": "isotype",
+        "description": "The name of the isotype of the antibody's heavy chain.",
         "locked": True,
+        "required": True,
+        "terminology": heavy_chains,
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!$B$2:$B${0}".format(len(isotypes) + 1),
+                "formula1": "=Terminology!$B$2:$B${0}".format(len(heavy_chains) + 1),
                 "allow_blank": True,
             }
         ],
@@ -71,16 +83,32 @@ def read_data(prefixes_tsv_path, fields_tsv_path, labels_tsv_path, antibodies_ts
 
 def write_xlsx(path, rows=[]):
     """Write the antibodies submission template."""
+    instructions = """CoVIC-DB Antibodies Submission
+
+Add your antibodies to the 'Antibodies' sheet. Do not edit the other sheets.
+
+Columns:
+"""
+    for header in headers:
+        instructions += "- {0}: {1}\n".format(header["label"], header["description"])
+
     instructions_rows = []
     for line in instructions.strip().splitlines():
         instructions_rows.append([grids.value_cell(line)])
     instructions_rows[0][0]["bold"] = True
 
+    terminology_tables = OrderedDict()
+    for header in headers:
+        if "terminology" in header:
+            terminology_tables[header["label"]] = header["terminology"]
+    terminology_tables_lengths = [len(t) for t in terminology_tables.values()]
     terminology_table = []
-    for i in range(0, max(len(hosts), len(isotypes))):
-        host = hosts[i] if i < len(hosts) else ""
-        isotype = isotypes[i] if i < len(isotypes) else ""
-        terminology_table.append(OrderedDict({"Host": host, "Isotype": isotype}))
+
+    for i in range(0, max(terminology_tables_lengths)):
+        newrow = OrderedDict()
+        for key, values in terminology_tables.items():
+            newrow[key] = values[i] if i < len(values) else ""
+        terminology_table.append(newrow)
     terminology_grid = grids.table_to_grid({}, {}, terminology_table)
     terminology_grid["title"] = "Terminology"
     terminology_grid["locked"] = True
@@ -107,6 +135,8 @@ ids = {"Homo sapiens": "NCBITaxon:9606", "Mus musculus": "NCBITaxon:10090"}
 def store_submission(submitter_id, submitter_label, table):
     """Given the IDs map, a submitter label, and a (validated!) antibody submission table,
     return a table of the submission."""
+
+    # TODO: Reuse submissions.store()
     submission = []
     for row in table:
         newrow = OrderedDict()
@@ -126,61 +156,7 @@ def validate_submission(table):
     """Given the IDs map and a submission table, return None if it is valid,
     otherwise return a grid with problems marked
     and an "errors" key with a list of errors."""
-    errors = []
-    rows = []
-    names = []
-
-    for i in range(0, len(table)):
-        row = table[i]
-        newrow = []
-        cell = None
-
-        if not "Antibody name" in row or row["Antibody name"].strip() == "":
-            comment = "Missing required value 'Antibody name'"
-            cell = grids.error_cell("", comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-            names.append("")
-        elif row["Antibody name"] in names:
-            name = row["Antibody name"]
-            comment = "Duplicate antibody name '{0}' is not allowed".format(name)
-            cell = grids.error_cell(row["Antibody name"], comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-            names.append(name)
-        else:
-            name = row["Antibody name"]
-            cell = grids.value_cell(name)
-            names.append(name)
-        newrow.append(cell)
-
-        if not "Host" in row or row["Host"].strip() == "":
-            comment = "Missing required value 'Host'"
-            cell = grids.error_cell("", comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-        elif row["Host"] not in hosts:
-            comment = "'{0}' is not a recognized host".format(row["Host"])
-            cell = grids.error_cell(row["Host"], comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-        else:
-            cell = grids.value_cell(row["Host"])
-        newrow.append(cell)
-
-        if not "Isotype" in row or row["Isotype"].strip() == "":
-            comment = "Missing required value 'Isotype'"
-            cell = grids.error_cell("", comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-        elif row["Isotype"] not in isotypes:
-            comment = "'{0}' is not a recognized isotype".format(row["Isotype"])
-            cell = grids.error_cell(row["Isotype"], comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-        else:
-            cell = grids.value_cell(row["Isotype"])
-        newrow.append(cell)
-
-        rows.append(newrow)
-
-    if len(errors) > 0:
-        return {"errors": errors, "headers": [headers], "rows": rows}
-    return None
+    return submissions.validate(headers, table)
 
 
 ### Validate Excel
@@ -226,22 +202,20 @@ def validate_request(submitter_id, submitter_label, request_files):
 
 def examples():
     """Write and test some examples."""
-    submitter_id = "org:1"
-    submitter_label = "Acme Corp."
     fields = names.read_fields("ontology/fields.tsv")
     prefixes = names.read_prefixes("ontology/prefixes.tsv")
 
     valid_data = [
-        ["Acme mAb 1", "Homo sapiens", "IgA"],
-        ["Acme mAb 2", "Homo sapiens", "IgD"],
-        ["Acme mAb 3", "Mus musculus", "IgG"],
-        ["Acme mAb 4", "Homo sapiens", "IgG2a"],
-        ["Acme mAb 5", "Mus musculus", "IgA1"],
-        ["Acme mAb 6", "Mus musculus", "IgA"],
-        ["Acme mAb 7", "Homo sapiens", "IgE"],
-        ["Acme mAb 8", "Mus musculus", "IgA2"],
-        ["Acme mAb 9", "Homo sapiens", "IgG1"],
-        ["Acme mAb 10", "Mus musculus", "IgM"],
+        ["VD-Crotty 1", "Homo sapiens", "IgA"],
+        ["VD-Crotty 2", "Homo sapiens", "IgD"],
+        ["VD-Crotty 3", "Mus musculus", "IgG"],
+        ["VD-Crotty 4", "Homo sapiens", "IgG2a"],
+        ["VD-Crotty 5", "Mus musculus", "IgA1"],
+        ["VD-Crotty 6", "Mus musculus", "IgA"],
+        ["VD-Crotty 7", "Homo sapiens", "IgE"],
+        ["VD-Crotty 8", "Mus musculus", "IgA2"],
+        ["VD-Crotty 9", "Homo sapiens", "IgG1"],
+        ["VD-Crotty 10", "Mus musculus", "IgM"],
     ]
     valid_data_table = []
     for row in valid_data:
@@ -251,14 +225,23 @@ def examples():
         )
     valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
 
-    invalid_data_table = deepcopy(valid_data_table)
-    invalid_data_table[1]["Antibody name"] = ""
-    invalid_data_table[2]["Antibody name"] = "Acme mAb 1"
-    invalid_data_table[4]["Host"] = ""
-    invalid_data_table[5]["Host"] = "Mu musculus"
-    invalid_data_table[6]["Host"] = "Coronavirus"
-    invalid_data_table[8]["Isotype"] = ""
-    invalid_data_table[9]["Isotype"] = "Ig"
+    invalid_data = [
+        ["A6", "Homo sapiens", "IgA"],
+        ["B12", "Mus musculus", "IgD"],
+        ["", "Mus musculus", "IgD"],
+        ["C2", "Mus musculus", "IgG"],
+        ["C3", "Homo sapiens", "IgG2a"],
+        ["C6", "", "Ig1"],
+        ["D12", "Homo sapiens", "IgE"],
+        ["E8", "Mus musclus", "Igm"],
+        ["C3", "Homo sapiens", "IgG2a"],
+    ]
+    invalid_data_table = []
+    for row in invalid_data:
+        a, h, i = row
+        invalid_data_table.append(
+            OrderedDict({"Antibody name": a, "Host": h, "Isotype": i})
+        )
     invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
 
     path = "examples/antibodies-submission.xlsx"
@@ -270,6 +253,8 @@ def examples():
     path = "examples/antibodies-submission-invalid.xlsx"
     write_xlsx(path, invalid_data_grid["rows"])
 
+    submitter_id = "org:2"
+    submitter_label = "Vanderbilt"
     response = validate_xlsx(submitter_id, submitter_label, path)
     print("INVALID", response)
     path = "examples/antibodies-submission-invalid-highlighted.xlsx"
@@ -279,6 +264,8 @@ def examples():
     html = responses.to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
+    submitter_id = "org:1"
+    submitter_label = "LJI"
     path = "examples/antibodies-submission-valid.xlsx"
     response = validate_xlsx(submitter_id, submitter_label, path)
     print("VALID", response)

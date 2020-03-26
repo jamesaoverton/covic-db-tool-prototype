@@ -1,4 +1,4 @@
-#ss!/usr/bin/env python3
+# ss!/usr/bin/env python3
 
 import argparse
 import os
@@ -7,7 +7,15 @@ import yaml
 from collections import OrderedDict
 from copy import deepcopy
 
-from covicdbtools import names, tables, grids, workbooks, templates, responses
+from covicdbtools import (
+    names,
+    tables,
+    grids,
+    workbooks,
+    templates,
+    responses,
+    submissions,
+)
 
 ### Hardcoded fields
 # TODO: Make this configurable
@@ -15,17 +23,18 @@ from covicdbtools import names, tables, grids, workbooks, templates, responses
 assays_table = tables.read_tsv("ontology/assays.tsv")
 assays = [r["label"] for r in assays_table[1:]]
 
-isotypes_table = tables.read_tsv("ontology/isotypes.tsv")
-isotypes = [r["label"] for r in isotypes_table[1:]]
-
 qualitative_measures = ["positive", "negative", "unknown"]
 
 headers = {
-    "ab_label":
-    {"label": "Antibody name", "value": "ab_label", "locked": True,
-     "description": "The antibody's CoVIC ID."},
-    "qualitative_measure":
-    {
+    "ab_label": {
+        "label": "Antibody name",
+        "value": "ab_label",
+        "locked": True,
+        "description": "The antibody's CoVIC ID.",
+        "required": True,
+        "unique": True,
+    },
+    "qualitative_measure": {
         "label": "Qualitative measure",
         "description": "The qualitative assay result.",
         "value": "qualitative_measure",
@@ -34,16 +43,16 @@ headers = {
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!$A$2:$A${0}".format(len(qualitative_measures) + 1),
+                "formula1": "=Terminology!$A$2:$A${0}".format(
+                    len(qualitative_measures) + 1
+                ),
                 "allow_blank": True,
             }
         ],
     },
 }
 
-assay_types = {
-    "OBI:0001643": ["ab_label", "qualitative_measure"]
-}
+assay_types = {"OBI:0001643": ["ab_label", "qualitative_measure"]}
 
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
@@ -126,6 +135,7 @@ Columns:
 
     workbooks.write_xlsx(submission_grids, path)
 
+
 ids = {"Homo sapiens": "NCBITaxon:9606", "Mus musculus": "NCBITaxon:10090"}
 
 
@@ -139,17 +149,8 @@ def store_submission(assay_type_id, table):
         raise Exception("Unrecognize assay type: {0}".format(assay_type_id))
     assay_headers = [headers[key] for key in keys]
 
-    submission = []
-    for row in table:
-        newrow = OrderedDict()
-        for header in assay_headers:
-            value = header["value"]
-            label = header["label"]
-            newrow[value] = row[label]
-        submission.append(newrow)
-
     # TODO: actually store the data!
-    return submission
+    return submissions.store(assay_headers, table)
 
 
 def validate_submission(assay_type_id, table):
@@ -163,51 +164,8 @@ def validate_submission(assay_type_id, table):
         raise Exception("Unrecognize assay type: {0}".format(assay_type_id))
     assay_headers = [headers[key] for key in keys]
 
-    errors = []
-    rows = []
-    names = []
+    return submissions.validate(assay_headers, table)
 
-    for i in range(0, len(table)):
-        row = table[i]
-        newrow = []
-        cell = None
-
-        if not "Antibody name" in row or row["Antibody name"].strip() == "":
-            comment = "Missing required value 'Antibody name'"
-            cell = grids.error_cell("", comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-            names.append("")
-        elif row["Antibody name"] in names:
-            name = row["Antibody name"]
-            comment = "Duplicate antibody name '{0}' is not allowed".format(name)
-            cell = grids.error_cell(row["Antibody name"], comment)
-            errors.append("Error in row {0}: {1}".format(i + 1, comment))
-            names.append(name)
-        else:
-            name = row["Antibody name"]
-            cell = grids.value_cell(name)
-            names.append(name)
-        newrow.append(cell)
-
-        for header in assay_headers[1:]:
-            label = header["label"]
-            if not label in row or row[label].strip() == "":
-                comment = "Missing required value '{}'".format(label)
-                cell = grids.error_cell("", comment)
-                errors.append("Error in row {0}: {1}".format(i + 1, comment))
-            elif "terminology" in header and row[label] not in header["terminology"]:
-                comment = "'{0}' is not a recognized value for '{1}'".format(row[label], label)
-                cell = grids.error_cell(row[label], comment)
-                errors.append("Error in row {0}: {1}".format(i + 1, comment))
-            else:
-                cell = grids.value_cell(row[label])
-            newrow.append(cell)
-
-        rows.append(newrow)
-
-    if len(errors) > 0:
-        return {"errors": errors, "headers": [assay_headers], "rows": rows}
-    return None
 
 ### Validate Excel
 #
@@ -247,22 +205,23 @@ def validate_request(assay_type_id, request_files):
         return result
     return validate_xlsx(assay_type_id, path)
 
+
 def examples():
     """Write and test some examples."""
     fields = names.read_fields("ontology/fields.tsv")
     prefixes = names.read_prefixes("ontology/prefixes.tsv")
 
     valid_data = [
-        ["Acme mAb 1", "positive"],
-        ["Acme mAb 2", "negative"],
-        ["Acme mAb 3", "negative"],
-        ["Acme mAb 4", "positive"],
-        ["Acme mAb 5", "unknown"],
-        ["Acme mAb 6", "negative"],
-        ["Acme mAb 7", "unknown"],
-        ["Acme mAb 8", "positive"],
-        ["Acme mAb 9", "negative"],
-        ["Acme mAb 10", "positive"],
+        ["COVIC 1", "positive"],
+        ["COVIC 2", "negative"],
+        ["COVIC 3", "negative"],
+        ["COVIC 4", "positive"],
+        ["COVIC 5", "unknown"],
+        ["COVIC 6", "negative"],
+        ["COVIC 7", ""],
+        ["COVIC 8", ""],
+        ["COVIC 9", ""],
+        ["COVIC 10", ""],
     ]
     valid_data_table = []
     for row in valid_data:
@@ -274,10 +233,9 @@ def examples():
 
     invalid_data_table = deepcopy(valid_data_table)
     invalid_data_table[1]["Antibody name"] = ""
-    invalid_data_table[2]["Antibody name"] = "Acme mAb 1"
-    invalid_data_table[4]["Qualitative measure"] = ""
+    invalid_data_table[2]["Antibody name"] = "COVIC 1"
+    invalid_data_table[4]["Qualitative measure"] = "postive"
     invalid_data_table[5]["Qualitative measure"] = "intermediate"
-    invalid_data_table[6]["Qualitative measure"] = "postive"
     invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
 
     assay_type_id = "OBI:0001643"
