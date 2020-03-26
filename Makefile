@@ -147,7 +147,7 @@ examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)
 
 ### Views
 
-build/antibodies.html: src/covicdbtools/antibodies.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv | build
+build/antibodies.html: src/covicdbtools/antibodies.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv build/antibodies.tsv | build
 	python $^ $@
 
 build/antibodies.tsv: build/antibodies-submission-valid-expanded.tsv
