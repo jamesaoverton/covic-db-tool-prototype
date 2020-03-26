@@ -7,4 +7,5 @@ host_type_id	Host	id
 host_type_label	Host name	label
 isotype	Isotype	label
 qualitative_measure	Qualitiative measure
+titer	Titer	float
 comment	Comment

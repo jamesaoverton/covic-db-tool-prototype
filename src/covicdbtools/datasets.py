@@ -52,6 +52,14 @@ headers = {
             }
         ],
     },
+    "titer": {
+        "value": "titer",
+        "label": "Titer",
+        "description": "The concentration",
+        "locked": True,
+        "required": True,
+        "type": "float",
+    },
     "comment": {
         "value": "comment",
         "label": "Comment",
@@ -62,12 +70,12 @@ headers = {
 
 assay_type_labels = {
     "OBI:0001643": "neutralization",
-    "OBI:VLP": "VLP",
+    "OBI:0000661": "VLP ELISA",
 }
 
 assay_types = {
-    "OBI:0001643": ["ab_label", "qualitative_measure"],
-    "OBI:VLP": ["ab_label", "qualitative_measure", "comment"],
+    "OBI:0001643": ["ab_label", "qualitative_measure", "titer"],
+    "OBI:0000661": ["ab_label", "qualitative_measure", "comment"],
 }
 
 
@@ -234,28 +242,28 @@ def examples():
 
     # neutralization template
     assay_type_id = "OBI:0001643"
-    assay_name = "neutralization-submission"
+    assay_name = assay_type_names[assay_type_id] + "-submission"
     path = "examples/" + assay_name + ".xlsx"
     write_xlsx(path, assay_type_id)
 
     # neutralization valid data
     valid_data = [
-        ["COVIC 1", "positive"],
-        ["COVIC 2", "negative"],
-        ["COVIC 3", "negative"],
-        ["COVIC 4", "positive"],
-        ["COVIC 5", "unknown"],
-        ["COVIC 6", "negative"],
-        ["COVIC 7", ""],
-        ["COVIC 8", ""],
-        ["COVIC 9", ""],
-        ["COVIC 10", ""],
+        ["COVIC 1", "positive", "0.52"],
+        ["COVIC 2", "negative", "20.2"],
+        ["COVIC 3", "negative", "23.7"],
+        ["COVIC 4", "positive", "1.5"],
+        ["COVIC 5", "unknown", "3.6"],
+        ["COVIC 6", "negative", "64"],
+        ["COVIC 7", "", ""],
+        ["COVIC 8", "", ""],
+        ["COVIC 9", "", ""],
+        ["COVIC 10", "", ""],
     ]
     valid_data_table = []
     for row in valid_data:
-        a, q = row
+        a, q, t = row
         valid_data_table.append(
-            OrderedDict({"Antibody name": a, "Qualitative measure": q})
+                OrderedDict({"Antibody name": a, "Qualitative measure": q, "Titer": t})
         )
     valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
 
@@ -275,7 +283,9 @@ def examples():
     invalid_data_table[1]["Antibody name"] = ""
     invalid_data_table[2]["Antibody name"] = "COVIC 1"
     invalid_data_table[4]["Qualitative measure"] = "postive"
+    invalid_data_table[4]["Titer"] = "none"
     invalid_data_table[5]["Qualitative measure"] = "intermediate"
+    invalid_data_table[6]["Titer"] = ""
     invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
 
     path = "examples/" + assay_name + "-invalid.xlsx"
@@ -289,13 +299,13 @@ def examples():
     html = responses.to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
-    # VLP template
-    assay_type_id = "OBI:VLP"
-    assay_name = "VLP-submission"
+    # VLP ELISA template
+    assay_type_id = "OBI:0000661"
+    assay_name = assay_type_names[assay_type_id] + "-submission"
     path = "examples/" + assay_name + ".xlsx"
     write_xlsx(path, assay_type_id)
 
-    # VLP valid data
+    # VLP ELISA valid data
     path = "examples/" + assay_name + "-valid.xlsx"
     valid_data = [
         ["COVIC 2", "positive", ""],

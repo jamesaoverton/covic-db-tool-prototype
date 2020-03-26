@@ -127,13 +127,13 @@ $(ANTIBODIES_EXAMPLES) &: src/covicdbtools/antibodies.py
 	python -c "from covicdbtools.antibodies import *; examples()"
 
 DATASETS_EXAMPLES = \
-build/VLP-submission-valid-expanded.html \
-build/VLP-submission-valid-expanded.tsv \
+build/VLP-ELISA-submission-valid-expanded.html \
+build/VLP-ELISA-submission-valid-expanded.tsv \
 build/neutralization-submission-invalid-highlighted.html \
 build/neutralization-submission-valid-expanded.html \
 build/neutralization-submission-valid-expanded.tsv \
-examples/VLP-submission-valid.xlsx \
-examples/VLP-submission.xlsx \
+examples/VLP-ELISA-submission-valid.xlsx \
+examples/VLP-ELISA-submission.xlsx \
 examples/neutralization-submission-invalid.xlsx \
 examples/neutralization-submission-valid.xlsx \
 examples/neutralization-submission.xlsx
