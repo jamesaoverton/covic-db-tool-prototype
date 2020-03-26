@@ -1,4 +1,4 @@
-# ss!/usr/bin/env python3
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -27,17 +27,17 @@ qualitative_measures = ["positive", "negative", "unknown"]
 
 headers = {
     "ab_label": {
-        "label": "Antibody name",
         "value": "ab_label",
-        "locked": True,
+        "label": "Antibody name",
         "description": "The antibody's CoVIC ID.",
+        "locked": True,
         "required": True,
         "unique": True,
     },
     "qualitative_measure": {
+        "value": "qualitative_measure",
         "label": "Qualitative measure",
         "description": "The qualitative assay result.",
-        "value": "qualitative_measure",
         "locked": True,
         "terminology": qualitative_measures,
         "validations": [
@@ -50,9 +50,16 @@ headers = {
             }
         ],
     },
+    "comment": {
+        "value": "comment",
+        "label": "Comment",
+        "description": "A free-text comment on the assay",
+        "locked": True,
+    },
 }
 
-assay_types = {"OBI:0001643": ["ab_label", "qualitative_measure"]}
+assay_types = {"OBI:0001643": ["ab_label", "qualitative_measure"],
+  "OBI:VLP": ["ab_label", "qualitative_measure", "comment"]}
 
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
@@ -211,6 +218,13 @@ def examples():
     fields = names.read_fields("ontology/fields.tsv")
     prefixes = names.read_prefixes("ontology/prefixes.tsv")
 
+    # neutralization template
+    assay_type_id = "OBI:0001643"
+    assay_name = "neutralization-submission"
+    path = "examples/" + assay_name + ".xlsx"
+    write_xlsx(path, assay_type_id)
+
+    # neutralization valid data
     valid_data = [
         ["COVIC 1", "positive"],
         ["COVIC 2", "negative"],
@@ -231,6 +245,18 @@ def examples():
         )
     valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
 
+    path = "examples/" + assay_name + "-valid.xlsx"
+    write_xlsx(path, assay_type_id, valid_data_grid["rows"])
+    response = validate_xlsx(assay_type_id, path)
+    print(assay_name, "VALID", response)
+    assert response["status"] == 200
+    path = "build/" + assay_name + "-valid-expanded.tsv"
+    tables.write_tsv(response["table"], path)
+    path = "build/" + assay_name + "-valid-expanded.html"
+    html = responses.to_html(response, prefixes=prefixes, fields=fields)
+    templates.write_html("templates/grid.html", {"html": html}, path)
+
+    # neutralization invalid data
     invalid_data_table = deepcopy(valid_data_table)
     invalid_data_table[1]["Antibody name"] = ""
     invalid_data_table[2]["Antibody name"] = "COVIC 1"
@@ -238,32 +264,51 @@ def examples():
     invalid_data_table[5]["Qualitative measure"] = "intermediate"
     invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
 
-    assay_type_id = "OBI:0001643"
-    assay_name = "neutralization-submission"
-
-    path = "examples/" + assay_name + ".xlsx"
-    write_xlsx(path, assay_type_id)
-
-    path = "examples/" + assay_name + "-valid.xlsx"
-    write_xlsx(path, assay_type_id, valid_data_grid["rows"])
-    response = validate_xlsx(assay_type_id, path)
-    print("VALID", response)
-    path = "build/" + assay_name + "-valid-expanded.tsv"
-    tables.write_tsv(response["table"], path)
-    path = "build/" + assay_name + "-valid-expanded.html"
-    html = responses.to_html(response, prefixes=prefixes, fields=fields)
-    templates.write_html("templates/grid.html", {"html": html}, path)
-
     path = "examples/" + assay_name + "-invalid.xlsx"
     write_xlsx(path, assay_type_id, invalid_data_grid["rows"])
     response = validate_xlsx(assay_type_id, path)
-    print("INVALID", response)
+    print(assay_name, "INVALID", response)
+    assert response["status"] == 400
     path = "examples/" + assay_name + "-invalid-highlighted.xlsx"
     write_xlsx(path, assay_type_id, response["grid"]["rows"])
     path = "build/" + assay_name + "-invalid-highlighted.html"
     html = responses.to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
 
+    # VLP template
+    assay_type_id = "OBI:VLP"
+    assay_name = "VLP-submission"
+    path = "examples/" + assay_name + ".xlsx"
+    write_xlsx(path, assay_type_id)
+
+    # VLP valid data
+    path = "examples/" + assay_name + "-valid.xlsx"
+    valid_data = [
+        ["COVIC 2", "positive", ""],
+        ["COVIC 3", "positive", ""],
+        ["COVIC 4", "positive", "also binds VP40 only VLP"],
+        ["COVIC 5", "negative", ""],
+        ["COVIC 6", "positive", ""],
+        ["COVIC 7", "negative", "did not bind positive control"],
+        ["COVIC 8", "positive", ""],
+        ["COVIC 9", "negative", ""],
+    ]
+    valid_data_table = []
+    for row in valid_data:
+        a, q, c = row
+        valid_data_table.append(
+                OrderedDict({"Antibody name": a, "Qualitative measure": q, "Comment": c})
+        )
+    valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
+    write_xlsx(path, assay_type_id, valid_data_grid["rows"])
+    response = validate_xlsx(assay_type_id, path)
+    print(assay_name, "VALID", response)
+    assert response["status"] == 200
+    path = "build/" + assay_name + "-valid-expanded.tsv"
+    tables.write_tsv(response["table"], path)
+    path = "build/" + assay_name + "-valid-expanded.html"
+    html = responses.to_html(response, prefixes=prefixes, fields=fields)
+    templates.write_html("templates/grid.html", {"html": html}, path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert dataset text files to HTML")
