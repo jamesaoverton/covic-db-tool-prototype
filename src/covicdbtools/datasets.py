@@ -14,6 +14,7 @@ from covicdbtools import (
     grids,
     workbooks,
     templates,
+    requests,
     responses,
     submissions,
 )
