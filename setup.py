@@ -26,6 +26,8 @@ setup(
     packages=find_packages(where='src'),
     python_requires='>=3.6, <4',
     install_requires=['jinja2', 'openpyxl', 'pyyaml', 'tabulate'],
-    # TODO: package_data
+    package_data={
+        'covicdbtools': ['ontology/*']
+    },
     # TODO: entry_points
 )
