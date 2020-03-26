@@ -222,9 +222,9 @@ def validate_request(assay_type_id, request_files):
     """Given an assay_type_id and a and Django request.FILES object with one file,
     read it, validate it, and return a response dictionary."""
     result = requests.read_file(request_files)
-    if result:
+    if result["status"] != 200:
         return result
-    return validate_xlsx(assay_type_id, path)
+    return validate_xlsx(assay_type_id, result["content"])
 
 
 def examples():

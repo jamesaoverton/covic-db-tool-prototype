@@ -201,9 +201,9 @@ def validate_request(submitter_id, submitter_label, request_files):
     and Django request.FILES object with one file,
     read it, validate it, and return a response dictionary."""
     result = requests.read_file(request_files)
-    if result:
+    if result["status"] != 200:
         return result
-    return validate_xlsx(submitter_id, submitter_label, result["bytes"])
+    return validate_xlsx(submitter_id, submitter_label, result["content"])
 
 
 def examples():

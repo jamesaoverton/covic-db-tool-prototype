@@ -20,4 +20,4 @@ def read_file(request_files):
     except Exception as e:
         return {"status": 400, "message": "Invalid upload", "exception": e}
 
-    return {"status": 200, "filename": upload_file.name, "bytes": content}
+    return {"status": 200, "filename": upload_file.name, "content": content}
