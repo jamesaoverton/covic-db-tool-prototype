@@ -169,7 +169,8 @@ def validate_submission(table):
 
 
 def validate_xlsx(submitter_id, submitter_label, source):
-    """Given a submitted_id string, a submitter_label string, and an XLSX file-like object,
+    """Given a submitted_id string, a submitter_label string,
+    and a file-like object (path, BytesIO) for an XLSX file,
     validate it the file and return a response dictionary."""
     try:
         table = workbooks.read_xlsx(source, sheet="Antibodies")

@@ -190,11 +190,12 @@ def validate_submission(assay_type_id, table):
 # with some extra fields. See the `responses` module.
 
 
-def validate_xlsx(assay_type_id, path):
-    """Given an assay_type_id and an XLSX file path,
+def validate_xlsx(assay_type_id, source):
+    """Given a submitted_id string, a submitter_label string,
+    and a file-like object (path, BytesIO) for an XLSX file,
     validate it the file and return a response dictionary."""
     try:
-        table = workbooks.read_xlsx(path, sheet="Dataset")
+        table = workbooks.read_xlsx(source, sheet="Dataset")
     except Exception as e:
         return {"status": 400, "message": "Could not create XLSX file", "exception": e}
 
