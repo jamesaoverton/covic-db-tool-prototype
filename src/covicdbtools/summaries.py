@@ -33,7 +33,7 @@ def read_data(
                 continue
             if name.endswith("-valid-expanded.tsv"):
                 assays_tsv_path = os.path.join(root, name)
-                assay_name = name.replace("-submission-valid-expanded.tsv", "")
+                assay_name = name.replace("-submission-valid-expanded.tsv", "").replace("-", " ")
                 assay_table = tables.read_tsv(assays_tsv_path)
                 columns = len(assay_table[0].keys()) - 1
                 assay_grid = grids.table_to_grid(prefixes, fields, assay_table)

@@ -218,7 +218,7 @@ def validate_xlsx(assay_type_id, source):
             "message": "Submitted table contains errors.",
             "errors": errors,
             "grid": grid,
-            "filename": assay_type_labels[assay_type_id] + "-submission.xlsx",
+            "filename": assay_type_labels[assay_type_id].replace(" ","-") + "-submission.xlsx",
             "content": content,
         }
 
@@ -242,7 +242,7 @@ def examples():
 
     # neutralization template
     assay_type_id = "OBI:0001643"
-    assay_name = assay_type_names[assay_type_id] + "-submission"
+    assay_name = assay_type_labels[assay_type_id].replace(" ","-") + "-submission"
     path = "examples/" + assay_name + ".xlsx"
     write_xlsx(path, assay_type_id)
 
@@ -301,7 +301,7 @@ def examples():
 
     # VLP ELISA template
     assay_type_id = "OBI:0000661"
-    assay_name = assay_type_names[assay_type_id] + "-submission"
+    assay_name = assay_type_labels[assay_type_id].replace(" ","-") + "-submission"
     path = "examples/" + assay_name + ".xlsx"
     write_xlsx(path, assay_type_id)
 
