@@ -40,7 +40,11 @@ def validate(headers, table):
                 error = "Duplicate value '{0}' is not allowed for '{1}'".format(
                     value, column
                 )
-            elif "terminology" in header and value != "" and value not in header["terminology"]:
+            elif (
+                "terminology" in header
+                and value != ""
+                and value not in header["terminology"]
+            ):
                 error = "'{0}' is not a recognized value for '{1}'".format(
                     value, column
                 )

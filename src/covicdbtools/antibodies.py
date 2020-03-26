@@ -166,11 +166,11 @@ def validate_submission(table):
 # with some extra fields. See the `responses` module.
 
 
-def validate_xlsx(submitter_id, submitter_label, path):
-    """Given a submitted_id string, a submitter_label string, and an XLSX file path,
+def validate_xlsx(submitter_id, submitter_label, source):
+    """Given a submitted_id string, a submitter_label string, and an XLSX file-like object,
     validate it the file and return a response dictionary."""
     try:
-        table = workbooks.read_xlsx(path, sheet="Antibodies")
+        table = workbooks.read_xlsx(source, sheet="Antibodies")
     except Exception as e:
         return {"status": 400, "message": "Could not create XLSX file", "exception": e}
 
@@ -192,12 +192,11 @@ def validate_xlsx(submitter_id, submitter_label, path):
 def validate_request(submitter_id, submitter_label, request_files):
     """Given a submitted_id string, a submitter_label string,
     and Django request.FILES object with one file,
-    store it in a temporary file, validate it, and return a response dictionary."""
-    result = requests.store_file(request_files)
+    read it, validate it, and return a response dictionary."""
+    result = requests.read_file(request_files)
     if result:
         return result
-
-    return validate_xlsx(submitter_id, submitter_label, path)
+    return validate_xlsx(submitter_id, submitter_label, result["bytes"])
 
 
 def examples():

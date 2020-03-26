@@ -20,7 +20,7 @@ def read_data(
     fields = names.read_fields(fields_tsv_path)
     labels = names.read_labels(labels_tsv_path)
 
-    #ab_list = antibodies.read_antibodies(labels, antibodies_tsv_path)
+    # ab_list = antibodies.read_antibodies(labels, antibodies_tsv_path)
     ab_table = tables.read_tsv(antibodies_tsv_path)
     ab_map = OrderedDict()
     for ab in ab_table:

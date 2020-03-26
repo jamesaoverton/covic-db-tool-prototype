@@ -58,8 +58,10 @@ headers = {
     },
 }
 
-assay_types = {"OBI:0001643": ["ab_label", "qualitative_measure"],
-  "OBI:VLP": ["ab_label", "qualitative_measure", "comment"]}
+assay_types = {
+    "OBI:0001643": ["ab_label", "qualitative_measure"],
+    "OBI:VLP": ["ab_label", "qualitative_measure", "comment"],
+}
 
 
 def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
@@ -206,8 +208,8 @@ def validate_xlsx(assay_type_id, path):
 
 def validate_request(assay_type_id, request_files):
     """Given an assay_type_id and a and Django request.FILES object with one file,
-    store it in a temporary file, validate it, and return a response dictionary."""
-    result = requests.store_file(request_files)
+    read it, validate it, and return a response dictionary."""
+    result = requests.read_file(request_files)
     if result:
         return result
     return validate_xlsx(assay_type_id, path)
@@ -297,7 +299,7 @@ def examples():
     for row in valid_data:
         a, q, c = row
         valid_data_table.append(
-                OrderedDict({"Antibody name": a, "Qualitative measure": q, "Comment": c})
+            OrderedDict({"Antibody name": a, "Qualitative measure": q, "Comment": c})
         )
     valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
     write_xlsx(path, assay_type_id, valid_data_grid["rows"])
@@ -309,6 +311,7 @@ def examples():
     path = "build/" + assay_name + "-valid-expanded.html"
     html = responses.to_html(response, prefixes=prefixes, fields=fields)
     templates.write_html("templates/grid.html", {"html": html}, path)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert dataset text files to HTML")
