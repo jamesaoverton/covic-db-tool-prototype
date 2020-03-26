@@ -4,6 +4,7 @@ import argparse
 
 from collections import OrderedDict
 from copy import deepcopy
+from io import BytesIO
 
 from covicdbtools import (
     names,
@@ -178,11 +179,15 @@ def validate_xlsx(submitter_id, submitter_label, source):
     if grid:
         errors = grid["errors"]
         del grid["errors"]
+        content = BytesIO()
+        write_xlsx(content, grid["rows"])
         return {
             "status": 400,
             "message": "Submitted table contains errors.",
             "errors": errors,
             "grid": grid,
+            "filename": "antibodies-submission.xlsx",
+            "content": content,
         }
 
     table = store_submission(submitter_id, submitter_label, table)

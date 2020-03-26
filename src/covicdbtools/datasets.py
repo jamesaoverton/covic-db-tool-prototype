@@ -6,6 +6,7 @@ import yaml
 
 from collections import OrderedDict
 from copy import deepcopy
+from io import BytesIO
 
 from covicdbtools import (
     names,
@@ -56,6 +57,11 @@ headers = {
         "description": "A free-text comment on the assay",
         "locked": True,
     },
+}
+
+assay_type_labels = {
+    "OBI:0001643": "neutralization",
+    "OBI:VLP": "VLP",
 }
 
 assay_types = {
@@ -195,11 +201,15 @@ def validate_xlsx(assay_type_id, path):
     if grid:
         errors = grid["errors"]
         del grid["errors"]
+        content = BytesIO()
+        write_xlsx(content, assay_type_id, grid["rows"])
         return {
             "status": 400,
             "message": "Submitted table contains errors.",
             "errors": errors,
             "grid": grid,
+            "filename": assay_type_labels[assay_type_id] + "-submission.xlsx",
+            "content": content,
         }
 
     table = store_submission(assay_type_id, table)
