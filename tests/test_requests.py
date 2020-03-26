@@ -1,4 +1,5 @@
 import os
+import tempfile
 
 from covicdbtools import requests, workbooks
 
@@ -27,4 +28,9 @@ def test_validate_request():
     result = requests.read_file({"file": upload})
     assert result["status"] == 200
     table = workbooks.read_xlsx(result["content"], "Antibodies")
+    assert table == []
+
+    tf = tempfile.NamedTemporaryFile(suffix=".xlsx")
+    tf.write(result["content"].getvalue())
+    table = workbooks.read_xlsx(tf.name, "Antibodies")
     assert table == []
