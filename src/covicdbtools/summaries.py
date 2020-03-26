@@ -22,9 +22,10 @@ def read_data(
 
     # ab_list = antibodies.read_antibodies(labels, antibodies_tsv_path)
     ab_table = tables.read_tsv(antibodies_tsv_path)
-    ab_map = OrderedDict()
-    for ab in ab_table:
-        ab_map[ab["ab_label"]] = ab
+    grid = grids.table_to_grid(prefixes, fields, ab_table)
+    cell = grids.value_cell("")
+    cell["colspan"] = len(grid["headers"][0])
+    grid["headers"].insert(0, [cell])
 
     for root, dirs, files in os.walk(dataset_path):
         for name in files:
@@ -33,26 +34,30 @@ def read_data(
             if name.endswith("-valid-expanded.tsv"):
                 assays_tsv_path = os.path.join(root, name)
                 assay_name = name.replace("-submission-valid-expanded.tsv", "")
-                table = tables.read_tsv(assays_tsv_path)
+                assay_table = tables.read_tsv(assays_tsv_path)
+                columns = len(assay_table[0].keys()) - 1
+                assay_grid = grids.table_to_grid(prefixes, fields, assay_table)
 
-                # Add these keys to all rows, preserving order.
-                keys = table[0].keys()
-                for ab in ab_map.values():
-                    for key in keys:
-                        if key != "ab_label":
-                            newkey = assay_name + "_" + key
-                            ab[newkey] = ""
+                ab_map = {}
+                for row in assay_grid["rows"]:
+                    ab_label = row[0]["value"]
+                    row.pop(0)
+                    ab_map[ab_label] = row
 
-                for row in table:
-                    if row["ab_label"] in ab_map:
-                        for key, value in row.items():
-                            if key != "ab_label":
-                                newkey = assay_name + "_" + key
-                                ab_map[row["ab_label"]][newkey] = value
+                header = grids.value_cell(assay_name)
+                header["colspan"] = columns
+                grid["headers"][0].append(header)
+                grid["headers"][1] += assay_grid["headers"][0][1:]
 
-    ab_list = list(ab_map.values())
-    grid = grids.table_to_grid(prefixes, fields, ab_list)
-    grid["message"]: "This is the public view with all antibodies (blinded) and assays."
+                for row in grid["rows"]:
+                    ab_label = row[0]["value"]
+                    if ab_label in ab_map:
+                        row += ab_map[ab_label]
+                    else:
+                        for column in range(0, columns):
+                            row.append(grids.value_cell(""))
+
+    grid["message"] = "This is the public view with all antibodies (blinded) and assays."
     return grid
 
 
@@ -67,10 +72,9 @@ if __name__ == "__main__":
     parser.add_argument("output", type=str, help="The output file")
     args = parser.parse_args()
 
+    grid = read_data(args.prefixes, args.fields, args.labels, args.antibodies, args.datasets)
     templates.write_html(
         args.template,
-        read_data(
-            args.prefixes, args.fields, args.labels, args.antibodies, args.datasets
-        ),
+        {"message": grid["message"], "html": grids.grid_to_html(grid)},
         args.output,
     )

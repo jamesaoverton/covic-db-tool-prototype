@@ -155,7 +155,6 @@ def table_to_grid(prefixes, fields, table):
 
 
 def cell_to_html(cell, header=False):
-    output = None
     label = None
     if "label" in cell:
         label = cell["label"]
@@ -178,6 +177,8 @@ def cell_to_html(cell, header=False):
     if "comment" in cell:
         comment = json.dumps(cell["comment"])  # escape quotes
         attrs += ' data-toggle="popover" data-content={0}'.format(comment)
+    if "colspan" in cell:
+        attrs += ' colspan="{0}"'.format(cell["colspan"])
 
     if header:
         return "<th{0}>{1}</th>".format(attrs, content)
