@@ -19,20 +19,36 @@ def read_data(
     prefixes = names.read_prefixes(prefixes_tsv_path)
     fields = names.read_fields(fields_tsv_path)
     labels = names.read_labels(labels_tsv_path)
-    ab_list = antibodies.read_antibodies(labels, antibodies_tsv_path)
+
+    #ab_list = antibodies.read_antibodies(labels, antibodies_tsv_path)
+    ab_table = tables.read_tsv(antibodies_tsv_path)
     ab_map = OrderedDict()
-    for ab in ab_list:
-        ab_map[ab["ab_id"]] = ab
+    for ab in ab_table:
+        ab_map[ab["ab_label"]] = ab
 
     for root, dirs, files in os.walk(dataset_path):
         for name in files:
-            if name == "assays.tsv":
+            if name.startswith("antibodies"):
+                continue
+            if name.endswith("-valid-expanded.tsv"):
                 assays_tsv_path = os.path.join(root, name)
-                for row in tables.read_tsv(assays_tsv_path):
-                    if row["Antibody"] in ab_map:
+                assay_name = name.replace("-submission-valid-expanded.tsv", "")
+                table = tables.read_tsv(assays_tsv_path)
+
+                # Add these keys to all rows, preserving order.
+                keys = table[0].keys()
+                for ab in ab_map.values():
+                    for key in keys:
+                        if key != "ab_label":
+                            newkey = assay_name + "_" + key
+                            ab[newkey] = ""
+
+                for row in table:
+                    if row["ab_label"] in ab_map:
                         for key, value in row.items():
-                            if key != "Antibody":
-                                ab_map[row["Antibody"]][key] = value
+                            if key != "ab_label":
+                                newkey = assay_name + "_" + key
+                                ab_map[row["ab_label"]][newkey] = value
 
     ab_list = list(ab_map.values())
     grid = grids.table_to_grid(prefixes, fields, ab_list)

@@ -6,3 +6,5 @@ submitter_label	Submitter name	label
 host_type_id	Host	id
 host_type_label	Host name	label
 isotype	Isotype	label
+qualitative_measure	Qualitiative measure
+comment	Comment

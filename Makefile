@@ -113,16 +113,51 @@ build/labels.tsv: build/imports.owl | build
 	--export $@
 
 
+### Examples
+
+ANTIBODIES_EXAMPLES = \
+build/antibodies-submission-invalid-highlighted.html \
+build/antibodies-submission-valid-expanded.html \
+build/antibodies-submission-valid-expanded.tsv \
+examples/antibodies-submission-invalid.xlsx \
+examples/antibodies-submission-valid.xlsx \
+examples/antibodies-submission.xlsx
+
+$(ANTIBODIES_EXAMPLES) &: src/covicdbtools/antibodies.py
+	python -c "from covicdbtools.antibodies import *; examples()"
+
+DATASETS_EXAMPLES = \
+build/VLP-submission-valid-expanded.html \
+build/VLP-submission-valid-expanded.tsv \
+build/neutralization-submission-invalid-highlighted.html \
+build/neutralization-submission-valid-expanded.html \
+build/neutralization-submission-valid-expanded.tsv \
+examples/VLP-submission-valid.xlsx \
+examples/VLP-submission.xlsx \
+examples/neutralization-submission-invalid.xlsx \
+examples/neutralization-submission-valid.xlsx \
+examples/neutralization-submission.xlsx
+
+$(DATASETS_EXAMPLES) &: src/covicdbtools/datasets.py
+	python -c "from covicdbtools.datasets import *; examples()"
+
+.PHONY: examples
+examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)
+
+
 ### Views
 
 build/antibodies.html: src/covicdbtools/antibodies.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv | build
 	python $^ $@
 
+build/antibodies.tsv: build/antibodies-submission-valid-expanded.tsv
+	cut -f1,4- $< | sed 's/VD-Crotty/COVIC/' > $@
+
 build/datasets/%/dataset.html: src/covicdbtools/datasets.py templates/dataset.html ontology/prefixes.tsv build/labels.tsv data/datasets/%/ | build/datasets
 	mkdir -p build/datasets/$*
 	python $^ $@
 
-build/summary.html: src/covicdbtools/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv data/antibodies.tsv data/datasets/ | build
+build/summary.html: src/covicdbtools/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv build/antibodies.tsv build/ | build
 	python $^ $@
 
 build/index.html: src/covicdbtools/build-index.py templates/index.html | build
