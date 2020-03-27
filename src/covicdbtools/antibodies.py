@@ -19,12 +19,19 @@ from covicdbtools import (
 ### Hardcoded fields
 # TODO: Make this configurable
 
+
 hosts_table = tables.read_tsv("ontology/hosts.tsv")
 hosts = [h["label"] for h in hosts_table[1:]]
 
 isotypes_table = tables.read_tsv("ontology/isotypes.tsv")
 heavy_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "heavy"]
 light_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "light"]
+
+ids = {}
+for row in hosts_table[1:]:
+    ids[row["label"]] = row["id"]
+for row in isotypes_table[1:]:
+    ids[row["label"]] = row["id"]
 
 headers = [
     {
@@ -127,10 +134,6 @@ Columns:
     ]
 
     workbooks.write_xlsx(submission_grids, path)
-
-
-# TODO: Make this configurable
-ids = {"Homo sapiens": "NCBITaxon:9606", "Mus musculus": "NCBITaxon:10090"}
 
 
 def store_submission(submitter_id, submitter_label, table):

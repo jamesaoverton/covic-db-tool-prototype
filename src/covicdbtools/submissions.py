@@ -2,8 +2,8 @@ from collections import defaultdict, OrderedDict
 from covicdbtools import grids
 
 
-def store(headers, table):
-    """Given the headers and a (validated!) table,
+def store(ids, headers, table):
+    """Given the IDs map, headers list, and a (validated!) table,
     return a table of the submission."""
     submission = []
     for row in table:

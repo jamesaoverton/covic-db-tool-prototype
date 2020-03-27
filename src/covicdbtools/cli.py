@@ -107,6 +107,12 @@ def validate(args):
         raise Exception("Unsupported input format for '{0}'".format(args.input))
 
     # TODO: Expand outputs
+    if not grid:
+        if "antibodies-submission" in args.output:
+            table = antibodies.store_submission("org:1", "LJI", table)
+        else:
+            table = datasets.store_submission(find_assay_type_id(args.input), table)
+        grid = grids.table_to_grid(prefixes, fields, table)
 
     if args.output.endswith(".xlsx"):
         if "antibodies-submission" in args.output:
@@ -118,6 +124,16 @@ def validate(args):
     elif args.output.endswith(".html"):
         html = grids.grid_to_html(grid)
         templates.write_html("templates/grid.html", {"html": html}, args.output)
+    elif "errors" in grid:
+        for error in errors:
+            print(error)
+        raise Exception(
+            "Validation errors cannot be stored in chosen format '{0}'".format(
+                args.output
+            )
+        )
+    elif args.output.endswith(".tsv"):
+        tables.write_tsv(table, args.output)
     else:
         raise Exception("Unsupported output format for '{0}'".format(args.output))
 

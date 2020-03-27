@@ -31,7 +31,7 @@ SHELL := bash
 ### General Tasks
 
 .PHONY: all
-all: views examples
+all: examples views
 
 .PHONY: tidy
 tidy:
@@ -136,23 +136,23 @@ examples/VLP-ELISA-submission-valid.xlsx \
 build/VLP-ELISA-submission-valid-expanded.tsv \
 build/VLP-ELISA-submission-valid-expanded.html
 
-examples/%-submission.xlsx:
+examples/%-submission.xlsx: | build/labels.tsv
 	python src/covicdbtools/cli.py update $@
 
-examples/%-highlighted.xlsx: examples/%.xlsx
+examples/%-highlighted.xlsx: examples/%.xlsx | build/labels.tsv
 	python src/covicdbtools/cli.py validate $< $@
 
-examples/%.xlsx: examples/%.tsv
+examples/%.xlsx: examples/%.tsv | build/labels.tsv
 	python src/covicdbtools/cli.py fill $< $@
 
-build/%-highlighted.html: examples/%.xlsx
+build/%-highlighted.html: examples/%.xlsx | build/labels.tsv
 	python src/covicdbtools/cli.py validate $< $@
 
-build/%-expanded.tsv: examples/%.tsv
-	python src/covicdbtools/cli.py expand $< $@
+build/%-expanded.tsv: examples/%.xlsx | build/labels.tsv
+	python src/covicdbtools/cli.py validate $< $@
 
-build/%-expanded.html: examples/%.tsv
-	python src/covicdbtools/cli.py expand $< $@
+build/%-expanded.html: examples/%.xlsx | build/labels.tsv
+	python src/covicdbtools/cli.py validate $< $@
 
 .PHONY: examples
 examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)

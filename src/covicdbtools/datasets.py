@@ -158,9 +158,6 @@ Columns:
     workbooks.write_xlsx(submission_grids, path)
 
 
-ids = {"Homo sapiens": "NCBITaxon:9606", "Mus musculus": "NCBITaxon:10090"}
-
-
 def store_submission(assay_type_id, table):
     """Given the assay_type_id and a (validated!) antibody submission table,
     return a table of the submission."""
@@ -172,7 +169,7 @@ def store_submission(assay_type_id, table):
     assay_headers = [headers[key] for key in keys]
 
     # TODO: actually store the data!
-    return submissions.store(assay_headers, table)
+    return submissions.store({}, assay_headers, table)
 
 
 def validate_submission(assay_type_id, table):
