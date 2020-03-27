@@ -30,10 +30,8 @@ SHELL := bash
 
 ### General Tasks
 
-VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html build/antibodies.html build/ontology.html
-
 .PHONY: all
-all: $(VIEWS)
+all: views examples
 
 .PHONY: tidy
 tidy:
@@ -79,6 +77,7 @@ build/robot.jar: | build
 build/robot-tree.jar: | build
 	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/tree-view/lastSuccessfulBuild/artifact/bin/robot.jar
 
+
 ### Tables
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
@@ -116,33 +115,48 @@ build/labels.tsv: build/imports.owl | build
 ### Examples
 
 ANTIBODIES_EXAMPLES = \
-build/antibodies-submission-invalid-highlighted.html \
-build/antibodies-submission-valid-expanded.html \
-build/antibodies-submission-valid-expanded.tsv \
-examples/antibodies-submission-invalid.xlsx \
+examples/antibodies-submission.xlsx \
 examples/antibodies-submission-valid.xlsx \
-examples/antibodies-submission.xlsx
-
-$(ANTIBODIES_EXAMPLES) &: src/covicdbtools/antibodies.py
-	python -c "from covicdbtools.antibodies import *; examples()"
+build/antibodies-submission-valid-expanded.tsv \
+build/antibodies-submission-valid-expanded.html \
+examples/antibodies-submission-invalid.xlsx \
+examples/antibodies-submission-invalid-highlighted.xlsx \
+build/antibodies-submission-invalid-highlighted.html
 
 DATASETS_EXAMPLES = \
-build/VLP-ELISA-submission-valid-expanded.html \
-build/VLP-ELISA-submission-valid-expanded.tsv \
-build/neutralization-submission-invalid-highlighted.html \
-build/neutralization-submission-valid-expanded.html \
-build/neutralization-submission-valid-expanded.tsv \
-examples/VLP-ELISA-submission-valid.xlsx \
-examples/VLP-ELISA-submission.xlsx \
-examples/neutralization-submission-invalid.xlsx \
+examples/neutralization-submission.xlsx \
 examples/neutralization-submission-valid.xlsx \
-examples/neutralization-submission.xlsx
+build/neutralization-submission-valid-expanded.tsv \
+build/neutralization-submission-valid-expanded.html \
+examples/neutralization-submission-invalid.xlsx \
+examples/neutralization-submission-invalid-highlighted.xlsx \
+build/neutralization-submission-invalid-highlighted.html \
+examples/VLP-ELISA-submission.xlsx \
+examples/VLP-ELISA-submission-valid.xlsx \
+build/VLP-ELISA-submission-valid-expanded.tsv \
+build/VLP-ELISA-submission-valid-expanded.html
 
-$(DATASETS_EXAMPLES) &: src/covicdbtools/datasets.py
-	python -c "from covicdbtools.datasets import *; examples()"
+examples/%-submission.xlsx:
+	python src/covicdbtools/cli.py update $@
+
+examples/%-highlighted.xlsx: examples/%.xlsx
+	python src/covicdbtools/cli.py validate $< $@
+
+examples/%.xlsx: examples/%.tsv
+	python src/covicdbtools/cli.py fill $< $@
+
+build/%-highlighted.html: examples/%.xlsx
+	python src/covicdbtools/cli.py validate $< $@
+
+build/%-expanded.tsv: examples/%.tsv
+	python src/covicdbtools/cli.py expand $< $@
+
+build/%-expanded.html: examples/%.tsv
+	python src/covicdbtools/cli.py expand $< $@
 
 .PHONY: examples
 examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)
+
 
 
 ### Views
@@ -157,7 +171,7 @@ build/datasets/%/dataset.html: src/covicdbtools/datasets.py templates/dataset.ht
 	mkdir -p build/datasets/$*
 	python $^ $@
 
-build/summary.html: src/covicdbtools/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv build/antibodies.tsv build/ | build
+build/summary.html: src/covicdbtools/summaries.py templates/grid.html ontology/prefixes.tsv ontology/fields.tsv build/labels.tsv build/antibodies.tsv build
 	python $^ $@
 
 build/index.html: src/covicdbtools/build-index.py templates/index.html | build
@@ -167,3 +181,9 @@ build/ontology.html: build/ontology.owl | build/robot-tree.jar
 	java -jar build/robot-tree.jar tree \
 	--input $< \
 	--tree $@
+
+VIEWS := build/datasets/1/dataset.html build/summary.html build/index.html build/antibodies.html build/ontology.html
+
+.PHONY: views
+views: $(VIEWS)
+

@@ -28,14 +28,18 @@ def validate(headers, table):
 
     for i in range(0, len(table)):
         row = table[i]
-        first_value = row[0]["value"].strip() if "value" in row else None
-        newrow = []
+        values = ""
+        for value in row.values():
+            values += value.strip()
+        if values == "":
+            continue
 
+        newrow = []
         for header in headers:
             column = header["label"]
             value = row[column].strip() if column in row else ""
             error = None
-            if "required" in header and header["required"] and first_value and value == "":
+            if "required" in header and header["required"] and value == "":
                 error = "Missing required value for '{0}'".format(column)
             elif "unique" in header and header["unique"] and value in unique[column]:
                 error = "Duplicate value '{0}' is not allowed for '{1}'".format(
@@ -54,8 +58,8 @@ def validate(headers, table):
                     try:
                         _ = float(value)
                     except:
-                        error = "'{0}' is not of type '{1}'".format(
-                            value, header["type"]
+                        error = "'{0}' is not of type '{1}' in '{2}'".format(
+                            value, header["type"], column
                         )
                 # TODO: Handle bad types
             if "unique" in header and header["unique"]:

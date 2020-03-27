@@ -32,7 +32,7 @@ def to_html(response, prefixes={}, fields={}):
         lines.append(grids.grid_to_html(response["grid"]))
     elif "table" in response:
         lines.append(
-            grids.grid_to_html(grids.table_to_grid(fields, fields, response["table"]))
+            grids.grid_to_html(grids.table_to_grid(prefixes, fields, response["table"]))
         )
     lines.append("</div>")
     return "\n".join(lines)

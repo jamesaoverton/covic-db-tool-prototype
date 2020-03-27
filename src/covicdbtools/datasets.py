@@ -5,7 +5,6 @@ import os
 import yaml
 
 from collections import OrderedDict
-from copy import deepcopy
 from io import BytesIO
 
 from covicdbtools import (
@@ -57,7 +56,6 @@ headers = {
         "label": "Titer",
         "description": "The concentration",
         "locked": True,
-        "required": True,
         "type": "float",
     },
     "comment": {
@@ -218,7 +216,8 @@ def validate_xlsx(assay_type_id, source):
             "message": "Submitted table contains errors.",
             "errors": errors,
             "grid": grid,
-            "filename": assay_type_labels[assay_type_id].replace(" ","-") + "-submission.xlsx",
+            "filename": assay_type_labels[assay_type_id].replace(" ", "-")
+            + "-submission.xlsx",
             "content": content,
         }
 
@@ -233,106 +232,6 @@ def validate_request(assay_type_id, request_files):
     if result["status"] != 200:
         return result
     return validate_xlsx(assay_type_id, result["content"])
-
-
-def examples():
-    """Write and test some examples."""
-    fields = names.read_fields("ontology/fields.tsv")
-    prefixes = names.read_prefixes("ontology/prefixes.tsv")
-
-    # neutralization template
-    assay_type_id = "OBI:0001643"
-    assay_name = assay_type_labels[assay_type_id].replace(" ","-") + "-submission"
-    path = "examples/" + assay_name + ".xlsx"
-    write_xlsx(path, assay_type_id)
-
-    # neutralization valid data
-    valid_data = [
-        ["COVIC 1", "positive", "0.52"],
-        ["COVIC 2", "negative", "20.2"],
-        ["COVIC 3", "negative", "23.7"],
-        ["COVIC 4", "positive", "1.5"],
-        ["COVIC 5", "unknown", "3.6"],
-        ["COVIC 6", "negative", "64"],
-        ["COVIC 7", "", ""],
-        ["COVIC 8", "", ""],
-        ["COVIC 9", "", ""],
-        ["COVIC 10", "", ""],
-    ]
-    valid_data_table = []
-    for row in valid_data:
-        a, q, t = row
-        valid_data_table.append(
-                OrderedDict({"Antibody name": a, "Qualitative measure": q, "Titer": t})
-        )
-    valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
-
-    path = "examples/" + assay_name + "-valid.xlsx"
-    write_xlsx(path, assay_type_id, valid_data_grid["rows"])
-    response = validate_xlsx(assay_type_id, path)
-    print(assay_name, "VALID", response)
-    assert response["status"] == 200
-    path = "build/" + assay_name + "-valid-expanded.tsv"
-    tables.write_tsv(response["table"], path)
-    path = "build/" + assay_name + "-valid-expanded.html"
-    html = responses.to_html(response, prefixes=prefixes, fields=fields)
-    templates.write_html("templates/grid.html", {"html": html}, path)
-
-    # neutralization invalid data
-    invalid_data_table = deepcopy(valid_data_table)
-    invalid_data_table[1]["Antibody name"] = ""
-    invalid_data_table[2]["Antibody name"] = "COVIC 1"
-    invalid_data_table[4]["Qualitative measure"] = "postive"
-    invalid_data_table[4]["Titer"] = "none"
-    invalid_data_table[5]["Qualitative measure"] = "intermediate"
-    invalid_data_table[6]["Titer"] = ""
-    invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
-
-    path = "examples/" + assay_name + "-invalid.xlsx"
-    write_xlsx(path, assay_type_id, invalid_data_grid["rows"])
-    response = validate_xlsx(assay_type_id, path)
-    print(assay_name, "INVALID", response)
-    assert response["status"] == 400
-    path = "examples/" + assay_name + "-invalid-highlighted.xlsx"
-    write_xlsx(path, assay_type_id, response["grid"]["rows"])
-    path = "build/" + assay_name + "-invalid-highlighted.html"
-    html = responses.to_html(response, prefixes=prefixes, fields=fields)
-    templates.write_html("templates/grid.html", {"html": html}, path)
-
-    # VLP ELISA template
-    assay_type_id = "OBI:0000661"
-    assay_name = assay_type_labels[assay_type_id].replace(" ","-") + "-submission"
-    path = "examples/" + assay_name + ".xlsx"
-    write_xlsx(path, assay_type_id)
-
-    # VLP ELISA valid data
-    path = "examples/" + assay_name + "-valid.xlsx"
-    valid_data = [
-        ["COVIC 2", "positive", ""],
-        ["COVIC 3", "positive", ""],
-        ["COVIC 4", "positive", "also binds VP40 only VLP"],
-        ["COVIC 5", "negative", ""],
-        ["COVIC 6", "positive", ""],
-        ["COVIC 7", "negative", "did not bind positive control"],
-        ["COVIC 8", "positive", ""],
-        ["COVIC 9", "negative", ""],
-    ]
-    valid_data_table = []
-    for row in valid_data:
-        a, q, c = row
-        valid_data_table.append(
-            OrderedDict({"Antibody name": a, "Qualitative measure": q, "Comment": c})
-        )
-    valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
-    write_xlsx(path, assay_type_id, valid_data_grid["rows"])
-    response = validate_xlsx(assay_type_id, path)
-    print(assay_name, "VALID", response)
-    assert response["status"] == 200
-    path = "build/" + assay_name + "-valid-expanded.tsv"
-    tables.write_tsv(response["table"], path)
-    path = "build/" + assay_name + "-valid-expanded.html"
-    html = responses.to_html(response, prefixes=prefixes, fields=fields)
-    templates.write_html("templates/grid.html", {"html": html}, path)
 
 
 if __name__ == "__main__":

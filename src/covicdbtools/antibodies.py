@@ -3,7 +3,6 @@
 import argparse
 
 from collections import OrderedDict
-from copy import deepcopy
 from io import BytesIO
 
 from covicdbtools import (
@@ -204,82 +203,6 @@ def validate_request(submitter_id, submitter_label, request_files):
     if result["status"] != 200:
         return result
     return validate_xlsx(submitter_id, submitter_label, result["content"])
-
-
-def examples():
-    """Write and test some examples."""
-    fields = names.read_fields("ontology/fields.tsv")
-    prefixes = names.read_prefixes("ontology/prefixes.tsv")
-
-    valid_data = [
-        ["VD-Crotty 1", "Homo sapiens", "IgA"],
-        ["VD-Crotty 2", "Homo sapiens", "IgD"],
-        ["VD-Crotty 3", "Mus musculus", "IgG"],
-        ["VD-Crotty 4", "Homo sapiens", "IgG2a"],
-        ["VD-Crotty 5", "Mus musculus", "IgA1"],
-        ["VD-Crotty 6", "Mus musculus", "IgA"],
-        ["VD-Crotty 7", "Homo sapiens", "IgE"],
-        ["VD-Crotty 8", "Mus musculus", "IgA2"],
-        ["VD-Crotty 9", "Homo sapiens", "IgG1"],
-        ["VD-Crotty 10", "Mus musculus", "IgM"],
-    ]
-    valid_data_table = []
-    for row in valid_data:
-        a, h, i = row
-        valid_data_table.append(
-            OrderedDict({"Antibody name": a, "Host": h, "Isotype": i})
-        )
-    valid_data_grid = grids.table_to_grid({}, {}, valid_data_table)
-
-    invalid_data = [
-        ["A6", "Homo sapiens", "IgA"],
-        ["B12", "Mus musculus", "IgD"],
-        ["", "Mus musculus", "IgD"],
-        ["C2", "Mus musculus", "IgG"],
-        ["C3", "Homo sapiens", "IgG2a"],
-        ["C6", "", "Ig1"],
-        ["D12", "Homo sapiens", "IgE"],
-        ["E8", "Mus musclus", "Igm"],
-        ["C3", "Homo sapiens", "IgG2a"],
-    ]
-    invalid_data_table = []
-    for row in invalid_data:
-        a, h, i = row
-        invalid_data_table.append(
-            OrderedDict({"Antibody name": a, "Host": h, "Isotype": i})
-        )
-    invalid_data_grid = grids.table_to_grid({}, {}, invalid_data_table)
-
-    path = "examples/antibodies-submission.xlsx"
-    write_xlsx(path)
-
-    path = "examples/antibodies-submission-valid.xlsx"
-    write_xlsx(path, valid_data_grid["rows"])
-
-    path = "examples/antibodies-submission-invalid.xlsx"
-    write_xlsx(path, invalid_data_grid["rows"])
-
-    submitter_id = "org:2"
-    submitter_label = "Vanderbilt"
-    response = validate_xlsx(submitter_id, submitter_label, path)
-    print("INVALID", response)
-    path = "examples/antibodies-submission-invalid-highlighted.xlsx"
-    write_xlsx(path, response["grid"]["rows"])
-
-    path = "build/antibodies-submission-invalid-highlighted.html"
-    html = responses.to_html(response, prefixes=prefixes, fields=fields)
-    templates.write_html("templates/grid.html", {"html": html}, path)
-
-    submitter_id = "org:1"
-    submitter_label = "LJI"
-    path = "examples/antibodies-submission-valid.xlsx"
-    response = validate_xlsx(submitter_id, submitter_label, path)
-    print("VALID", response)
-    path = "build/antibodies-submission-valid-expanded.tsv"
-    tables.write_tsv(response["table"], path)
-    path = "build/antibodies-submission-valid-expanded.html"
-    html = responses.to_html(response, prefixes=prefixes, fields=fields)
-    templates.write_html("templates/grid.html", {"html": html}, path)
 
 
 if __name__ == "__main__":

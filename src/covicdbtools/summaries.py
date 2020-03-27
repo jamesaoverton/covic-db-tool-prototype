@@ -33,7 +33,9 @@ def read_data(
                 continue
             if name.endswith("-valid-expanded.tsv"):
                 assays_tsv_path = os.path.join(root, name)
-                assay_name = name.replace("-submission-valid-expanded.tsv", "").replace("-", " ")
+                assay_name = name.replace("-submission-valid-expanded.tsv", "").replace(
+                    "-", " "
+                )
                 assay_table = tables.read_tsv(assays_tsv_path)
                 columns = len(assay_table[0].keys()) - 1
                 assay_grid = grids.table_to_grid(prefixes, fields, assay_table)
@@ -57,7 +59,9 @@ def read_data(
                         for column in range(0, columns):
                             row.append(grids.value_cell(""))
 
-    grid["message"] = "This is the public view with all antibodies (blinded) and assays."
+    grid[
+        "message"
+    ] = "This is the public view with all antibodies (blinded) and assays."
     return grid
 
 
@@ -72,7 +76,9 @@ if __name__ == "__main__":
     parser.add_argument("output", type=str, help="The output file")
     args = parser.parse_args()
 
-    grid = read_data(args.prefixes, args.fields, args.labels, args.antibodies, args.datasets)
+    grid = read_data(
+        args.prefixes, args.fields, args.labels, args.antibodies, args.datasets
+    )
     templates.write_html(
         args.template,
         {"message": grid["message"], "html": grids.grid_to_html(grid)},
