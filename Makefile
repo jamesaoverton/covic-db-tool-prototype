@@ -52,11 +52,12 @@ update:
 
 .PHONY: test
 test:
-	pytest
+	pytest tests
 
 .PHONY: format
 format:
 	black src/covicdbtools/*.py tests/*.py
+	shellcheck tests/*.sh
 
 
 ### Set Up
@@ -69,7 +70,8 @@ build build/datasets:
 #
 # We use development versions of ROBOT for this project.
 
-ROBOT := java -jar build/robot.jar --prefix "ONTIE: https://ontology.iedb.org/ontology/ONTIE_"
+PREFIXES := --prefix "ONTIE: https://ontology.iedb.org/ontology/ONTIE_"
+ROBOT := java -jar build/robot.jar $(PREFIXES)
 
 build/robot.jar: | build
 	curl -L -o $@ https://build.obolibrary.io/job/ontodev/job/robot/job/master/lastSuccessfulBuild/artifact/bin/robot.jar
@@ -82,7 +84,7 @@ build/robot-tree.jar: | build
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
 
-ONTOLOGY_SHEETS = core hosts assays isotypes
+ONTOLOGY_SHEETS = core hosts isotypes assays
 SHEETS = prefixes $(ONTOLOGY_SHEETS) fields
 SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
 
@@ -105,11 +107,18 @@ build/ontology.owl: build/imports.owl ontology/protein-tree.owl | build/robot.ja
 	$(foreach o,$^,--input $(o)) \
 	--output $@
 
-build/labels.tsv: build/imports.owl | build
+build/labels.tsv: build/imports.owl | build/robot.jar
 	$(ROBOT) export \
 	--input $< \
 	--header "ID|LABEL" \
 	--export $@
+
+config.json: src/covicdbtools/config.py $(SHEET_TSVS) build/labels.tsv
+	python $^ $@
+
+src/covicdbtools/cli.py: config.json
+
+CVDB := python src/covicdbtools/cli.py
 
 
 ### Examples
@@ -136,23 +145,23 @@ examples/VLP-ELISA-submission-valid.xlsx \
 build/VLP-ELISA-submission-valid-expanded.tsv \
 build/VLP-ELISA-submission-valid-expanded.html
 
-examples/%-submission.xlsx: | build/labels.tsv
-	python src/covicdbtools/cli.py update $@
+examples/%-submission.xlsx: | src/covicdbtools/cli.py
+	$(CVDB) update $@
 
-examples/%-highlighted.xlsx: examples/%.xlsx | build/labels.tsv
-	python src/covicdbtools/cli.py validate $< $@
+examples/%-highlighted.xlsx: examples/%.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $< $@
 
-examples/%.xlsx: examples/%.tsv | build/labels.tsv
-	python src/covicdbtools/cli.py fill $< $@
+examples/%.xlsx: examples/%.tsv | src/covicdbtools/cli.py
+	$(CVDB) fill $< $@
 
-build/%-highlighted.html: examples/%.xlsx | build/labels.tsv
-	python src/covicdbtools/cli.py validate $< $@
+build/%-highlighted.html: examples/%.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $< $@
 
-build/%-expanded.tsv: examples/%.xlsx | build/labels.tsv
-	python src/covicdbtools/cli.py validate $< $@
+build/%-expanded.tsv: examples/%.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $< $@
 
-build/%-expanded.html: examples/%.xlsx | build/labels.tsv
-	python src/covicdbtools/cli.py validate $< $@
+build/%-expanded.html: examples/%.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $< $@
 
 .PHONY: examples
 examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)
@@ -178,7 +187,7 @@ build/index.html: src/covicdbtools/build-index.py templates/index.html | build
 	python $^ $@
 
 build/ontology.html: build/ontology.owl | build/robot-tree.jar
-	java -jar build/robot-tree.jar tree \
+	java -jar build/robot-tree.jar $(PREFIXES) tree \
 	--input $< \
 	--tree $@
 

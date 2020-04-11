@@ -20,14 +20,6 @@ from covicdbtools import tables
 # We can then convert IDs (CURIES) to IRIs (URIs).
 
 
-def read_prefixes(prefixes_tsv_path):
-    """Read the prefixes table and return the prefixes map."""
-    prefixes = {}
-    for row in tables.read_tsv(prefixes_tsv_path):
-        prefixes[row["prefix"]] = row["base"]
-    return prefixes
-
-
 def split_id(i):
     return i.split(":", maxsplit=1)
 
@@ -59,34 +51,6 @@ def id_to_iri(prefixes, i):
     if prefix in prefixes:
         return prefixes[prefix] + localname
     return i
-
-
-### Fields
-#
-# A field describes a column of that may occur in multiple tables,
-# and its SQL name, human friendly label, and eventually validation rules.
-# The fields map takes column names to dictionaries.
-
-
-def read_fields(fields_tsv_path):
-    """Read the fields table and return the fields map."""
-    fields = {}
-    for row in tables.read_tsv(fields_tsv_path):
-        fields[row["field"]] = row
-    return fields
-
-
-### Labels
-#
-# The labels map takes IDs to label strings.
-
-
-def read_labels(labels_tsv_path):
-    """Read the labels table and return the labels map."""
-    labels = {}
-    for row in tables.read_tsv(labels_tsv_path):
-        labels[row["ID"]] = row["LABEL"]
-    return labels
 
 
 ### Concise Tables

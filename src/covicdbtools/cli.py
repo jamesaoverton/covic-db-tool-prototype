@@ -3,6 +3,7 @@
 import argparse
 import os
 
+from covicdbtools import update_config
 from covicdbtools import (
     names,
     tables,
@@ -13,10 +14,6 @@ from covicdbtools import (
     datasets,
     submissions,
 )
-
-prefixes = names.read_prefixes("ontology/prefixes.tsv")
-labels = names.read_labels("build/labels.tsv")
-fields = names.read_fields("ontology/fields.tsv")
 
 
 def find_assay_type_id(path):
@@ -139,6 +136,8 @@ def validate(args):
 
 
 def main():
+    update_config()
+
     main_parser = argparse.ArgumentParser()
     subparsers = main_parser.add_subparsers()
 
