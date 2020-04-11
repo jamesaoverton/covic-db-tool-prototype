@@ -12,9 +12,11 @@ IFS=$'\n\t'
 
 ### Initialization
 
-ROOT="$(pwd)"
-TEMP="temp/"
-export CVDB_DATA_REPO="${TEMP}data_repo/"
+ROOT="$(pwd)/"
+TEMP="${ROOT}temp/"
+export CVDB_STAGING="${TEMP}staging/"
+export CVDB_SECRET="${TEMP}secret/"
+export CVDB_PUBLIC="${TEMP}public/"
 #EXAMPLE="examples/"
 #CVDB="src/covicdbtools/cli.py"
 AUTHOR="cvdbtools <cvdb@example.com>"
@@ -40,16 +42,33 @@ trap 'print_failure' INT TERM EXIT
 
 ### Script
 
-step "Create git data repository for testing"
-mkdir -p "${CVDB_DATA_REPO}"
-cd "${CVDB_DATA_REPO}"
+step "Create git data repositories for testing"
+mkdir -p "${CVDB_STAGING}"
+cd "${CVDB_STAGING}"
 git init
-assert "Directory should be empty" \
+mkdir -p "${CVDB_SECRET}"
+mkdir -p "${CVDB_PUBLIC}"
+cd "${CVDB_PUBLIC}"
+git init
+cd "${ROOT}"
+
+cd "${CVDB_STAGING}"
+assert "staging: directory should be empty" \
 "$(tree)" \
 ".
 
 0 directories, 0 files"
-assert "git log should be empty" \
+assert "stagin: git log should be empty" \
+"$(git log)" \
+""
+
+cd "${CVDB_PUBLIC}"
+assert "public: directory should be empty" \
+"$(tree)" \
+".
+
+0 directories, 0 files"
+assert "public: git log should be empty" \
 "$(git log)" \
 ""
 cd "${ROOT}"
@@ -59,40 +78,38 @@ step "Submit antibodies"
 #${CVDB} submit antibodies ${EXAMPLES}/antibodies-submission-valid.xlsx
 
 # Fake submit antibodies operations
-cd "${CVDB_DATA_REPO}"
+cd "${CVDB_STAGING}"
 touch antibodies.tsv
 git add antibodies.tsv
 git commit --author "${AUTHOR}" --message "${STEP}"
-git checkout --orphan public
-touch antibodies.tsv
+cp "${CVDB_STAGING}antibodies.tsv" "${CVDB_PUBLIC}"
+cd "${CVDB_PUBLIC}"
 git add antibodies.tsv
 git commit --author "${AUTHOR}" --message "${STEP}"
-git checkout master
 cd "${ROOT}"
 
-cd "${CVDB_DATA_REPO}"
-git checkout master
-assert "master branch: antibodies.tsv should exist" \
+cd "${CVDB_STAGING}"
+assert "staging: antibodies.tsv should exist" \
 "$(tree)" \
 ".
 └── antibodies.tsv
 
 0 directories, 1 file"
 
-assert "master branch: git log should show one commit" \
+assert "staging: git log should show one commit" \
 "$(git shortlog)" \
 "cvdbtools (1):
       Submit antibodies"
 
-git checkout public
-assert "public branch: antibodies.tsv should exist" \
+cd "${CVDB_PUBLIC}"
+assert "public: antibodies.tsv should exist" \
 "$(tree)" \
 ".
 └── antibodies.tsv
 
 0 directories, 1 file"
 
-assert "public branch: git log should show one commit" \
+assert "public: git log should show one commit" \
 "$(git shortlog)" \
 "cvdbtools (1):
       Submit antibodies"
@@ -113,23 +130,23 @@ cd "${ROOT}"
 
 #step "Submit Valid Assays"
 #${CVDB} submit assays "${EXAMPLES}/neutralization-submission-valid.xlsx"
-# TODO: check branches (files and git log): master, public
-# TODO: build and check SQL tables: master, public
+# TODO: check repos (files and git log): staging, public
+# TODO: build and check SQL tables: staging, public
 
 #step "Promote Dataset"
 #${CVDB} promote dataset 1
-# TODO: check branches (files and git log): master, public
-# TODO: build and check SQL tables: master, public
+# TODO: check repos (files and git log): staging, public
+# TODO: build and check SQL tables: staging, public
 
 #step "Update Dataset"
 #${CVDB} submit assays "${EXAMPLES}/neutralization-submission-valid-update.xlsx"
-# TODO: check branches (files and git log): master, public
+# TODO: check repos (files and git log): staging, public
 # TODO: build and check SQL tables
 
 #step "Promote Updated Dataset"
 #${CVDB} promote dataset 1
-# TODO: check branches (files and git log): master, public
-# TODO: build and check SQL tables: master, public
+# TODO: check repos (files and git log): staging, public
+# TODO: build and check SQL tables: staging, public
 
 # Clear trap to exit cleanly
 trap '' INT TERM EXIT
