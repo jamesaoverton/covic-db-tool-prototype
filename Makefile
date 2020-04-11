@@ -146,22 +146,25 @@ build/VLP-ELISA-submission-valid-expanded.tsv \
 build/VLP-ELISA-submission-valid-expanded.html
 
 examples/%-submission.xlsx: | src/covicdbtools/cli.py
-	$(CVDB) update $@
+	$(CVDB) fill $* "" $@
 
-examples/%-highlighted.xlsx: examples/%.xlsx | src/covicdbtools/cli.py
-	$(CVDB) validate $< $@
+examples/%-submission-valid.xlsx: examples/%-submission-valid.tsv | src/covicdbtools/cli.py
+	$(CVDB) fill $* $< $@
 
-examples/%.xlsx: examples/%.tsv | src/covicdbtools/cli.py
-	$(CVDB) fill $< $@
+examples/%-submission-invalid.xlsx: examples/%-submission-invalid.tsv | src/covicdbtools/cli.py
+	$(CVDB) fill $* $< $@
 
-build/%-highlighted.html: examples/%.xlsx | src/covicdbtools/cli.py
-	$(CVDB) validate $< $@
+examples/%-submission-invalid-highlighted.xlsx: examples/%-submission-invalid.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $* $< $@
 
-build/%-expanded.tsv: examples/%.xlsx | src/covicdbtools/cli.py
-	$(CVDB) validate $< $@
+build/%-submission-invalid-highlighted.html: examples/%-submission-invalid.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $* $< $@
 
-build/%-expanded.html: examples/%.xlsx | src/covicdbtools/cli.py
-	$(CVDB) validate $< $@
+build/%-submission-valid-expanded.tsv: examples/%-submission-valid.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $* $< $@
+
+build/%-submission-valid-expanded.html: examples/%-submission-valid.xlsx | src/covicdbtools/cli.py
+	$(CVDB) validate $* $< $@
 
 .PHONY: examples
 examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)

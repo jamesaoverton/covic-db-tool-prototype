@@ -7,11 +7,19 @@
 import argparse
 import json
 
+from collections import OrderedDict
 from covicdbtools import tables
 
 
-# Global config object.
-config = {}
+# Global config dictionaries.
+prefixes = {}
+core = {}
+hosts = {}
+isoforms = {}
+assays = {}
+fields = {}
+labels = {}
+ids = {}
 
 
 ### Prefixes
@@ -93,20 +101,42 @@ def read_ids(labels_tsv_path):
 
 
 def validate_config(new_config):
-    if type(new_config) is not dict:
+    """Given a config dictionary, return None if it is valid,
+    otherwise return a string describing the problem."""
+    if not isinstance(new_config, dict):
         return "Config is not a dictionary"
-    for key in ["prefixes", "core", "hosts", "isotypes", "assays", "fields", "labels", "ids"]:
+    for key in [
+        "prefixes",
+        "core",
+        "hosts",
+        "isotypes",
+        "assays",
+        "fields",
+        "labels",
+        "ids",
+    ]:
         if key not in new_config:
             return f"Config is missing key '{key}'"
     return None
 
 
 def is_config(new_config):
+    """Given a config dictionary, return True if it is valid, False otherwise."""
     if validate_config(new_config):
         return False
     return True
 
-def build_config(prefixes_tsv_path, core_tsv_path, hosts_tsv_path, isotypes_tsv_path, assays_tsv_path, fields_tsv_path, labels_tsv_path):
+
+def build_config(
+    prefixes_tsv_path,
+    core_tsv_path,
+    hosts_tsv_path,
+    isotypes_tsv_path,
+    assays_tsv_path,
+    fields_tsv_path,
+    labels_tsv_path,
+):
+    """Read TSV files and return a new config dictionary."""
     new_config = {}
     new_config["prefixes"] = read_prefixes(prefixes_tsv_path)
     new_config["core"] = read_terms(core_tsv_path)
@@ -120,26 +150,38 @@ def build_config(prefixes_tsv_path, core_tsv_path, hosts_tsv_path, isotypes_tsv_
 
 
 def save_config(new_config, output_path):
+    """Save a config dictionary to a JSON file."""
     with open(output_path, "w", encoding="utf-8") as output:
         json.dump(new_config, output, ensure_ascii=False, indent=2)
 
 
 def read_config(config_json_path="config.json"):
+    """Read a config dictionary from a JSON file
+    as OrderedDicts."""
     new_config = None
     try:
         with open(config_json_path) as f:
-            new_config = json.load(f)
+            new_config = json.load(f, object_pairs_hook=OrderedDict)
         return new_config
     except Exception as e:
         raise Exception(f"Could not read config from '{config_json_path}': {e}")
 
 
 def load_config(new_config):
-    global config
-    config = new_config
+    """Load a new config into the global dictionaries."""
+    global prefixes, core, hosts, isotypes, assays, fields, labels, ids
+    prefixes = new_config["prefixes"]
+    core = new_config["core"]
+    hosts = new_config["hosts"]
+    isotypes = new_config["isotypes"]
+    assays = new_config["assays"]
+    fields = new_config["fields"]
+    labels = new_config["labels"]
+    ids = new_config["ids"]
 
 
 def update_config(config_json_path="config.json"):
+    """Read and load a config."""
     new_config = read_config(config_json_path)
     result = validate_config(new_config)
     if result:
@@ -148,7 +190,7 @@ def update_config(config_json_path="config.json"):
 
 
 def main():
-    """Read a new configuration from TSV files and save it."""
+    """Read a new configuration from TSV files and save it as JSON."""
     parser = argparse.ArgumentParser(description="Read configuration and save it")
     parser.add_argument("prefixes", type=str, help="The prefixes table")
     parser.add_argument("core", type=str, help="The core table")
@@ -160,7 +202,15 @@ def main():
     parser.add_argument("output", type=str, help="The output JSON file")
     args = parser.parse_args()
 
-    new_config = build_config(args.prefixes, args.core, args.hosts, args.isotypes, args.assays, args.fields, args.labels)
+    new_config = build_config(
+        args.prefixes,
+        args.core,
+        args.hosts,
+        args.isotypes,
+        args.assays,
+        args.fields,
+        args.labels,
+    )
     result = validate_config(new_config)
     if result:
         raise Exception(f"Invalid config: {result}")

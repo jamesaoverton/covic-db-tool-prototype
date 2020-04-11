@@ -1,3 +1,4 @@
 id	label	type	parent
 ID	LABEL	TYPE	C %
-OBI:0001643	neutralization|biological activity	owl:Class	assay
+OBI:0001643	neutralization	owl:Class	assay
+OBI:0000661	VLP ELISA	owl:Class	assay

@@ -6,6 +6,7 @@ from collections import OrderedDict
 from io import BytesIO
 
 from covicdbtools import (
+    config,
     names,
     tables,
     grids,
@@ -26,12 +27,6 @@ hosts = [h["label"] for h in hosts_table[1:]]
 isotypes_table = tables.read_tsv("ontology/isotypes.tsv")
 heavy_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "heavy"]
 light_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "light"]
-
-ids = {}
-for row in hosts_table[1:]:
-    ids[row["label"]] = row["id"]
-for row in isotypes_table[1:]:
-    ids[row["label"]] = row["id"]
 
 headers = [
     {
@@ -137,7 +132,7 @@ Columns:
 
 
 def store_submission(submitter_id, submitter_label, table):
-    """Given the IDs map, a submitter label, and a (validated!) antibody submission table,
+    """Given a submitter ID, a submitter label, and a (validated!) antibody submission table,
     return a table of the submission."""
 
     # TODO: Reuse submissions.store()
@@ -147,7 +142,7 @@ def store_submission(submitter_id, submitter_label, table):
         newrow["ab_label"] = row["Antibody name"]
         newrow["submitter_id"] = submitter_id
         newrow["submitter_label"] = submitter_label
-        newrow["host_type_id"] = ids[row["Host"]]
+        newrow["host_type_id"] = config.ids[row["Host"]]
         newrow["host_type_label"] = row["Host"]
         newrow["isotype"] = row["Isotype"]
         submission.append(newrow)

@@ -3,8 +3,8 @@
 import argparse
 import os
 
-from covicdbtools import update_config
 from covicdbtools import (
+    config,
     names,
     tables,
     grids,
@@ -16,22 +16,11 @@ from covicdbtools import (
 )
 
 
-def find_assay_type_id(path):
-    root, ext = os.path.splitext(path)
-    filename = os.path.basename(root)
-    assay_name = (
-        filename.replace("-submission", "")
-        .replace("-valid", "")
-        .replace("-invalid", "")
-        .replace("-highlighted", "")
-        .replace("-", " ")
-    )
-    for key, value in datasets.assay_type_labels.items():
-        if assay_name == value:
-            return key
-    raise Exception(
-        "Unrecognized assay name '{0}' for path '{1}'".format(assay_name, path)
-    )
+def find_assay_type_id(assay_name):
+    assay_name = assay_name.replace("-", " ")
+    if assay_name in config.assays:
+        return config.assays[assay_name]["id"]
+    raise Exception(f"Unrecognized assay name '{assay_name}'")
 
 
 def read(args):
@@ -54,12 +43,12 @@ def expand(args):
     else:
         raise Exception("Unsupported input format for '{0}'".format(args.input))
 
-    table = names.label_table(labels, table)
+    table = names.label_table(config.labels, table)
 
     if args.output.endswith(".tsv"):
         tables.write_tsv(table, args.output)
     elif args.output.endswith(".html"):
-        grid = grids.table_to_grid(prefixes, fields, table)
+        grid = grids.table_to_grid(config.prefixes, config.fields, table)
         html = grids.grid_to_html(grid)
         templates.write_html("templates/grid.html", {"html": html}, args.output)
     else:
@@ -67,57 +56,53 @@ def expand(args):
 
 
 def fill(args):
-    if "antibodies-submission" in args.output:
+    rows = []
+    if args.input != "":
         table = tables.read_tsv(args.input)
-        grid = grids.table_to_grid(prefixes, fields, table)
-        antibodies.write_xlsx(args.output, grid["rows"])
+        grid = grids.table_to_grid(config.prefixes, config.fields, table)
+        rows = grid["rows"]
+    if args.type == "antibodies":
+        antibodies.write_xlsx(args.output, rows)
     else:
-        table = tables.read_tsv(args.input)
-        grid = grids.table_to_grid(prefixes, fields, table)
-        datasets.write_xlsx(args.output, find_assay_type_id(args.input), grid["rows"])
-
-
-def update(args):
-    if "antibodies-submission" in args.output:
-        antibodies.write_xlsx(args.output)
-    else:
-        datasets.write_xlsx(args.output, find_assay_type_id(args.output))
+        datasets.write_xlsx(args.output, find_assay_type_id(args.type), rows)
 
 
 def validate(args):
     table = None
     grid = None
+    assay_id = None
+    if args.type != "antibodies":
+        assay_id = find_assay_type_id(args.type)
+
     if args.input.endswith(".xlsx"):
-        if "antibodies-submission" in args.output:
+        if args.type == "antibodies":
             table = workbooks.read_xlsx(args.input, "Antibodies")
             grid = antibodies.validate_submission(table)
         else:
             table = workbooks.read_xlsx(args.input, "Dataset")
-            grid = datasets.validate_submission(find_assay_type_id(args.input), table)
+            grid = datasets.validate_submission(assay_id, table)
     elif args.input.endswith(".tsv"):
         table = tables.read_tsv(args.input)
-        if "antibodies-submission" in args.output:
+        if args.type == "antibodies":
             grid = antibodies.validate_submission(table)
         else:
-            grid = datasets.validate_submission(find_assay_type_id(args.input), table)
+            grid = datasets.validate_submission(assay_id, table)
     else:
-        raise Exception("Unsupported input format for '{0}'".format(args.input))
+        raise Exception(f"Unsupported input format for '{args.input}'")
 
     # TODO: Expand outputs
     if not grid:
-        if "antibodies-submission" in args.output:
+        if args.type == "antibodies":
             table = antibodies.store_submission("org:1", "LJI", table)
         else:
-            table = datasets.store_submission(find_assay_type_id(args.input), table)
-        grid = grids.table_to_grid(prefixes, fields, table)
+            table = datasets.store_submission(assay_id, table)
+        grid = grids.table_to_grid(config.prefixes, config.fields, table)
 
     if args.output.endswith(".xlsx"):
-        if "antibodies-submission" in args.output:
+        if args.type == "antibodies":
             antibodies.write_xlsx(args.output, grid["rows"])
         else:
-            datasets.write_xlsx(
-                args.output, find_assay_type_id(args.output), grid["rows"]
-            )
+            datasets.write_xlsx(args.output, assay_id, grid["rows"])
     elif args.output.endswith(".html"):
         html = grids.grid_to_html(grid)
         templates.write_html("templates/grid.html", {"html": html}, args.output)
@@ -136,7 +121,7 @@ def validate(args):
 
 
 def main():
-    update_config()
+    config.update_config()
 
     main_parser = argparse.ArgumentParser()
     subparsers = main_parser.add_subparsers()
@@ -157,15 +142,13 @@ def main():
     parser = subparsers.add_parser(
         "fill", help="Use a TSV table to fill an Excel template"
     )
+    parser.add_argument("type", help="The type of template to fill")
     parser.add_argument("input", help="The TSV file to read")
     parser.add_argument("output", help="The Excel file to write")
     parser.set_defaults(func=fill)
 
-    parser = subparsers.add_parser("update", help="Update an Excel template")
-    parser.add_argument("output", help="The Excel file to write")
-    parser.set_defaults(func=update)
-
     parser = subparsers.add_parser("validate", help="Validate submission")
+    parser.add_argument("type", help="The type of template to validate")
     parser.add_argument("input", help="The input file to validate")
     parser.add_argument("output", help="The output file to write")
     parser.set_defaults(func=validate)

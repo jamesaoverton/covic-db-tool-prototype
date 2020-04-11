@@ -8,6 +8,7 @@ from collections import OrderedDict
 from io import BytesIO
 
 from covicdbtools import (
+    config,
     names,
     tables,
     grids,
@@ -20,9 +21,6 @@ from covicdbtools import (
 
 ### Hardcoded fields
 # TODO: Make this configurable
-
-assays_table = tables.read_tsv("ontology/assays.tsv")
-assays = [r["label"] for r in assays_table[1:]]
 
 qualitative_measures = ["positive", "negative", "unknown"]
 
@@ -64,11 +62,6 @@ headers = {
         "description": "A free-text comment on the assay",
         "locked": True,
     },
-}
-
-assay_type_labels = {
-    "OBI:0001643": "neutralization",
-    "OBI:0000661": "VLP ELISA",
 }
 
 assay_types = {
@@ -213,7 +206,7 @@ def validate_xlsx(assay_type_id, source):
             "message": "Submitted table contains errors.",
             "errors": errors,
             "grid": grid,
-            "filename": assay_type_labels[assay_type_id].replace(" ", "-")
+            "filename": config.labels[assay_type_id].replace(" ", "-")
             + "-submission.xlsx",
             "content": content,
         }

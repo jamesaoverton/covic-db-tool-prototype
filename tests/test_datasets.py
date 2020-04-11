@@ -2,8 +2,13 @@ import os
 
 from collections import OrderedDict
 
-from covicdbtools import tables, workbooks, datasets
+from covicdbtools import config, tables, workbooks, datasets
 from .test_requests import UploadedFile
+
+config.labels = {
+    "OBI:0001643": "neutralization",
+    "OBI:0000661": "VLP ELISA",
+}
 
 
 def test_validate_submission():
