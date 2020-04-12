@@ -170,17 +170,21 @@ def create(author, dataset_config):
 
 
 def store(author, dataset_id, table):
-    # TODO: Expand outputs
-    if not grid:
-        if datatype == "antibodies":
-            table = antibodies.store_submission("org:1", "LJI", table)
-        else:
-            table = datasets.store_submission(assay_id, table)
-        grid = grids.table_to_grid(config.prefixes, config.fields, table)
+    if dataset_id == "antibodies":
+        return antibodies.store(table)
+
+    return failure(f"Unrecognized dataset ID {dataset_id}")
 
 
-def submit(author, dataset_id, table_or_path):
-    pass
+def submit(name, email, dataset_id, table_or_path):
+    if dataset_id == "antibodies":
+        response = validate(dataset_id, table_or_path)
+        if failed(response):
+            return response
+        table = response["table"]
+        return antibodies.submit(name, email, table)
+
+    return failure(f"Unrecognized dataset ID {dataset_id}")
 
 
 def promote(author, dataset_id):

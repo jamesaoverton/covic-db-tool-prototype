@@ -6,8 +6,10 @@
 
 import argparse
 import json
+import os
 
 from collections import OrderedDict
+from git import Repo
 from covicdbtools import tables
 
 
@@ -20,6 +22,12 @@ assays = {}
 fields = {}
 labels = {}
 ids = {}
+
+
+# Global git repositories
+secret = Repo(os.environ.get("CVDB_SECRET"))
+staging = Repo(os.environ.get("CVDB_STAGING"))
+public = Repo(os.environ.get("CVDB_PUBLIC"))
 
 
 ### Prefixes

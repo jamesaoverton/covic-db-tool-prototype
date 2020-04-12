@@ -4,3 +4,4 @@ openpyxl
 pytest
 pyyaml
 tabulate
+gitpython

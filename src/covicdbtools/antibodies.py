@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 
 from collections import OrderedDict
+from git import Actor
 from io import BytesIO
 
 from covicdbtools import (
@@ -15,7 +17,7 @@ from covicdbtools import (
     requests,
     submissions,
 )
-from covicdbtools.responses import success, failure
+from covicdbtools.responses import success, failure, failed
 
 
 ### Hardcoded fields
@@ -71,20 +73,6 @@ headers = [
 ]
 
 
-def read_antibodies(id_to_label, antibodies_tsv_path):
-    return names.label_tsv(id_to_label, antibodies_tsv_path)
-
-
-def read_data(prefixes_tsv_path, fields_tsv_path, labels_tsv_path, antibodies_tsv_path):
-    prefixes = names.read_prefixes(prefixes_tsv_path)
-    labels = names.read_labels(labels_tsv_path)
-    fields = names.read_fields(fields_tsv_path)
-    antibodies = read_antibodies(labels, antibodies_tsv_path)
-    grid = grids.table_to_grid(prefixes, fields, antibodies)
-    grid["message"]: "These are all the antibodies in the system."
-    return grid
-
-
 def fill(rows=[]):
     """Fill the antibodies submission template, returning a list of grids."""
     instructions = """CoVIC-DB Antibodies Submission
@@ -133,3 +121,106 @@ Columns:
 def validate(table):
     """Given a table, validate and return a response with a "grid"."""
     return submissions.validate(headers, table)
+
+
+def submit(name, email, table):
+    """Given a new table of antibodies:
+    1. validate it
+    2. assign IDs and append them to the secrets,
+    3. append the blinded antibodies to the staging table,
+    4. return a response with merged IDs."""
+    response = validate(table)
+    if failed(response):
+        return response
+
+    secret = []
+    path = os.path.join(config.secret.working_tree_dir, "antibodies.tsv")
+    if os.path.isfile(path):
+        secret = tables.read_tsv(path)
+
+    blind = []
+    path = os.path.join(config.staging.working_tree_dir, "antibodies.tsv")
+    if os.path.isfile(path):
+        blind = tables.read_tsv(path)
+
+    if len(secret) != len(blind):
+        return failure(
+            f"Different number of antibody rows: {len(secret)} != {len(blind)}"
+        )
+
+    current_id = "COVIC:0"
+    if len(blind) > 0:
+        current_id = blind[-1]["ab_id"]
+
+    submission = []
+    for row in table:
+        current_id = names.increment_id(current_id)
+
+        # secrets
+        secret_row = OrderedDict()
+        secret_row["ab_id"] = current_id
+        secret_row["ab_name"] = row["Antibody name"]
+        secret_row["creator_name"] = name
+        secret_row["creator_email"] = email
+        secret.append(secret_row)
+
+        # blind
+        blind_row = OrderedDict()
+        blind_row["ab_id"] = current_id
+        blind_row["host_type_id"] = config.ids[row["Host"]]
+        blind_row["host_type_label"] = row["Host"]
+        blind_row["isotype_id"] = config.ids[row["Isotype"]]
+        blind_row["isotype_label"] = row["Isotype"]
+        blind.append(blind_row)
+
+        # submission
+        submission_row = OrderedDict()
+        submission_row["ab_id"] = current_id
+        submission_row["ab_name"] = row["Antibody name"]
+        submission_row["host_type_id"] = config.ids[row["Host"]]
+        submission_row["host_type_label"] = row["Host"]
+        submission_row["isotype_id"] = config.ids[row["Isotype"]]
+        submission_row["isotype_label"] = row["Isotype"]
+        submission.append(submission_row)
+
+    # secret
+    try:
+        path = os.path.join(config.secret.working_tree_dir, "antibodies.tsv")
+        tables.write_tsv(secret, path)
+    except Exception as e:
+        return failure(f"Failed to write '{path}'", {"exception": e})
+    try:
+        author = Actor(name, email)
+        config.secret.index.add([path])
+        config.secret.index.commit(f"Submit antibodies", author=author)
+    except Exception as e:
+        return failure(f"Failed to commit '{path}'", {"exception": e})
+
+    # staging
+    try:
+        path = os.path.join(config.staging.working_tree_dir, "antibodies.tsv")
+        tables.write_tsv(blind, path)
+    except Exception as e:
+        return failure(f"Failed to write '{path}'", {"exception": e})
+    try:
+        author = Actor(name, email)
+        config.staging.index.add([path])
+        config.staging.index.commit(f"Submit antibodies", author=author)
+    except Exception as e:
+        return failure(f"Failed to commit '{path}'", {"exception": e})
+
+    # public
+    try:
+        path = os.path.join(config.public.working_tree_dir, "antibodies.tsv")
+        tables.write_tsv(blind, path)
+    except Exception as e:
+        return failure(f"Failed to write '{path}'", {"exception": e})
+    try:
+        author = Actor("CoVIC", "<covic@lji.org>")
+        config.public.index.add([path])
+        config.public.index.commit(f"Submit antibodies", author=author)
+    except Exception as e:
+        return failure(f"Failed to commit '{path}'", {"exception": e})
+
+    grid = grids.table_to_grid(config.prefixes, config.fields, submission)
+    return success({"table": submission, "grid": grid})

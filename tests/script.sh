@@ -12,14 +12,13 @@ IFS=$'\n\t'
 
 ### Initialization
 
-ROOT="$(pwd)/"
-TEMP="${ROOT}temp/"
-export CVDB_STAGING="${TEMP}staging/"
-export CVDB_SECRET="${TEMP}secret/"
-export CVDB_PUBLIC="${TEMP}public/"
-#EXAMPLE="examples/"
-#CVDB="src/covicdbtools/cli.py"
-AUTHOR="cvdbtools <cvdb@example.com>"
+ROOT="$(pwd)"
+TEMP="${ROOT}/temp"
+export CVDB_SECRET="${TEMP}/secret"
+export CVDB_STAGING="${TEMP}/staging"
+export CVDB_PUBLIC="${TEMP}/public"
+EXAMPLES="${ROOT}/examples"
+CVDB=src/covicdbtools/cli.py
 
 step() {
   STEP="$1"
@@ -43,50 +42,45 @@ trap 'print_failure' INT TERM EXIT
 ### Script
 
 step "Create git data repositories for testing"
+mkdir -p "${CVDB_SECRET}"
+cd "${CVDB_SECRET}"
+git init
 mkdir -p "${CVDB_STAGING}"
 cd "${CVDB_STAGING}"
 git init
-mkdir -p "${CVDB_SECRET}"
 mkdir -p "${CVDB_PUBLIC}"
 cd "${CVDB_PUBLIC}"
 git init
 cd "${ROOT}"
 
-cd "${CVDB_STAGING}"
-assert "staging: directory should be empty" \
+
+step "Submit antibodies invalid"
+assert "submission should fail" \
+"$(${CVDB} submit "Shane Crotty" "shane@lji.org" antibodies "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
+"There were 6 errors
+Error in row 3: Missing required value for 'Antibody name'
+Error in row 6: Missing required value for 'Host'
+Error in row 6: 'Ig1' is not a recognized value for 'Isotype'
+Error in row 8: 'Mus musclus' is not a recognized value for 'Host'
+Error in row 8: 'Igm' is not a recognized value for 'Isotype'
+Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'"
+
+
+step "Submit antibodies valid"
+${CVDB} submit "Shane Crotty" "shane@lji.org" antibodies "${EXAMPLES}/antibodies-submission-valid.xlsx"
+
+cd "${CVDB_SECRET}"
+assert "secret: antibodies.tsv should exist" \
 "$(tree)" \
 ".
+└── antibodies.tsv
 
-0 directories, 0 files"
-assert "stagin: git log should be empty" \
-"$(git log)" \
-""
+0 directories, 1 file"
 
-cd "${CVDB_PUBLIC}"
-assert "public: directory should be empty" \
-"$(tree)" \
-".
-
-0 directories, 0 files"
-assert "public: git log should be empty" \
-"$(git log)" \
-""
-cd "${ROOT}"
-
-
-step "Submit antibodies"
-#${CVDB} submit antibodies ${EXAMPLES}/antibodies-submission-valid.xlsx
-
-# Fake submit antibodies operations
-cd "${CVDB_STAGING}"
-touch antibodies.tsv
-git add antibodies.tsv
-git commit --author "${AUTHOR}" --message "${STEP}"
-cp "${CVDB_STAGING}antibodies.tsv" "${CVDB_PUBLIC}"
-cd "${CVDB_PUBLIC}"
-git add antibodies.tsv
-git commit --author "${AUTHOR}" --message "${STEP}"
-cd "${ROOT}"
+assert "secret: git log should show one commit" \
+"$(git shortlog)" \
+"Shane Crotty (1):
+      Submit antibodies"
 
 cd "${CVDB_STAGING}"
 assert "staging: antibodies.tsv should exist" \
@@ -98,7 +92,7 @@ assert "staging: antibodies.tsv should exist" \
 
 assert "staging: git log should show one commit" \
 "$(git shortlog)" \
-"cvdbtools (1):
+"Shane Crotty (1):
       Submit antibodies"
 
 cd "${CVDB_PUBLIC}"
@@ -111,7 +105,7 @@ assert "public: antibodies.tsv should exist" \
 
 assert "public: git log should show one commit" \
 "$(git shortlog)" \
-"cvdbtools (1):
+"CoVIC (1):
       Submit antibodies"
 
 # TODO: check SQL tables

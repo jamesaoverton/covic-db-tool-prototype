@@ -16,6 +16,8 @@ def guard(response):
     if "errors" in response:
         for error in response["errors"]:
             print(error)
+    if "exception" in response:
+        print(response["exception"])
     sys.exit(1)
 
 
@@ -48,16 +50,26 @@ def fill(args):
     responses.write(response)
 
 
+def maybe_write(response, datatype, output):
+    if output and output.endswith(".xlsx"):
+        response = guard(api.fill_rows(datatype, response["grid"]["rows"]))
+    elif output:
+        response = guard(api.convert(response["grid"], output))
+        response["path"] = output
+        responses.write(response)
+    return response
+
+
 def validate(args):
     """Validate a table and optionally write the result."""
     response = api.validate(args.type, args.input)
-    if args.output and args.output.endswith(".xlsx"):
-        response = guard(api.fill_rows(args.type, response["grid"]["rows"]))
-    elif args.output:
-        response = guard(api.convert(response["grid"], args.output))
-        response["path"] = args.output
-        responses.write(response)
-    guard(response)
+    guard(maybe_write(response, args.type, args.output))
+
+
+def submit(args):
+    """Submit a table, validate, store, and optionally write the result."""
+    response = api.submit(args.name, args.email, args.type, args.input)
+    guard(maybe_write(response, args.type, args.output))
 
 
 def main():
@@ -93,11 +105,19 @@ def main():
     parser.add_argument("output", help="The Excel file to write")
     parser.set_defaults(func=fill)
 
-    parser = subparsers.add_parser("validate", help="Validate submission")
-    parser.add_argument("type", help="The type of template to validate")
+    parser = subparsers.add_parser("validate", help="Validate data")
+    parser.add_argument("type", help="The type of data to validate")
     parser.add_argument("input", help="The input file to validate")
     parser.add_argument("output", help="The output file to write", nargs="?")
     parser.set_defaults(func=validate)
+
+    parser = subparsers.add_parser("submit", help="Submit data")
+    parser.add_argument("name", help="The submitter's name")
+    parser.add_argument("email", help="The submitter's email")
+    parser.add_argument("type", help="The type of data to submit")
+    parser.add_argument("input", help="The input file to submit")
+    parser.add_argument("output", help="The output file to write", nargs="?")
+    parser.set_defaults(func=submit)
 
     args = main_parser.parse_args()
     args.func(args)
