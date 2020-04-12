@@ -1,5 +1,6 @@
 from collections import defaultdict, OrderedDict
 from covicdbtools import grids
+from covicdbtools.responses import success, failure
 
 
 def store(ids, headers, table):
@@ -19,9 +20,8 @@ def store(ids, headers, table):
 
 
 def validate(headers, table):
-    """Given the headers and a (validated!) table, return None if it is valid,
-    otherwise return a grid with problems marked
-    and an "errors" key with a list of errors."""
+    """Given the headers and a (validated!) table, 
+    return a response with "grid" and maybe "errors"."""
     errors = []
     rows = []
     unique = defaultdict(set)
@@ -75,6 +75,11 @@ def validate(headers, table):
 
         rows.append(newrow)
 
-    if len(errors) > 0:
-        return {"errors": errors, "headers": [headers], "rows": rows}
-    return None
+    grid = {"headers": [headers], "rows": rows}
+    error_count = len(errors)
+    if error_count > 0:
+        return failure(
+            f"There were {error_count} errors",
+            {"errors": errors, "table": table, "grid": grid},
+        )
+    return success({"table": table, "grid": grid})

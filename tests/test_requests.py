@@ -27,10 +27,10 @@ def test_validate_request():
     upload = UploadedFile("examples/antibodies-submission.xlsx")
     result = requests.read_file({"file": upload})
     assert result["status"] == 200
-    table = workbooks.read_xlsx(result["content"], "Antibodies")
+    table = workbooks.read(result["content"], "Antibodies")
     assert table == []
 
     tf = tempfile.NamedTemporaryFile(suffix=".xlsx")
     tf.write(result["content"].getvalue())
-    table = workbooks.read_xlsx(tf.name, "Antibodies")
+    table = workbooks.read(tf.name, "Antibodies")
     assert table == []

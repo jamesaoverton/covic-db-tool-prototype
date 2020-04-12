@@ -70,10 +70,27 @@ assay_types = {
 }
 
 
-def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
-    prefixes = names.read_prefixes(prefixes_tsv_path)
-    labels = names.read_labels(labels_tsv_path)
+def get_assay_type_id(assay_type):
+    """Given an assay type name or ID, return the assay type ID."""
+    assay_type_id = assay_type
+    if names.is_id(config.prefixes, assay_type):
+        return assay_type_id
+    assay_name = assay_type.replace("-", " ")
+    if assay_name not in config.ids:
+        raise Exception(f"Unrecognized assay type: {assay_type}")
+    assay_type_id = config.ids[assay_name]
+    if assay_type_id not in assay_types:
+        raise Exception(f"Not an assay type: {assay_type_id} {assay_type}")
+    return assay_type_id
 
+
+def get_assay_headers(assay_type):
+    """Given an assay type name or ID, return the assay headers."""
+    assay_type_id = get_assay_type_id(assay_type)
+    return [headers[key] for key in assay_types[assay_type_id]]
+
+
+def read_data(dataset_path):
     dataset_yaml_path = os.path.join(dataset_path, "dataset.yml")
     with open(dataset_yaml_path, "r") as f:
         dataset = yaml.load(f, Loader=yaml.SafeLoader)
@@ -81,11 +98,11 @@ def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
     fields = []
     for key, value in dataset.items():
         iri = None
-        if names.is_id(prefixes, value):
-            iri = names.id_to_iri(prefixes, value)
+        if names.is_id(config.prefixes, value):
+            iri = names.id_to_iri(config.prefixes, value)
         label = value
-        if value in labels:
-            label = value + " " + labels[value]
+        if value in config.labels:
+            label = value + " " + config.labels[value]
         fields.append({"field": key, "iri": iri, "label": label, "value": value})
 
     assays_tsv_path = os.path.join(dataset_path, "assays.tsv")
@@ -96,15 +113,9 @@ def read_data(prefixes_tsv_path, labels_tsv_path, dataset_path):
     return {"dataset": dataset, "fields": fields, "assays": assays}
 
 
-def write_xlsx(path, assay_type_id, rows=[]):
-    """Write the assays submission template."""
-    keys = None
-    if assay_type_id in assay_types:
-        keys = assay_types[assay_type_id]
-    else:
-        raise Exception("Unrecognize assay type: {0}".format(assay_type_id))
-
-    assay_headers = [headers[key] for key in keys]
+def fill(assay_type, rows=[]):
+    """Fill the assay submission template, returning a list of grids."""
+    assay_headers = get_assay_headers(assay_type)
 
     instructions = """CoVIC-DB Dataset Submission
 
@@ -136,7 +147,7 @@ Columns:
     terminology_grid["title"] = "Terminology"
     terminology_grid["locked"] = True
 
-    submission_grids = [
+    return [
         {"title": "Instructions", "locked": True, "rows": instructions_rows},
         {
             "title": "Dataset",
@@ -148,91 +159,20 @@ Columns:
         terminology_grid,
     ]
 
-    workbooks.write_xlsx(submission_grids, path)
 
-
-def store_submission(assay_type_id, table):
-    """Given the assay_type_id and a (validated!) antibody submission table,
-    return a table of the submission."""
-    keys = None
-    if assay_type_id in assay_types:
-        keys = assay_types[assay_type_id]
-    else:
-        raise Exception("Unrecognize assay type: {0}".format(assay_type_id))
-    assay_headers = [headers[key] for key in keys]
-
-    # TODO: actually store the data!
-    return submissions.store({}, assay_headers, table)
-
-
-def validate_submission(assay_type_id, table):
-    """Given the assay_type_id and a submission table, return None if it is valid,
-    otherwise return a grid with problems marked
-    and an "errors" key with a list of errors."""
-    keys = None
-    if assay_type_id in assay_types:
-        keys = assay_types[assay_type_id]
-    else:
-        raise Exception("Unrecognize assay type: {0}".format(assay_type_id))
-    assay_headers = [headers[key] for key in keys]
-
+def validate(assay_type, table):
+    """Given the assay_type_id and a submission table,
+    validate it and return a response with "grid" and maybe "errors"."""
+    assay_headers = get_assay_headers(assay_type)
     return submissions.validate(assay_headers, table)
 
 
-### Validate Excel
-#
-# These validation methods read Excel (.xlsx) files
-# and return a response dictionary that looks like an HTML reponse
-# with some extra fields. See the `responses` module.
-
-
-def validate_xlsx(assay_type_id, source):
-    """Given a submitted_id string, a submitter_label string,
-    and a file-like object (path, BytesIO) for an XLSX file,
-    validate it the file and return a response dictionary."""
-    try:
-        table = workbooks.read_xlsx(source, sheet="Dataset")
-    except Exception as e:
-        return {"status": 400, "message": "Could not create XLSX file", "exception": e}
-
-    grid = validate_submission(assay_type_id, table)
-    if grid:
-        errors = grid["errors"]
-        del grid["errors"]
-        content = BytesIO()
-        write_xlsx(content, assay_type_id, grid["rows"])
-        return {
-            "status": 400,
-            "message": "Submitted table contains errors.",
-            "errors": errors,
-            "grid": grid,
-            "filename": config.labels[assay_type_id].replace(" ", "-")
-            + "-submission.xlsx",
-            "content": content,
-        }
-
-    table = store_submission(assay_type_id, table)
-    return {"status": 200, "message": "Success", "table": table}
-
-
-def validate_request(assay_type_id, request_files):
-    """Given an assay_type_id and a and Django request.FILES object with one file,
-    read it, validate it, and return a response dictionary."""
-    result = requests.read_file(request_files)
-    if result["status"] != 200:
-        return result
-    return validate_xlsx(assay_type_id, result["content"])
-
-
 if __name__ == "__main__":
+    config.update()
     parser = argparse.ArgumentParser(description="Convert dataset text files to HTML")
     parser.add_argument("template", type=str, help="The template to use")
-    parser.add_argument("prefixes", type=str, help="The prefixes table")
-    parser.add_argument("labels", type=str, help="The labels table")
     parser.add_argument("dataset", type=str, help="The dataset directory")
     parser.add_argument("output", type=str, help="The output file")
     args = parser.parse_args()
 
-    templates.write_html(
-        args.template, read_data(args.prefixes, args.labels, args.dataset), args.output
-    )
+    templates.write_html(args.template, read_data(args.dataset), args.output)

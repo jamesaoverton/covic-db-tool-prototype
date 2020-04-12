@@ -7,9 +7,6 @@ def test_is_table():
     table = "Foo"
     assert tables.is_table(table) == False
 
-    table = []
-    assert tables.is_table(table) == False
-
     table = [{"foo": "bar"}]
     assert tables.is_table(table) == False
 

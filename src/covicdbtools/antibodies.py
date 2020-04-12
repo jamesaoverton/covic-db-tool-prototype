@@ -13,9 +13,10 @@ from covicdbtools import (
     workbooks,
     templates,
     requests,
-    responses,
     submissions,
 )
+from covicdbtools.responses import success, failure
+
 
 ### Hardcoded fields
 # TODO: Make this configurable
@@ -84,8 +85,8 @@ def read_data(prefixes_tsv_path, fields_tsv_path, labels_tsv_path, antibodies_ts
     return grid
 
 
-def write_xlsx(path, rows=[]):
-    """Write the antibodies submission template."""
+def fill(rows=[]):
+    """Fill the antibodies submission template, returning a list of grids."""
     instructions = """CoVIC-DB Antibodies Submission
 
 Add your antibodies to the 'Antibodies' sheet. Do not edit the other sheets.
@@ -116,7 +117,7 @@ Columns:
     terminology_grid["title"] = "Terminology"
     terminology_grid["locked"] = True
 
-    submission_grids = [
+    return [
         {"title": "Instructions", "locked": True, "rows": instructions_rows},
         {
             "title": "Antibodies",
@@ -128,93 +129,7 @@ Columns:
         terminology_grid,
     ]
 
-    workbooks.write_xlsx(submission_grids, path)
 
-
-def store_submission(submitter_id, submitter_label, table):
-    """Given a submitter ID, a submitter label, and a (validated!) antibody submission table,
-    return a table of the submission."""
-
-    # TODO: Reuse submissions.store()
-    submission = []
-    for row in table:
-        newrow = OrderedDict()
-        newrow["ab_label"] = row["Antibody name"]
-        newrow["submitter_id"] = submitter_id
-        newrow["submitter_label"] = submitter_label
-        newrow["host_type_id"] = config.ids[row["Host"]]
-        newrow["host_type_label"] = row["Host"]
-        newrow["isotype"] = row["Isotype"]
-        submission.append(newrow)
-
-    # TODO: actually store the data!
-    return submission
-
-
-def validate_submission(table):
-    """Given the IDs map and a submission table, return None if it is valid,
-    otherwise return a grid with problems marked
-    and an "errors" key with a list of errors."""
+def validate(table):
+    """Given a table, validate and return a response with a "grid"."""
     return submissions.validate(headers, table)
-
-
-### Validate Excel
-#
-# These validation methods read Excel (.xlsx) files
-# and return a response dictionary that looks like an HTML reponse
-# with some extra fields. See the `responses` module.
-
-
-def validate_xlsx(submitter_id, submitter_label, source):
-    """Given a submitted_id string, a submitter_label string,
-    and a file-like object (path, BytesIO) for an XLSX file,
-    validate it the file and return a response dictionary."""
-    try:
-        table = workbooks.read_xlsx(source, sheet="Antibodies")
-    except Exception as e:
-        return {"status": 400, "message": "Could not create XLSX file", "exception": e}
-
-    grid = validate_submission(table)
-    if grid:
-        errors = grid["errors"]
-        del grid["errors"]
-        content = BytesIO()
-        write_xlsx(content, grid["rows"])
-        return {
-            "status": 400,
-            "message": "Submitted table contains errors.",
-            "errors": errors,
-            "grid": grid,
-            "filename": "antibodies-submission.xlsx",
-            "content": content,
-        }
-
-    table = store_submission(submitter_id, submitter_label, table)
-    return {"status": 200, "message": "Success", "table": table}
-
-
-def validate_request(submitter_id, submitter_label, request_files):
-    """Given a submitted_id string, a submitter_label string,
-    and Django request.FILES object with one file,
-    read it, validate it, and return a response dictionary."""
-    result = requests.read_file(request_files)
-    if result["status"] != 200:
-        return result
-    return validate_xlsx(submitter_id, submitter_label, result["content"])
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Convert antibodies table to HTML")
-    parser.add_argument("template", type=str, help="The template to use")
-    parser.add_argument("prefixes", type=str, help="The prefixes table")
-    parser.add_argument("fields", type=str, help="The fields table")
-    parser.add_argument("labels", type=str, help="The labels table")
-    parser.add_argument("antibodies", type=str, help="The antibodies table")
-    parser.add_argument("output", type=str, help="The output file")
-    args = parser.parse_args()
-
-    templates.write_html(
-        args.template,
-        read_data(args.prefixes, args.fields, args.labels, args.antibodies),
-        args.output,
-    )

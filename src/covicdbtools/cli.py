@@ -1,127 +1,67 @@
 #!/usr/bin/env python
 
 import argparse
-import os
+import sys
 
-from covicdbtools import (
-    config,
-    names,
-    tables,
-    grids,
-    workbooks,
-    templates,
-    antibodies,
-    datasets,
-    submissions,
-)
+from covicdbtools import api, config, responses, tables
 
 
-def find_assay_type_id(assay_name):
-    assay_name = assay_name.replace("-", " ")
-    if assay_name in config.assays:
-        return config.assays[assay_name]["id"]
-    raise Exception(f"Unrecognized assay name '{assay_name}'")
+def guard(response):
+    """Given a successful response, just return it,
+    otherwise print an error message and exit."""
+    if response and responses.succeeded(response):
+        return response
+    if "message" in response:
+        print(response["message"])
+    if "errors" in response:
+        for error in response["errors"]:
+            print(error)
+    sys.exit(1)
 
 
 def read(args):
-    table = None
-    if args.input.endswith(".xlsx"):
-        table = workbooks.read_xlsx(args.input, args.sheet)
-    elif args.input.endswith(".tsv"):
-        table = tables.read_tsv(args.input)
-    else:
-        raise Exception("Unsupported input format for '{0}'".format(args.input))
-    tables.print_tsv(table)
+    """Read a table and print to STDOUT."""
+    response = guard(api.read(args.input, args.sheet))
+    tables.print_tsv(response["table"])
 
 
 def expand(args):
-    table = None
-    if args.input.endswith(".xlsx"):
-        table = workbooks.read_xlsx(args.input, args.sheet)
-    elif args.input.endswith(".tsv"):
-        table = tables.read_tsv(args.input)
-    else:
-        raise Exception("Unsupported input format for '{0}'".format(args.input))
+    """Read a table, expand IDs and labels, then write it."""
+    response = guard(api.expand(args.input, args.sheet))
+    response = guard(api.convert(response["table"], args.output))
+    response["path"] = args.output
+    responses.write(response)
 
-    table = names.label_table(config.labels, table)
 
-    if args.output.endswith(".tsv"):
-        tables.write_tsv(table, args.output)
-    elif args.output.endswith(".html"):
-        grid = grids.table_to_grid(config.prefixes, config.fields, table)
-        html = grids.grid_to_html(grid)
-        templates.write_html("templates/grid.html", {"html": html}, args.output)
-    else:
-        raise Exception("Unsupported output format for '{0}'".format(args.output))
+def convert(args):
+    """Read a table and save it to another format."""
+    response = guard(api.read(args.input, args.sheet))
+    response = guard(api.convert(response["table"], args.output))
+    response["path"] = args.output
+    responses.write(response)
 
 
 def fill(args):
-    rows = []
-    if args.input != "":
-        table = tables.read_tsv(args.input)
-        grid = grids.table_to_grid(config.prefixes, config.fields, table)
-        rows = grid["rows"]
-    if args.type == "antibodies":
-        antibodies.write_xlsx(args.output, rows)
-    else:
-        datasets.write_xlsx(args.output, find_assay_type_id(args.type), rows)
+    """Fill a template with optional table of data then write it."""
+    response = guard(api.fill(args.type, args.input))
+    response["path"] = args.output
+    responses.write(response)
 
 
 def validate(args):
-    table = None
-    grid = None
-    assay_id = None
-    if args.type != "antibodies":
-        assay_id = find_assay_type_id(args.type)
-
-    if args.input.endswith(".xlsx"):
-        if args.type == "antibodies":
-            table = workbooks.read_xlsx(args.input, "Antibodies")
-            grid = antibodies.validate_submission(table)
-        else:
-            table = workbooks.read_xlsx(args.input, "Dataset")
-            grid = datasets.validate_submission(assay_id, table)
-    elif args.input.endswith(".tsv"):
-        table = tables.read_tsv(args.input)
-        if args.type == "antibodies":
-            grid = antibodies.validate_submission(table)
-        else:
-            grid = datasets.validate_submission(assay_id, table)
-    else:
-        raise Exception(f"Unsupported input format for '{args.input}'")
-
-    # TODO: Expand outputs
-    if not grid:
-        if args.type == "antibodies":
-            table = antibodies.store_submission("org:1", "LJI", table)
-        else:
-            table = datasets.store_submission(assay_id, table)
-        grid = grids.table_to_grid(config.prefixes, config.fields, table)
-
-    if args.output.endswith(".xlsx"):
-        if args.type == "antibodies":
-            antibodies.write_xlsx(args.output, grid["rows"])
-        else:
-            datasets.write_xlsx(args.output, assay_id, grid["rows"])
-    elif args.output.endswith(".html"):
-        html = grids.grid_to_html(grid)
-        templates.write_html("templates/grid.html", {"html": html}, args.output)
-    elif "errors" in grid:
-        for error in errors:
-            print(error)
-        raise Exception(
-            "Validation errors cannot be stored in chosen format '{0}'".format(
-                args.output
-            )
-        )
-    elif args.output.endswith(".tsv"):
-        tables.write_tsv(table, args.output)
-    else:
-        raise Exception("Unsupported output format for '{0}'".format(args.output))
+    """Validate a table and optionally write the result."""
+    response = api.validate(args.type, args.input)
+    if args.output and args.output.endswith(".xlsx"):
+        response = guard(api.fill_rows(args.type, response["grid"]["rows"]))
+    elif args.output:
+        response = guard(api.convert(response["grid"], args.output))
+        response["path"] = args.output
+        responses.write(response)
+    guard(response)
 
 
 def main():
-    config.update_config()
+    config.update()
 
     main_parser = argparse.ArgumentParser()
     subparsers = main_parser.add_subparsers()
@@ -130,6 +70,12 @@ def main():
     parser.add_argument("input", help="The table file to read")
     parser.add_argument("sheet", help="The sheet to read", nargs="?", default=None)
     parser.set_defaults(func=read)
+
+    parser = subparsers.add_parser("convert", help="Convert a table to another format")
+    parser.add_argument("input", help="The table file to read")
+    parser.add_argument("sheet", help="The sheet to read", nargs="?", default=None)
+    parser.add_argument("output", help="The file to write")
+    parser.set_defaults(func=convert)
 
     parser = subparsers.add_parser(
         "expand", help="Expand a concise table to a labelled table"
@@ -150,7 +96,7 @@ def main():
     parser = subparsers.add_parser("validate", help="Validate submission")
     parser.add_argument("type", help="The type of template to validate")
     parser.add_argument("input", help="The input file to validate")
-    parser.add_argument("output", help="The output file to write")
+    parser.add_argument("output", help="The output file to write", nargs="?")
     parser.set_defaults(func=validate)
 
     args = main_parser.parse_args()

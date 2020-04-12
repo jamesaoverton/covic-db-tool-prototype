@@ -73,7 +73,7 @@ def validate_grid(grid):
         if len(headers) < 1:
             return "Grid 'headers' has no rows"
         for i in range(0, len(headers)):
-            row = rows[i]
+            row = headers[i]
             if type(row) is not list:
                 return "Row {0} is not a list".format(i)
             for j in range(0, len(row)):

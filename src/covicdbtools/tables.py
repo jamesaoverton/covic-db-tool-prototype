@@ -20,7 +20,7 @@ def validate_table(table):
     if type(table) is not list:
         return "Input is not a list"
     if len(table) < 1:
-        return "Table has no rows"
+        return None
     keys = table[0].keys()
     for i in range(0, len(table)):
         row = table[i]

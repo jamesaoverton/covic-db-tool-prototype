@@ -100,10 +100,10 @@ def read_ids(labels_tsv_path):
 # A configuration object is just a dictionary with certain keys.
 
 
-def validate_config(new_config):
+def validate(config):
     """Given a config dictionary, return None if it is valid,
     otherwise return a string describing the problem."""
-    if not isinstance(new_config, dict):
+    if not isinstance(config, dict):
         return "Config is not a dictionary"
     for key in [
         "prefixes",
@@ -115,19 +115,19 @@ def validate_config(new_config):
         "labels",
         "ids",
     ]:
-        if key not in new_config:
+        if key not in config:
             return f"Config is missing key '{key}'"
     return None
 
 
-def is_config(new_config):
+def is_config(config):
     """Given a config dictionary, return True if it is valid, False otherwise."""
-    if validate_config(new_config):
+    if validate(config):
         return False
     return True
 
 
-def build_config(
+def build(
     prefixes_tsv_path,
     core_tsv_path,
     hosts_tsv_path,
@@ -137,56 +137,56 @@ def build_config(
     labels_tsv_path,
 ):
     """Read TSV files and return a new config dictionary."""
-    new_config = {}
-    new_config["prefixes"] = read_prefixes(prefixes_tsv_path)
-    new_config["core"] = read_terms(core_tsv_path)
-    new_config["hosts"] = read_terms(hosts_tsv_path)
-    new_config["isotypes"] = read_terms(isotypes_tsv_path)
-    new_config["assays"] = read_terms(assays_tsv_path)
-    new_config["fields"] = read_fields(fields_tsv_path)
-    new_config["labels"] = read_labels(labels_tsv_path)
-    new_config["ids"] = read_ids(labels_tsv_path)
-    return new_config
+    config = {}
+    config["prefixes"] = read_prefixes(prefixes_tsv_path)
+    config["core"] = read_terms(core_tsv_path)
+    config["hosts"] = read_terms(hosts_tsv_path)
+    config["isotypes"] = read_terms(isotypes_tsv_path)
+    config["assays"] = read_terms(assays_tsv_path)
+    config["fields"] = read_fields(fields_tsv_path)
+    config["labels"] = read_labels(labels_tsv_path)
+    config["ids"] = read_ids(labels_tsv_path)
+    return config
 
 
-def save_config(new_config, output_path):
+def save(config, output_path):
     """Save a config dictionary to a JSON file."""
     with open(output_path, "w", encoding="utf-8") as output:
-        json.dump(new_config, output, ensure_ascii=False, indent=2)
+        json.dump(config, output, ensure_ascii=False, indent=2)
 
 
-def read_config(config_json_path="config.json"):
+def read(config_json_path="config.json"):
     """Read a config dictionary from a JSON file
     as OrderedDicts."""
-    new_config = None
+    config = None
     try:
         with open(config_json_path) as f:
-            new_config = json.load(f, object_pairs_hook=OrderedDict)
-        return new_config
+            config = json.load(f, object_pairs_hook=OrderedDict)
+        return config
     except Exception as e:
         raise Exception(f"Could not read config from '{config_json_path}': {e}")
 
 
-def load_config(new_config):
+def load(config):
     """Load a new config into the global dictionaries."""
     global prefixes, core, hosts, isotypes, assays, fields, labels, ids
-    prefixes = new_config["prefixes"]
-    core = new_config["core"]
-    hosts = new_config["hosts"]
-    isotypes = new_config["isotypes"]
-    assays = new_config["assays"]
-    fields = new_config["fields"]
-    labels = new_config["labels"]
-    ids = new_config["ids"]
+    prefixes = config["prefixes"]
+    core = config["core"]
+    hosts = config["hosts"]
+    isotypes = config["isotypes"]
+    assays = config["assays"]
+    fields = config["fields"]
+    labels = config["labels"]
+    ids = config["ids"]
 
 
-def update_config(config_json_path="config.json"):
+def update(config_json_path="config.json"):
     """Read and load a config."""
-    new_config = read_config(config_json_path)
-    result = validate_config(new_config)
+    config = read(config_json_path)
+    result = validate(config)
     if result:
         raise Exception(f"Invalid config '{config_json_path}': {result}")
-    load_config(new_config)
+    load(config)
 
 
 def main():
@@ -202,7 +202,7 @@ def main():
     parser.add_argument("output", type=str, help="The output JSON file")
     args = parser.parse_args()
 
-    new_config = build_config(
+    config = build(
         args.prefixes,
         args.core,
         args.hosts,
@@ -211,10 +211,10 @@ def main():
         args.fields,
         args.labels,
     )
-    result = validate_config(new_config)
+    result = validate(config)
     if result:
         raise Exception(f"Invalid config: {result}")
-    save_config(new_config, args.output)
+    save(config, args.output)
 
 
 if __name__ == "__main__":

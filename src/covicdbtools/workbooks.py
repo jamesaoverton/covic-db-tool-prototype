@@ -26,7 +26,7 @@ def read_sheet(ws):
     return table
 
 
-def read_xlsx(path, sheet=None):
+def read(path, sheet=None):
     wb = load_workbook(path)
     ws = wb.active
     if sheet:
@@ -34,8 +34,8 @@ def read_xlsx(path, sheet=None):
     return read_sheet(ws)
 
 
-def write_xlsx(grids, path):
-    """Given a list of grids and a file path, write an XLSX file.
+def write(grids, output):
+    """Given a list of grids and a file-like output, save an XLSX file.
     In addition to "headers" and "rows", the grid may contain these keys:
     - title string: sets the sheet title in Excel
     - active bool: sets the active sheet in Excel
@@ -104,4 +104,4 @@ def write_xlsx(grids, path):
         if "locked" in grid and grid["locked"]:
             grid["worksheet"].protection.enable()
 
-    wb.save(filename=path)
+    wb.save(output)

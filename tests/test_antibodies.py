@@ -2,21 +2,22 @@ import os
 
 from collections import OrderedDict
 
-from covicdbtools import tables, workbooks, antibodies
+from covicdbtools import tables, workbooks, antibodies, api
+from covicdbtools.responses import succeeded, failed
 from .test_requests import UploadedFile
 
 
-def test_validate_submission():
+def test_validate():
     path = "examples/antibodies-submission-valid.tsv"
     table = tables.read_tsv(path)
-    grid = antibodies.validate_submission(table)
-    assert grid is None
+    response = antibodies.validate(table)
+    assert succeeded(response)
 
     path = "examples/antibodies-submission-invalid.tsv"
     table = tables.read_tsv(path)
-    grid = antibodies.validate_submission(table)
-    errors = grid["errors"]
-    assert errors == [
+    response = antibodies.validate(table)
+    assert failed(response)
+    assert response["errors"] == [
         "Error in row 3: Missing required value for 'Antibody name'",
         "Error in row 6: Missing required value for 'Host'",
         "Error in row 6: 'Ig1' is not a recognized value for 'Isotype'",
@@ -27,31 +28,30 @@ def test_validate_submission():
 
 
 def test_validate_request():
-    upload = UploadedFile("examples/antibodies-submission.xlsx")
-    result = antibodies.validate_request("org:1", "Acme", {"file": upload})
-    assert result == {"status": 200, "message": "Success", "table": []}
+    upload = UploadedFile("examples/antibodies-submission-valid.xlsx")
+    response = api.validate_request("antibodies", {"file": upload})
+    assert succeeded(response)
 
     upload = UploadedFile("examples/antibodies-submission-invalid.xlsx")
-    result = antibodies.validate_request("org:1", "Acme", {"file": upload})
-    assert result["status"] == 400
-    table = workbooks.read_xlsx(result["content"], "Antibodies")
-    assert table[0]["Antibody name"] == "A6"
+    response = api.validate_request("antibodies", {"file": upload})
+    assert failed(response)
+    assert response["table"][0]["Antibody name"] == "A6"
 
 
 def test_examples():
     example = "antibodies-submission"
     table = []
-    excel = workbooks.read_xlsx("examples/{0}.xlsx".format(example))
+    excel = workbooks.read("examples/{0}.xlsx".format(example))
     assert table == excel
 
     examples = ["antibodies-submission-valid", "antibodies-submission-invalid"]
     for example in examples:
         tsv = tables.read_tsv("examples/{0}.tsv".format(example))
-        excel = workbooks.read_xlsx("examples/{0}.xlsx".format(example))
+        excel = workbooks.read("examples/{0}.xlsx".format(example))
         assert tsv == excel
 
     example = "antibodies-submission-invalid"
     tsv = tables.read_tsv("examples/{0}.tsv".format(example))
     example = "antibodies-submission-invalid-highlighted"
-    excel = workbooks.read_xlsx("examples/{0}.xlsx".format(example))
+    excel = workbooks.read("examples/{0}.xlsx".format(example))
     assert tsv == excel
