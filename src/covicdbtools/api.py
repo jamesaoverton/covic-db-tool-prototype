@@ -165,8 +165,8 @@ def validate_request(datatype, request_files):
     return validate(datatype, table)
 
 
-def create(author, dataset_config):
-    pass
+def create(name, email, datatype):
+    return datasets.create(name, email, datatype)
 
 
 def store(author, dataset_id, table):

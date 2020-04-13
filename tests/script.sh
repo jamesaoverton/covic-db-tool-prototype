@@ -56,7 +56,7 @@ cd "${ROOT}"
 
 step "Submit antibodies invalid"
 assert "submission should fail" \
-"$(${CVDB} submit "Shane Crotty" "shane@lji.org" antibodies "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
+"$(${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
 "There were 6 errors
 Error in row 3: Missing required value for 'Antibody name'
 Error in row 6: Missing required value for 'Host'
@@ -67,7 +67,7 @@ Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'"
 
 
 step "Submit antibodies valid"
-${CVDB} submit "Shane Crotty" "shane@lji.org" antibodies "${EXAMPLES}/antibodies-submission-valid.xlsx"
+${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-valid.xlsx"
 
 cd "${CVDB_SECRET}"
 assert "secret: antibodies.tsv should exist" \
@@ -108,13 +108,60 @@ assert "public: git log should show one commit" \
 "CoVIC (1):
       Submit antibodies"
 
-# TODO: check SQL tables
 cd "${ROOT}"
 
 
-#step "Create Dataset"
-#${CVDB} create dataset "${EXAMPLES}/dataset.yml"
-# TODO: create dataset: assay type, name, etc.
+step "Create Dataset"
+assert "staging: dataset 1 created" \
+"$(${CVDB} create "Jon Yewdell" "jyewdell@niaid.nih.gov" "neutralization")" \
+"Created dataset 1"
+
+cd "${CVDB_SECRET}"
+assert "secret: files not changed" \
+"$(tree)" \
+".
+└── antibodies.tsv
+
+0 directories, 1 file"
+
+assert "secret: git log not changed" \
+"$(git shortlog)" \
+"Shane Crotty (1):
+      Submit antibodies"
+
+cd "${CVDB_STAGING}"
+assert "staging: dataets/1/dataset.yml should exist" \
+"$(tree)" \
+".
+├── antibodies.tsv
+└── datasets
+    └── 1
+        └── dataset.yml
+
+2 directories, 2 files"
+
+assert "staging: git log should show two commits" \
+"$(git shortlog)" \
+"Jon Yewdell (1):
+      Create dataset 1
+
+Shane Crotty (1):
+      Submit antibodies"
+
+cd "${CVDB_PUBLIC}"
+assert "public: files not changed" \
+"$(tree)" \
+".
+└── antibodies.tsv
+
+0 directories, 1 file"
+
+assert "public: git log not changed" \
+"$(git shortlog)" \
+"CoVIC (1):
+      Submit antibodies"
+
+cd "${ROOT}"
 # TODO: fetch .xlsx for dataset
 # TODO: check .xlsx
 

@@ -2,9 +2,11 @@
 
 import argparse
 import os
+import re
 import yaml
 
 from collections import OrderedDict
+from git import Actor
 from io import BytesIO
 
 from covicdbtools import (
@@ -15,9 +17,9 @@ from covicdbtools import (
     workbooks,
     templates,
     requests,
-    responses,
     submissions,
 )
+from covicdbtools.responses import success, failure, failed
 
 ### Hardcoded fields
 # TODO: Make this configurable
@@ -165,6 +167,47 @@ def validate(assay_type, table):
     validate it and return a response with "grid" and maybe "errors"."""
     assay_headers = get_assay_headers(assay_type)
     return submissions.validate(assay_headers, table)
+
+
+def create(name, email, assay_type):
+    assay_type_id = get_assay_type_id(assay_type)
+    datasets_path = os.path.join(config.staging.working_tree_dir, "datasets")
+    current_id = 0
+    if not os.path.exists(datasets_path):
+        os.makedirs(datasets_path)
+    if not os.path.isdir(datasets_path):
+        return failure(f"'{datasets_path}' is not a directory")
+    for root, dirs, files in os.walk(datasets_path):
+        for name in dirs:
+            if re.match(r"\d+", name):
+                current_id = max(current_id, int(name))
+    dataset_id = current_id + 1
+
+    # staging
+    try:
+        dataset_path = os.path.join(datasets_path, str(dataset_id))
+        os.mkdir(dataset_path)
+    except Exception as e:
+        return failure(f"Failed to create '{dataset_path}'", {"exception": e})
+    try:
+        dataset = {
+                "Dataset ID": f"ds:{dataset_id}",
+                "Assay type ID": assay_type_id,
+                }
+        yaml_path = os.path.join(dataset_path, "dataset.yml")
+        with open(yaml_path, "w") as outfile:
+            yaml.dump(dataset, outfile, sort_keys=False)
+    except Exception as e:
+        return failure(f"Failed to write '{yaml_path}'", {"exception": e})
+    try:
+        author = Actor(name, email)
+        config.staging.index.add([yaml_path])
+        config.staging.index.commit(f"Create dataset {dataset_id}", author=author)
+    except Exception as e:
+        return failure(f"Failed to commit '{yaml_path}'", {"exception": e})
+
+    print(f"Created dataset {dataset_id}")
+    return success({"dataset_id": dataset_id})
 
 
 if __name__ == "__main__":

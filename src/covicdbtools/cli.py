@@ -9,6 +9,9 @@ from covicdbtools import api, config, responses, tables
 def guard(response):
     """Given a successful response, just return it,
     otherwise print an error message and exit."""
+    if not response:
+        print("Bad response:", response)
+        sys.exit(1)
     if response and responses.succeeded(response):
         return response
     if "message" in response:
@@ -72,6 +75,11 @@ def submit(args):
     guard(maybe_write(response, args.type, args.output))
 
 
+def create(args):
+    """Create a new dataset with a given assay type."""
+    guard(api.create(args.name, args.email, args.type))
+
+
 def main():
     config.update()
 
@@ -118,6 +126,12 @@ def main():
     parser.add_argument("input", help="The input file to submit")
     parser.add_argument("output", help="The output file to write", nargs="?")
     parser.set_defaults(func=submit)
+
+    parser = subparsers.add_parser("create", help="Create a new dataset")
+    parser.add_argument("name", help="The submitter's name")
+    parser.add_argument("email", help="The submitter's email")
+    parser.add_argument("type", help="The type of data to submit")
+    parser.set_defaults(func=create)
 
     args = main_parser.parse_args()
     args.func(args)
