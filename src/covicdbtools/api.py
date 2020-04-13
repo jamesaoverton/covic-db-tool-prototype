@@ -169,13 +169,6 @@ def create(name, email, datatype):
     return datasets.create(name, email, datatype)
 
 
-def store(author, dataset_id, table):
-    if dataset_id == "antibodies":
-        return antibodies.store(table)
-
-    return failure(f"Unrecognized dataset ID {dataset_id}")
-
-
 def submit(name, email, dataset_id, table_or_path):
     if dataset_id == "antibodies":
         response = validate(dataset_id, table_or_path)
@@ -183,8 +176,12 @@ def submit(name, email, dataset_id, table_or_path):
             return response
         table = response["table"]
         return antibodies.submit(name, email, table)
-
-    return failure(f"Unrecognized dataset ID {dataset_id}")
+    else:
+        response = validate(dataset_id, table_or_path)
+        if failed(response):
+            return response
+        table = response["table"]
+        return datasets.submit(name, email, dataset_id, table)
 
 
 def promote(author, dataset_id):

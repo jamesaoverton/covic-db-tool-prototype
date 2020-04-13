@@ -165,9 +165,17 @@ cd "${ROOT}"
 # TODO: fetch .xlsx for dataset
 # TODO: check .xlsx
 
-#step "Submit Invalid Assays"
-#${CVDB} submit assays "${EXAMPLES}/neutralization-submission-invalid.xlsx" > "${TEMP}/invalid.xlsx"
-# TODO: check invalid output
+
+step "Submit Invalid Assays"
+assert "submission should fail" \
+"$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
+"There were 5 errors
+Error in row 2: Missing required value for 'Antibody name'
+Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody name'
+Error in row 5: 'postive' is not a recognized value for 'Qualitative measure'
+Error in row 5: 'none' is not of type 'float' in 'Titer'
+Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measure'"
+
 
 #step "Submit Valid Assays"
 #${CVDB} submit assays "${EXAMPLES}/neutralization-submission-valid.xlsx"

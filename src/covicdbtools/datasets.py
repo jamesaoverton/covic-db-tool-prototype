@@ -74,13 +74,22 @@ assay_types = {
 
 def get_assay_type_id(assay_type):
     """Given an assay type name or ID, return the assay type ID."""
-    assay_type_id = assay_type
+    assay_type_id = None
     if names.is_id(config.prefixes, assay_type):
-        return assay_type_id
-    assay_name = assay_type.replace("-", " ")
-    if assay_name not in config.ids:
+        assay_type_id = assay_type
+    else:
+        assay_name = assay_type.replace("-", " ")
+        if assay_name in config.ids:
+            assay_type_id = config.ids[assay_name]
+        else:
+            yaml_path = os.path.join(config.staging.working_tree_dir, "datasets", assay_type, "dataset.yml")
+            if os.path.isfile(yaml_path):
+                with open(yaml_path, "r") as f:
+                    dataset = yaml.load(f, Loader=yaml.SafeLoader)
+                if "Assay type ID" in dataset:
+                    assay_type_id = dataset["Assay type ID"]
+    if not assay_type_id:
         raise Exception(f"Unrecognized assay type: {assay_type}")
-    assay_type_id = config.ids[assay_name]
     if assay_type_id not in assay_types:
         raise Exception(f"Not an assay type: {assay_type_id} {assay_type}")
     return assay_type_id
@@ -191,9 +200,9 @@ def create(name, email, assay_type):
         return failure(f"Failed to create '{dataset_path}'", {"exception": e})
     try:
         dataset = {
-                "Dataset ID": f"ds:{dataset_id}",
-                "Assay type ID": assay_type_id,
-                }
+            "Dataset ID": f"ds:{dataset_id}",
+            "Assay type ID": assay_type_id,
+        }
         yaml_path = os.path.join(dataset_path, "dataset.yml")
         with open(yaml_path, "w") as outfile:
             yaml.dump(dataset, outfile, sort_keys=False)
@@ -208,6 +217,19 @@ def create(name, email, assay_type):
 
     print(f"Created dataset {dataset_id}")
     return success({"dataset_id": dataset_id})
+
+
+def submit(name, email, dataset_id, table):
+    """Given a new table of antibodies:
+    1. validate it
+    2. assign IDs and append them to the secrets,
+    3. append the blinded antibodies to the staging table,
+    4. return a response with merged IDs."""
+    response = validate(dataset_id, table)
+    if failed(response):
+        return response
+
+    return failed("Still working on it")
 
 
 if __name__ == "__main__":
