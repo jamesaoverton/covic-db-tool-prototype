@@ -195,7 +195,7 @@ assert "secret: git log not changed" \
       Submit antibodies"
 
 cd "${CVDB_STAGING}"
-assert "staging: dataets/1/ should contain xlsx and tsv" \
+assert "staging: datasets/1/ should contain tsv" \
 "$(tree)" \
 ".
 ├── antibodies.tsv
@@ -231,10 +231,66 @@ assert "public: git log not changed" \
 cd "${ROOT}"
 
 
-#step "Promote Dataset"
-#${CVDB} promote dataset 1
-# TODO: check repos (files and git log): staging, public
-# TODO: build and check SQL tables: staging, public
+step "Promote Dataset"
+assert "promotion should succeed" \
+"$(${CVDB} promote "Sharon Schendel" "schendel@lji.org" 1)" \
+"Promoted dataset 1 from staging to public"
+
+cd "${CVDB_SECRET}"
+assert "secret: files not changed" \
+"$(tree)" \
+".
+└── antibodies.tsv
+
+0 directories, 1 file"
+
+assert "secret: git log not changed" \
+"$(git shortlog)" \
+"Shane Crotty (1):
+      Submit antibodies"
+
+cd "${CVDB_STAGING}"
+assert "staging: same files" \
+"$(tree)" \
+".
+├── antibodies.tsv
+└── datasets
+    └── 1
+        ├── assays.tsv
+        └── dataset.yml
+
+2 directories, 3 files"
+
+assert "staging: git log should show four commits" \
+"$(git shortlog)" \
+"Jon Yewdell (2):
+      Create dataset 1
+      Submit assays to dataset 1
+
+Shane Crotty (1):
+      Submit antibodies
+
+Sharon Schendel (1):
+      Promote dataset 1"
+cd "${CVDB_PUBLIC}"
+assert "public: added datasets/1" \
+"$(tree)" \
+".
+├── antibodies.tsv
+└── datasets
+    └── 1
+        ├── assays.tsv
+        └── dataset.yml
+
+2 directories, 3 files"
+
+assert "public: git log should show two commits" \
+"$(git shortlog)" \
+"CoVIC (2):
+      Submit antibodies
+      Promote dataset 1"
+
+cd "${ROOT}"
 
 #step "Update Dataset"
 #${CVDB} submit assays "${EXAMPLES}/neutralization-submission-valid-update.xlsx"

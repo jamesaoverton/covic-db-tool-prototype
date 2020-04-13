@@ -79,6 +79,11 @@ def create(args):
     guard(api.create(args.name, args.email, args.type))
 
 
+def promote(args):
+    """Promote a new dataset from staging to public."""
+    guard(api.promote(args.name, args.email, args.id))
+
+
 def main():
     config.update()
 
@@ -131,6 +136,14 @@ def main():
     parser.add_argument("email", help="The submitter's email")
     parser.add_argument("type", help="The type of data to submit")
     parser.set_defaults(func=create)
+
+    parser = subparsers.add_parser(
+        "promote", help="Promote a dataset from staging to public"
+    )
+    parser.add_argument("name", help="The submitter's name")
+    parser.add_argument("email", help="The submitter's email")
+    parser.add_argument("id", help="The dataset ID to promote")
+    parser.set_defaults(func=promote)
 
     args = main_parser.parse_args()
     args.func(args)

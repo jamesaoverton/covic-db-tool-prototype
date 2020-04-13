@@ -216,7 +216,7 @@ def submit(name, email, table):
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
-        author = Actor("CoVIC", "<covic@lji.org>")
+        author = Actor("CoVIC", "covic@lji.org")
         config.public.index.add([path])
         config.public.index.commit(f"Submit antibodies", author=author)
     except Exception as e:

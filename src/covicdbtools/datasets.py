@@ -3,6 +3,7 @@
 import argparse
 import os
 import re
+import shutil
 import yaml
 
 from collections import OrderedDict
@@ -101,6 +102,28 @@ def get_assay_headers(assay_type):
     """Given an assay type name or ID, return the assay headers."""
     assay_type_id = get_assay_type_id(assay_type)
     return [headers[key] for key in assay_types[assay_type_id]]
+
+
+def get_status(dataset_id):
+    path = os.path.join(
+        config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml"
+    )
+    if os.path.isfile(path):
+        with open(path, "r") as f:
+            dataset = yaml.load(f, Loader=yaml.SafeLoader)
+            return dataset.get("Dataset status", "submitted")
+    return None
+
+
+def set_status(dataset_id, status):
+    path = os.path.join(
+        config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml"
+    )
+    with open(path, "r") as f:
+        dataset = yaml.load(f, Loader=yaml.SafeLoader)
+        dataset["Dataset status"] = status
+        with open(path, "w") as outfile:
+            yaml.dump(dataset, outfile, sort_keys=False)
 
 
 def read_data(dataset_path):
@@ -203,6 +226,7 @@ def create(name, email, assay_type):
     try:
         dataset = {
             "Dataset ID": f"ds:{dataset_id}",
+            "Dataset status": "submitted",
             "Assay type ID": assay_type_id,
         }
         path = os.path.join(dataset_path, "dataset.yml")
@@ -229,17 +253,25 @@ def submit(name, email, dataset_id, table):
         return response
 
     # staging
+    dataset_path = os.path.join(
+        config.staging.working_tree_dir, "datasets", str(dataset_id)
+    )
+    paths = []
     try:
-        dataset_path = os.path.join(
-            config.staging.working_tree_dir, "datasets", str(dataset_id)
-        )
+        set_status(dataset_id, "submitted")
+        path = os.path.join(dataset_path, "dataset.yml")
+        paths.append(path)
+    except Exception as e:
+        return failure(f"Failed to update dataset status", {"exception": e})
+    try:
         path = os.path.join(dataset_path, "assays.tsv")
         tables.write_tsv(table, path)
+        paths.append(path)
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         author = Actor(name, email)
-        config.staging.index.add([path])
+        config.staging.index.add(paths)
         config.staging.index.commit(
             f"Submit assays to dataset {dataset_id}", author=author
         )
@@ -247,6 +279,53 @@ def submit(name, email, dataset_id, table):
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
     print(f"Submitted assays to dataset {dataset_id}")
+    return success({"dataset_id": dataset_id})
+
+
+def promote(name, email, dataset_id):
+    # staging
+    staging_dataset_path = os.path.join(
+        config.staging.working_tree_dir, "datasets", str(dataset_id)
+    )
+    paths = []
+    try:
+        set_status(dataset_id, "promoted")
+        path = os.path.join(staging_dataset_path, "dataset.yml")
+        paths.append(path)
+    except Exception as e:
+        return failure(f"Failed to update dataset status", {"exception": e})
+    try:
+        author = Actor(name, email)
+        config.staging.index.add(paths)
+        config.staging.index.commit(f"Promote dataset {dataset_id}", author=author)
+    except Exception as e:
+        return failure(f"Failed to commit '{path}'", {"exception": e})
+
+    # public
+    public_dataset_path = os.path.join(
+        config.public.working_tree_dir, "datasets", str(dataset_id)
+    )
+    try:
+        os.makedirs(public_dataset_path)
+    except Exception as e:
+        return failure(f"Could not create '{path}'", {"exception": e})
+    try:
+        paths = []
+        for filename in ["dataset.yml", "assays.tsv"]:
+            src = os.path.join(staging_dataset_path, filename)
+            dst = os.path.join(public_dataset_path, filename)
+            shutil.copyfile(src, dst)
+            paths.append(dst)
+    except Exception as e:
+        return failure(f"Could not copy '{src}' to '{dst}'", {"exception": e})
+    try:
+        author = Actor("CoVIC", "covic@lji.org")
+        config.public.index.add(paths)
+        config.public.index.commit(f"Promote dataset {dataset_id}", author=author)
+    except Exception as e:
+        return failure(f"Failed to commit '{public_dataset_path}'", {"exception": e})
+
+    print(f"Promoted dataset {dataset_id} from staging to public")
     return success({"dataset_id": dataset_id})
 
 

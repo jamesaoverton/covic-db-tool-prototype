@@ -180,5 +180,5 @@ def submit(name, email, dataset_id, table_or_path):
         return datasets.submit(name, email, dataset_id, table)
 
 
-def promote(author, dataset_id):
-    pass
+def promote(name, email, dataset_id):
+    return datasets.promote(name, email, dataset_id)
