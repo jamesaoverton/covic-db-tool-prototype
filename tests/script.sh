@@ -167,7 +167,7 @@ cd "${ROOT}"
 
 
 step "Submit Invalid Assays"
-assert "submission should fail" \
+assert "invalid submission should fail" \
 "$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
 "There were 5 errors
 Error in row 2: Missing required value for 'Antibody name'
@@ -176,11 +176,60 @@ Error in row 5: 'postive' is not a recognized value for 'Qualitative measure'
 Error in row 5: 'none' is not of type 'float' in 'Titer'
 Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measure'"
 
+step "Submit Valid Assays"
+assert "valid submission should succeed" \
+"$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-valid.xlsx")" \
+"Submitted assays to dataset 1"
 
-#step "Submit Valid Assays"
-#${CVDB} submit assays "${EXAMPLES}/neutralization-submission-valid.xlsx"
-# TODO: check repos (files and git log): staging, public
-# TODO: build and check SQL tables: staging, public
+cd "${CVDB_SECRET}"
+assert "secret: files not changed" \
+"$(tree)" \
+".
+└── antibodies.tsv
+
+0 directories, 1 file"
+
+assert "secret: git log not changed" \
+"$(git shortlog)" \
+"Shane Crotty (1):
+      Submit antibodies"
+
+cd "${CVDB_STAGING}"
+assert "staging: dataets/1/ should contain xlsx and tsv" \
+"$(tree)" \
+".
+├── antibodies.tsv
+└── datasets
+    └── 1
+        ├── assays.tsv
+        └── dataset.yml
+
+2 directories, 3 files"
+
+assert "staging: git log should show three commits" \
+"$(git shortlog)" \
+"Jon Yewdell (2):
+      Create dataset 1
+      Submit assays to dataset 1
+
+Shane Crotty (1):
+      Submit antibodies"
+
+cd "${CVDB_PUBLIC}"
+assert "public: files not changed" \
+"$(tree)" \
+".
+└── antibodies.tsv
+
+0 directories, 1 file"
+
+assert "public: git log not changed" \
+"$(git shortlog)" \
+"CoVIC (1):
+      Submit antibodies"
+
+cd "${ROOT}"
+
 
 #step "Promote Dataset"
 #${CVDB} promote dataset 1

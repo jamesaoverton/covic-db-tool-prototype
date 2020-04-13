@@ -82,9 +82,11 @@ def get_assay_type_id(assay_type):
         if assay_name in config.ids:
             assay_type_id = config.ids[assay_name]
         else:
-            yaml_path = os.path.join(config.staging.working_tree_dir, "datasets", assay_type, "dataset.yml")
-            if os.path.isfile(yaml_path):
-                with open(yaml_path, "r") as f:
+            path = os.path.join(
+                config.staging.working_tree_dir, "datasets", assay_type, "dataset.yml"
+            )
+            if os.path.isfile(path):
+                with open(path, "r") as f:
                     dataset = yaml.load(f, Loader=yaml.SafeLoader)
                 if "Assay type ID" in dataset:
                     assay_type_id = dataset["Assay type ID"]
@@ -203,33 +205,49 @@ def create(name, email, assay_type):
             "Dataset ID": f"ds:{dataset_id}",
             "Assay type ID": assay_type_id,
         }
-        yaml_path = os.path.join(dataset_path, "dataset.yml")
-        with open(yaml_path, "w") as outfile:
+        path = os.path.join(dataset_path, "dataset.yml")
+        with open(path, "w") as outfile:
             yaml.dump(dataset, outfile, sort_keys=False)
     except Exception as e:
-        return failure(f"Failed to write '{yaml_path}'", {"exception": e})
+        return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         author = Actor(name, email)
-        config.staging.index.add([yaml_path])
+        config.staging.index.add([path])
         config.staging.index.commit(f"Create dataset {dataset_id}", author=author)
     except Exception as e:
-        return failure(f"Failed to commit '{yaml_path}'", {"exception": e})
+        return failure(f"Failed to commit '{path}'", {"exception": e})
 
     print(f"Created dataset {dataset_id}")
     return success({"dataset_id": dataset_id})
 
 
 def submit(name, email, dataset_id, table):
-    """Given a new table of antibodies:
-    1. validate it
-    2. assign IDs and append them to the secrets,
-    3. append the blinded antibodies to the staging table,
-    4. return a response with merged IDs."""
+    """Given a dataset ID and a new table of assays,
+    validate it, save it to staging, and commit."""
     response = validate(dataset_id, table)
     if failed(response):
         return response
 
-    return failed("Still working on it")
+    # staging
+    try:
+        dataset_path = os.path.join(
+            config.staging.working_tree_dir, "datasets", str(dataset_id)
+        )
+        path = os.path.join(dataset_path, "assays.tsv")
+        tables.write_tsv(table, path)
+    except Exception as e:
+        return failure(f"Failed to write '{path}'", {"exception": e})
+    try:
+        author = Actor(name, email)
+        config.staging.index.add([path])
+        config.staging.index.commit(
+            f"Submit assays to dataset {dataset_id}", author=author
+        )
+    except Exception as e:
+        return failure(f"Failed to commit '{path}'", {"exception": e})
+
+    print(f"Submitted assays to dataset {dataset_id}")
+    return success({"dataset_id": dataset_id})
 
 
 if __name__ == "__main__":

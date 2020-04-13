@@ -170,17 +170,13 @@ def create(name, email, datatype):
 
 
 def submit(name, email, dataset_id, table_or_path):
+    response = validate(dataset_id, table_or_path)
+    if failed(response):
+        return response
+    table = response["table"]
     if dataset_id == "antibodies":
-        response = validate(dataset_id, table_or_path)
-        if failed(response):
-            return response
-        table = response["table"]
         return antibodies.submit(name, email, table)
     else:
-        response = validate(dataset_id, table_or_path)
-        if failed(response):
-            return response
-        table = response["table"]
         return datasets.submit(name, email, dataset_id, table)
 
 

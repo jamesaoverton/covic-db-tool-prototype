@@ -9,9 +9,8 @@ from covicdbtools import api, config, responses, tables
 def guard(response):
     """Given a successful response, just return it,
     otherwise print an error message and exit."""
-    if not response:
-        print("Bad response:", response)
-        sys.exit(1)
+    if not responses.is_response(response):
+        raise Exception(f"Bad response: {response}")
     if response and responses.succeeded(response):
         return response
     if "message" in response:
