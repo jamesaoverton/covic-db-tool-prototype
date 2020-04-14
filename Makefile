@@ -109,6 +109,9 @@ build/ontology.owl: build/imports.owl ontology/protein-tree.owl | build/robot.ja
 	$(foreach o,$^,--input $(o)) \
 	--output $@
 
+.PHONY: ontology
+ontology: build/ontology.owl
+
 build/labels.tsv: build/imports.owl | build/robot.jar
 	$(ROBOT) export \
 	--input $< \

@@ -8,6 +8,42 @@ A demo is here: https://cvdb.ontodev.com
 
 Supporting Google Sheet is here: https://docs.google.com/spreadsheets/d/11ItLLoXY7_r2lDazY4prMERHMb-7czrim91UABnvbYM
 
+
+## Usage
+
+This repository serves two purposes:
+
+1. build an ontology to support the CoVIC-DB project
+2. provide a library and command-line tool for working with CoVIC-DB data
+
+
+### Ontology
+
+Building the ontology requires GNU Make, Java 8+, and xlx2csv. Run `make ontology`.
+
+We use this ontology to build the `src/covicdbtools/config.json` file used by the library and command-line tool, and after that point Java is not required.
+
+
+### Library
+
+The library is a Python 3 module. We suggest using `virtualenv` and installing with `pip install -e .`. Please set the `CVDB_DATA` environment variable to the directory where your git data repositories will be stored, e.g. `data/`. Common functionality is exposed through `covicdbtools.api`:
+
+1. `api.initialize()` create the required git data repositories in `$CVDB_DATA`
+2. `api.fetch_template("antibodies")` fetch the empty antibodies Excel template
+3. `api.submit_antibodies(name, email, organization, request)` submit an Excel template filled with antibody entries
+4. `api.create_dataset(name, email, assay_type)` create a new dataset for the given assay type
+5. `api.fetch_template(dataset_id)` fetch the empty Excel template for this dataset
+6. `api.submit_assays(name, email, dataset_id, request)` submit an Excel template filled with assay entries
+7. `api.promote_dataset(name, email, dataset_id)` promote a dataset from staging to public
+
+All these functions return `response` dictionaries, which include a `"status"` indicating success or failure and a `"message"`. Failed responses may include `"errors"`. The `fetch_template` and `submit_*` responses will usually include `"content"` with `BytesIO` for an Excel file.
+
+
+### Command Line
+
+The API functionality is also accessible through a command-line client at `src/covicdbtools/cli.py`, which `pip` should alias to `cvdb`. See `cvdb --help` for more information.
+
+
 ## Design
 
 One of our goals is to create [Linked Data](http://linkeddata.org). At the most basic level, this means:

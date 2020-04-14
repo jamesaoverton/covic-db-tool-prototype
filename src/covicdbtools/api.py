@@ -41,7 +41,8 @@ from covicdbtools.responses import success, failure, failed
 
 def initialize():
     """Create the global data repositories."""
-    return config.initialize()
+    config.initialize()
+    return success()
 
 
 def read_path(path, sheet=None):
