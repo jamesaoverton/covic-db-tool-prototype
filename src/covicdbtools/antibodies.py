@@ -187,8 +187,7 @@ def submit(name, email, organization, table):
         secret_row["ab_name"] = row["Antibody name"]
         secret_row["ab_details"] = row["Antibody details"]
         secret_row["ab_comment"] = row["Antibody comment"]
-        secret_row["organization"] = organization
-        secret_row["submitter_name"] = name
+        secret_row["org_name"] = organization
         secret_row["submitter_email"] = email
         secret.append(secret_row)
 

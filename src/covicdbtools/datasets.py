@@ -236,6 +236,24 @@ def create(name, email, assay_type):
 
     author = Actor(name, email)
 
+    # secret
+    try:
+        path = os.path.join(config.secret.working_tree_dir, "datasets.tsv")
+        datasets = []
+        if os.path.isfile(path):
+            datasets = tables.read_tsv(path)
+        datasets.append(OrderedDict({"ds_id": dataset_id, "submitter_email": email}))
+        tables.write_tsv(datasets, path)
+    except Exception as e:
+        return failure(f"Failed to update '{path}'", {"exception": e})
+    try:
+        config.secret.index.add([path])
+        config.secret.index.commit(
+            f"Create dataset {dataset_id}", author=author, committer=config.covic
+        )
+    except Exception as e:
+        return failure(f"Failed to commit '{path}'", {"exception": e})
+
     # staging
     try:
         dataset_path = os.path.join(datasets_path, str(dataset_id))
