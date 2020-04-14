@@ -65,12 +65,7 @@ def fetch_template(args):
 
 
 def maybe_write(response, datatype, output):
-    if output and output.endswith(".xlsx"):
-        response = guard(api.fill_rows(datatype, response["grid"]["rows"]))
-        response["path"] = output
-        responses.write(response)
-    elif output:
-        response = guard(api.convert(response["grid"], output))
+    if output and "content" in response:
         response["path"] = output
         responses.write(response)
     return response

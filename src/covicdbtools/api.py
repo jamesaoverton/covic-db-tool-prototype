@@ -167,9 +167,9 @@ def fetch_template(datatype):
 
 
 def validate(datatype, source):
-    """Given a datatype and a source, return a validation response.
-    A failed response will include validation "errors" and "grid",
-    which can be `fill`ed to create a higlighted Excel file."""
+    """Given a datatype and a source,
+    validate it and return a response with "grid" and maybe "errors",
+    and an Excel file as "content"."""
     if datatype == "antibodies":
         sheet = "Antibodies"
     else:
@@ -193,9 +193,7 @@ def create_dataset(name, email, assay_type):
 
 def submit_antibodies(name, email, organization, source):
     """Given the submitter's name, email, organization, and a source
-    submit a set of antibodies.
-    A failed response will include validation "errors" and "grid",
-    which can be `fill`ed to create a higlighted Excel file.
+    validate and submit a set of antibodies.
     A successful response will include a table of submitted data and IDs."""
     response = validate("antibodies", source)
     if failed(response):
@@ -206,9 +204,7 @@ def submit_antibodies(name, email, organization, source):
 
 def submit_assays(name, email, dataset_id, source):
     """Given the submitter's name and email, an existing dataset ID, and a source
-    submit a set of assays.
-    A failed response will include validation "errors" and "grid",
-    which can be `fill`ed to create a higlighted Excel file.
+    validate it and submit a set of assays.
     A successful response will include a table of submitted data."""
     response = validate(dataset_id, source)
     if failed(response):
@@ -218,4 +214,6 @@ def submit_assays(name, email, dataset_id, source):
 
 
 def promote_dataset(name, email, dataset_id):
+    """Given a user name, email, and a dataset ID,
+    promote the dataset from staging to production."""
     return datasets.promote(name, email, dataset_id)

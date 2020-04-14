@@ -15,6 +15,7 @@ from covicdbtools import (
     workbooks,
     templates,
     requests,
+    responses,
     submissions,
 )
 from covicdbtools.responses import success, failure, failed
@@ -131,8 +132,16 @@ Columns:
 
 
 def validate(table):
-    """Given a table, validate and return a response with a "grid"."""
-    return submissions.validate(headers, table)
+    """Given a table,
+    validate it and return a response with "grid" and maybe "errors",
+    and an Excel file as "content"."""
+    response = submissions.validate(headers, table)
+    grids = fill(response["grid"]["rows"])
+    content = BytesIO()
+    workbooks.write(grids, content)
+    response["content type"] = responses.xlsx
+    response["content"] = content
+    return response
 
 
 def submit(name, email, organization, table):
