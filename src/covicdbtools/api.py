@@ -83,27 +83,27 @@ def convert(source, destination):
     """Given a source and a destimation (format or path)
     convert the table to that format
     and return a response with a "content" key."""
-    response = read(source)
-    if failed(response):
-        return response
+    table = None
+    grid = None
+    if grids.is_grid(source):
+        grid = source
+    else:
+        response = read(source)
+        if failed(response):
+            return response
+        table = response["table"]
 
     output_format = destination.lower()
     if output_format not in ["tsv", "html"]:
         filename, extension = os.path.splitext(destination)
         output_format = extension.lower().lstrip(".")
     if output_format.lower() == "tsv":
-        table = response["table"]
         content = tables.table_to_tsv_string(table)
         return success(
             {"table": table, "content type": responses.tsv, "content": content,}
         )
     elif output_format.lower() == "html":
-        table = None
-        grid = None
-        if "grid" in response:
-            grid = response["grid"]
-        elif "table" in response:
-            table = response["table"]
+        if not grid:
             grid = grids.table_to_grid(config.prefixes, config.fields, table)
         html = grids.grid_to_html(grid)
         content = templates.render_html("templates/grid.html", {"html": html})
