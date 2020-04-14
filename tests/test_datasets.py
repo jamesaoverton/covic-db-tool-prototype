@@ -23,8 +23,8 @@ def test_validate_submission():
     response = datasets.validate("neutralization", table)
     assert failed(response)
     assert response["errors"] == [
-        "Error in row 2: Missing required value for 'Antibody name'",
-        "Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody name'",
+        "Error in row 2: Missing required value for 'Antibody label'",
+        "Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody label'",
         "Error in row 5: 'postive' is not a recognized value for 'Qualitative measure'",
         "Error in row 5: 'none' is not of type 'float' in 'Titer'",
         "Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measure'",
@@ -42,7 +42,7 @@ def test_validate_submission():
     upload = UploadedFile("examples/neutralization-submission-invalid.xlsx")
     response = api.validate("neutralization", {"file": upload})
     assert failed(response)
-    assert response["table"][0]["Antibody name"] == "COVIC 1"
+    assert response["table"][0]["Antibody label"] == "COVIC 1"
 
 
 def test_examples():

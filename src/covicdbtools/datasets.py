@@ -31,7 +31,7 @@ qualitative_measures = ["positive", "negative", "unknown"]
 headers = {
     "ab_label": {
         "value": "ab_label",
-        "label": "Antibody name",
+        "label": "Antibody label",
         "description": "The antibody's CoVIC ID.",
         "locked": True,
         "required": True,
@@ -290,6 +290,19 @@ def submit(name, email, dataset_id, table):
     if failed(response):
         return response
 
+    assay_headers = get_assay_headers(dataset_id)
+    assays = []
+    for row in table:
+        assay = OrderedDict()
+        for header in assay_headers:
+            value = header["value"]
+            label = header["label"]
+            if value == "ab_label":
+                assay["ab_id"] = row[label].replace(" ", ":")
+            else:
+                assay[value] = row[label]
+        assays.append(assay)
+
     author = Actor(name, email)
 
     # staging
@@ -307,7 +320,7 @@ def submit(name, email, dataset_id, table):
         return failure(f"Failed to update dataset status", {"exception": e})
     try:
         path = os.path.join(dataset_path, "assays.tsv")
-        tables.write_tsv(table, path)
+        tables.write_tsv(assays, path)
         paths.append(path)
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})

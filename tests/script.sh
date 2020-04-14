@@ -115,8 +115,8 @@ step "Submit Invalid Assays"
 assert "invalid submission should fail" \
   "$(${CVDB} submit assays "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
   "There were 5 errors
-Error in row 2: Missing required value for 'Antibody name'
-Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody name'
+Error in row 2: Missing required value for 'Antibody label'
+Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody label'
 Error in row 5: 'postive' is not a recognized value for 'Qualitative measure'
 Error in row 5: 'none' is not of type 'float' in 'Titer'
 Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measure'"

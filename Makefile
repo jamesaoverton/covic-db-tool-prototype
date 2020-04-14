@@ -157,10 +157,10 @@ examples/%-submission-invalid.xlsx: examples/%-submission-invalid.tsv | src/covi
 	$(CVDB) fill $* $< $@
 
 examples/%-submission-invalid-highlighted.xlsx: examples/%-submission-invalid.xlsx | src/covicdbtools/cli.py
-	$(CVDB) validate $* $< $@
+	-$(CVDB) validate $* $< $@
 
 build/%-submission-invalid-highlighted.html: examples/%-submission-invalid.xlsx | src/covicdbtools/cli.py build
-	$(CVDB) validate $* $< $@
+	-$(CVDB) validate $* $< $@
 
 build/%-submission-valid-expanded.tsv: examples/%-submission-valid.xlsx | src/covicdbtools/cli.py build
 	$(CVDB) expand $< $@
