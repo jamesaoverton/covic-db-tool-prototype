@@ -234,6 +234,8 @@ def create(name, email, assay_type):
                 current_id = max(current_id, int(name))
     dataset_id = current_id + 1
 
+    author = Actor(name, email)
+
     # staging
     try:
         dataset_path = os.path.join(datasets_path, str(dataset_id))
@@ -252,9 +254,10 @@ def create(name, email, assay_type):
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
-        author = Actor(name, email)
         config.staging.index.add([path])
-        config.staging.index.commit(f"Create dataset {dataset_id}", author=author)
+        config.staging.index.commit(
+            f"Create dataset {dataset_id}", author=author, committer=config.covic
+        )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -268,6 +271,8 @@ def submit(name, email, dataset_id, table):
     response = validate(dataset_id, table)
     if failed(response):
         return response
+
+    author = Actor(name, email)
 
     # staging
     if not config.staging:
@@ -289,10 +294,11 @@ def submit(name, email, dataset_id, table):
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
-        author = Actor(name, email)
         config.staging.index.add(paths)
         config.staging.index.commit(
-            f"Submit assays to dataset {dataset_id}", author=author
+            f"Submit assays to dataset {dataset_id}",
+            author=author,
+            committer=config.covic,
         )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
@@ -302,6 +308,8 @@ def submit(name, email, dataset_id, table):
 
 
 def promote(name, email, dataset_id):
+    author = Actor(name, email)
+
     # staging
     if not config.staging:
         return Failure("CVDB_STAGING directory is not configured")
@@ -316,9 +324,10 @@ def promote(name, email, dataset_id):
     except Exception as e:
         return failure(f"Failed to update dataset status", {"exception": e})
     try:
-        author = Actor(name, email)
         config.staging.index.add(paths)
-        config.staging.index.commit(f"Promote dataset {dataset_id}", author=author)
+        config.staging.index.commit(
+            f"Promote dataset {dataset_id}", author=author, committer=config.covic
+        )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -342,9 +351,10 @@ def promote(name, email, dataset_id):
     except Exception as e:
         return failure(f"Could not copy '{src}' to '{dst}'", {"exception": e})
     try:
-        author = Actor("CoVIC", "covic@lji.org")
         config.public.index.add(paths)
-        config.public.index.commit(f"Promote dataset {dataset_id}", author=author)
+        config.public.index.commit(
+            f"Promote dataset {dataset_id}", author=config.covic, committer=config.covic
+        )
     except Exception as e:
         return failure(f"Failed to commit '{public_dataset_path}'", {"exception": e})
 

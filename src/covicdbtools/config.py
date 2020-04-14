@@ -9,7 +9,7 @@ import json
 import os
 
 from collections import OrderedDict
-from git import Repo
+from git import Actor, Repo
 from covicdbtools import tables
 
 
@@ -28,6 +28,7 @@ ids = {}
 secret = None
 staging = None
 public = None
+covic = Actor("CoVIC", "covic@lji.org")
 
 
 ### Prefixes

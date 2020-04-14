@@ -211,6 +211,8 @@ def submit(name, email, organization, table):
         submission_row["ab_comment"] = row["Antibody comment"]
         submission.append(submission_row)
 
+    author = Actor(name, email)
+
     # secret
     try:
         path = os.path.join(config.secret.working_tree_dir, "antibodies.tsv")
@@ -218,9 +220,10 @@ def submit(name, email, organization, table):
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
-        author = Actor(name, email)
         config.secret.index.add([path])
-        config.secret.index.commit(f"Submit antibodies", author=author)
+        config.secret.index.commit(
+            f"Submit antibodies", author=author, committer=config.covic
+        )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -231,9 +234,10 @@ def submit(name, email, organization, table):
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
-        author = Actor(name, email)
         config.staging.index.add([path])
-        config.staging.index.commit(f"Submit antibodies", author=author)
+        config.staging.index.commit(
+            f"Submit antibodies", author=author, committer=config.covic
+        )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -246,9 +250,10 @@ def submit(name, email, organization, table):
     except Exception as e:
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
-        author = Actor("CoVIC", "covic@lji.org")
         config.public.index.add([path])
-        config.public.index.commit(f"Submit antibodies", author=author)
+        config.public.index.commit(
+            f"Submit antibodies", author=config.covic, committer=config.covic
+        )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
