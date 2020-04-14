@@ -25,9 +25,10 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     python_requires='>=3.6, <4',
-    install_requires=['jinja2', 'openpyxl', 'pyyaml', 'tabulate'],
-    package_data={
-        'covicdbtools': ['ontology/*']
+    install_requires=['jinja2', 'openpyxl', 'pyyaml', 'tabulate', 'gitpython'],
+    entry_points={
+        "console_scripts": [
+            "cvdb = covicdbtools.cli:main",
+        ],
     },
-    # TODO: entry_points
 )

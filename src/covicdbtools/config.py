@@ -25,9 +25,9 @@ ids = {}
 
 
 # Global git repositories
-secret = Repo(os.environ.get("CVDB_SECRET"))
-staging = Repo(os.environ.get("CVDB_STAGING"))
-public = Repo(os.environ.get("CVDB_PUBLIC"))
+secret = None
+staging = None
+public = None
 
 
 ### Prefixes
@@ -188,13 +188,41 @@ def load(config):
     ids = config["ids"]
 
 
-def update(config_json_path="config.json"):
+def update(config_json_path=None):
     """Read and load a config."""
+    if not config_json_path:
+        config_json_path = os.path.join(os.path.dirname(__file__), "config.json")
     config = read(config_json_path)
     result = validate(config)
     if result:
         raise Exception(f"Invalid config '{config_json_path}': {result}")
     load(config)
+
+
+def init():
+    """Set the global data repositories."""
+    global secret, staging, public
+    if "CVDB_DATA" in os.environ:
+        data_path = os.environ["CVDB_DATA"]
+        if os.path.isdir(data_path):
+            secret = Repo(os.path.join(data_path, "secret"))
+            staging = Repo(os.path.join(data_path, "staging"))
+            public = Repo(os.path.join(data_path, "public"))
+    update()
+
+
+def initialize():
+    """Create the global data repositories."""
+    if "CVDB_DATA" in os.environ:
+        data_path = os.environ["CVDB_DATA"]
+        os.mkdir(data_path)
+        for name in ["secret", "staging", "public"]:
+            path = os.path.join(data_path, name)
+            Repo.init(path, mkdir=True)
+        init()
+        print(f"Initialized data repositories in '{data_path}'")
+    else:
+        raise Exception("ERROR: Please set the CVDB_DATA environment variable")
 
 
 def main():
@@ -223,6 +251,10 @@ def main():
     if result:
         raise Exception(f"Invalid config: {result}")
     save(config, args.output)
+
+
+# Load config.json and data repositories
+init()
 
 
 if __name__ == "__main__":

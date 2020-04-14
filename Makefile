@@ -53,6 +53,8 @@ update:
 .PHONY: test
 test:
 	pytest tests
+	rm -rf temp
+	tests/script.sh
 
 .PHONY: format
 format:
@@ -113,10 +115,10 @@ build/labels.tsv: build/imports.owl | build/robot.jar
 	--header "ID|LABEL" \
 	--export $@
 
-config.json: src/covicdbtools/config.py $(SHEET_TSVS) build/labels.tsv
+src/covicdbtools/config.json: src/covicdbtools/config.py $(SHEET_TSVS) build/labels.tsv
 	python $^ $@
 
-src/covicdbtools/cli.py: config.json
+src/covicdbtools/cli.py: src/covicdbtools/config.json
 
 CVDB := python src/covicdbtools/cli.py
 

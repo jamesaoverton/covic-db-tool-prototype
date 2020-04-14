@@ -40,6 +40,11 @@ def read_path(path, sheet=None):
     return success({"table": table})
 
 
+def initialize():
+    """Create the global data repositories."""
+    return config.initialize()
+
+
 def read(table_or_path, sheet=None):
     """Read a table and return a response with a "table" key."""
     if tables.is_table(table_or_path):

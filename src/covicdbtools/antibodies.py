@@ -133,11 +133,15 @@ def submit(name, email, table):
     if failed(response):
         return response
 
+    if not config.secret:
+        return Failure("CVDB_SECRET directory is not configured")
     secret = []
     path = os.path.join(config.secret.working_tree_dir, "antibodies.tsv")
     if os.path.isfile(path):
         secret = tables.read_tsv(path)
 
+    if not config.staging:
+        return Failure("CVDB_STAGING directory is not configured")
     blind = []
     path = os.path.join(config.staging.working_tree_dir, "antibodies.tsv")
     if os.path.isfile(path):
@@ -210,6 +214,8 @@ def submit(name, email, table):
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
     # public
+    if not config.public:
+        return Failure("CVDB_PUBLIC directory is not configured")
     try:
         path = os.path.join(config.public.working_tree_dir, "antibodies.tsv")
         tables.write_tsv(blind, path)

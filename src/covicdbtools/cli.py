@@ -23,6 +23,11 @@ def guard(response):
     sys.exit(1)
 
 
+def initialize(args):
+    """Create the global data repositories."""
+    api.initialize()
+
+
 def read(args):
     """Read a table and print to STDOUT."""
     response = guard(api.read(args.input, args.sheet))
@@ -85,10 +90,13 @@ def promote(args):
 
 
 def main():
-    config.update()
-
     main_parser = argparse.ArgumentParser()
-    subparsers = main_parser.add_subparsers()
+    subparsers = main_parser.add_subparsers(required=True, dest="cmd")
+
+    parser = subparsers.add_parser(
+        "initialize", help="Initialize the data repositories"
+    )
+    parser.set_defaults(func=initialize)
 
     parser = subparsers.add_parser("read", help="Read a table to STDOUT")
     parser.add_argument("input", help="The table file to read")

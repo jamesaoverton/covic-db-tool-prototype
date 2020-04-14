@@ -83,6 +83,8 @@ def get_assay_type_id(assay_type):
         if assay_name in config.ids:
             assay_type_id = config.ids[assay_name]
         else:
+            if not config.staging:
+                raise Exception("CVDB_STAGING directory is not configured")
             path = os.path.join(
                 config.staging.working_tree_dir, "datasets", assay_type, "dataset.yml"
             )
@@ -105,6 +107,8 @@ def get_assay_headers(assay_type):
 
 
 def get_status(dataset_id):
+    if not config.staging:
+        raise Exception("CVDB_STAGING directory is not configured")
     path = os.path.join(
         config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml"
     )
@@ -116,6 +120,8 @@ def get_status(dataset_id):
 
 
 def set_status(dataset_id, status):
+    if not config.staging:
+        raise Exception("CVDB_STAGING directory is not configured")
     path = os.path.join(
         config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml"
     )
@@ -204,6 +210,9 @@ def validate(assay_type, table):
 
 
 def create(name, email, assay_type):
+    if not config.staging:
+        return Failure("CVDB_STAGING directory is not configured")
+
     assay_type_id = get_assay_type_id(assay_type)
     datasets_path = os.path.join(config.staging.working_tree_dir, "datasets")
     current_id = 0
@@ -253,6 +262,8 @@ def submit(name, email, dataset_id, table):
         return response
 
     # staging
+    if not config.staging:
+        return Failure("CVDB_STAGING directory is not configured")
     dataset_path = os.path.join(
         config.staging.working_tree_dir, "datasets", str(dataset_id)
     )
@@ -284,6 +295,8 @@ def submit(name, email, dataset_id, table):
 
 def promote(name, email, dataset_id):
     # staging
+    if not config.staging:
+        return Failure("CVDB_STAGING directory is not configured")
     staging_dataset_path = os.path.join(
         config.staging.working_tree_dir, "datasets", str(dataset_id)
     )
@@ -302,6 +315,8 @@ def promote(name, email, dataset_id):
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
     # public
+    if not config.public:
+        return Failure("CVDB_PUBLIC directory is not configured")
     public_dataset_path = os.path.join(
         config.public.working_tree_dir, "datasets", str(dataset_id)
     )
