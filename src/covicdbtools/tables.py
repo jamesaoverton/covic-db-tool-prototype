@@ -59,7 +59,9 @@ def read_tsv(path):
 def table_to_lists(table):
     """Given a list of OrderedDicts of strings,
     return a list of lists of strings."""
-    lists = [list(table[0].keys())]
+    lists = []
+    if len(table) > 0:
+        lists = [list(table[0].keys())]
     for row in table:
         lists.append(list(row.values()))
     return lists
@@ -85,4 +87,6 @@ def table_to_tsv_string(table):
 
 def print_tsv(table):
     lists = table_to_lists(table)
-    print(tabulate(lists[1:], lists[0]))
+    if len(lists) > 0:
+        print(tabulate(lists[1:], lists[0]))
+    print("Empty table")

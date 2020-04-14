@@ -4,6 +4,10 @@ from io import BytesIO
 from covicdbtools.responses import success, failure, xlsx
 
 
+def is_request(request_files):
+    return hasattr(request_files, "file") or "file" in request_files
+
+
 def read_file(request_files):
     """Given a submitted_id string, a submitter_label string,
     and Django request.FILES object with one file,

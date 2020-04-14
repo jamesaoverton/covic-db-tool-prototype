@@ -244,4 +244,5 @@ def submit(name, email, organization, table):
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
     grid = grids.table_to_grid(config.prefixes, config.fields, submission)
+    print("Submitted antibodies")
     return success({"table": submission, "grid": grid})

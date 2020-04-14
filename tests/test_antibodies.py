@@ -26,14 +26,12 @@ def test_validate():
         "Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'",
     ]
 
-
-def test_validate_request():
     upload = UploadedFile("examples/antibodies-submission-valid.xlsx")
-    response = api.validate_request("antibodies", {"file": upload})
+    response = api.validate("antibodies", {"file": upload})
     assert succeeded(response)
 
     upload = UploadedFile("examples/antibodies-submission-invalid.xlsx")
-    response = api.validate_request("antibodies", {"file": upload})
+    response = api.validate("antibodies", {"file": upload})
     assert failed(response)
     assert response["table"][0]["Antibody name"] == "A6"
 

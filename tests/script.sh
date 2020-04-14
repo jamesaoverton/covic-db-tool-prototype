@@ -13,7 +13,9 @@ IFS=$'\n\t'
 ### Initialization
 
 ROOT="$(pwd)"
-export CVDB_DATA="${ROOT}/temp"
+TEMP="${ROOT}/temp"
+mkdir "${TEMP}"
+export CVDB_DATA="${TEMP}/data"
 CVDB_SECRET="${CVDB_DATA}/secret"
 CVDB_STAGING="${CVDB_DATA}/staging"
 CVDB_PUBLIC="${CVDB_DATA}/public"
@@ -26,10 +28,10 @@ step() {
 }
 
 # Compare two strings
-MESSAGE=""
 assert() {
   MESSAGE="$1"
   diff <(echo "$2") <(echo "$3")
+  MESSAGE=""
 }
 
 # Compare CVDB_DATA files and logs to a test directory
@@ -40,6 +42,7 @@ check() {
   diff <(cd "${CVDB_SECRET}" && git shortlog HEAD) "$1/secret.log"
   diff <(cd "${CVDB_STAGING}" && git shortlog HEAD) "$1/staging.log"
   diff <(cd "${CVDB_PUBLIC}" && git shortlog HEAD) "$1/public.log"
+  MESSAGE=""
 }
 
 # If the script exits early, print the current step.
@@ -66,6 +69,14 @@ assert "directories should be created" \
 3 directories, 0 files"
 
 
+step "Fetch antibodies template"
+FILE="${TEMP}/antibodies-submission.xlsx"
+${CVDB} fetch template antibodies "${FILE}"
+assert "template should be empty" \
+  "$(${CVDB} read "${FILE}" Antibodies)" \
+  "Empty table"
+
+
 step "Submit antibodies invalid"
 assert "submission should fail" \
   "$(${CVDB} submit antibodies "Shane Crotty" "shane@lji.org" "LJI" "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
@@ -79,7 +90,9 @@ Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'"
 
 
 step "Submit antibodies valid"
-${CVDB} submit antibodies "Shane Crotty" "shane@lji.org" "LJI" "${EXAMPLES}/antibodies-submission-valid.xlsx"
+assert "valid antibody submission should succeed" \
+  "$(${CVDB} submit antibodies "Shane Crotty" "shane@lji.org" "LJI" "${EXAMPLES}/antibodies-submission-valid.xlsx")" \
+  "Submitted antibodies"
 check "${ROOT}/tests/submit-antibodies"
 
 
@@ -88,7 +101,14 @@ assert "staging: dataset 1 created" \
   "$(${CVDB} create dataset "Jon Yewdell" "jyewdell@niaid.nih.gov" "neutralization")" \
   "Created dataset 1"
 check "${ROOT}/tests/create-dataset"
-# TODO: fetch .xlsx for dataset
+
+
+step "Fetch assays template"
+FILE="${TEMP}/neutralization-submission.xlsx"
+${CVDB} fetch template 1 "${FILE}"
+assert "template should be empty" \
+  "$(${CVDB} read "${FILE}" Dataset)" \
+  "Empty table"
 
 
 step "Submit Invalid Assays"
@@ -111,7 +131,7 @@ check "${ROOT}/tests/submit-assays"
 
 step "Promote Dataset"
 assert "promotion should succeed" \
-  "$(${CVDB} promote "Sharon Schendel" "schendel@lji.org" 1)" \
+  "$(${CVDB} promote dataset "Sharon Schendel" "schendel@lji.org" 1)" \
   "Promoted dataset 1 from staging to public"
 check "${ROOT}/tests/promote-dataset"
 

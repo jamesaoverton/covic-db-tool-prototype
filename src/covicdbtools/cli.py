@@ -57,6 +57,13 @@ def fill(args):
     responses.write(response)
 
 
+def fetch_template(args):
+    """Fetch the empty template for a given data type, then write it."""
+    response = guard(api.fetch_template(args.type))
+    response["path"] = args.output
+    responses.write(response)
+
+
 def maybe_write(response, datatype, output):
     if output and output.endswith(".xlsx"):
         response = guard(api.fill_rows(datatype, response["grid"]["rows"]))
@@ -94,9 +101,9 @@ def create_dataset(args):
     guard(api.create_dataset(args.name, args.email, args.type))
 
 
-def promote(args):
+def promote_dataset(args):
     """Promote a new dataset from staging to public."""
-    guard(api.promote(args.name, args.email, args.id))
+    guard(api.promote_dataset(args.name, args.email, args.id))
 
 
 def main():
@@ -135,6 +142,13 @@ def main():
     parser.add_argument("output", help="The Excel file to write")
     parser.set_defaults(func=fill)
 
+    parser = subparsers.add_parser("fetch", help="Fetch an Excel file")
+    subsubparsers = parser.add_subparsers(required=True, dest="cmd")
+    parser = subsubparsers.add_parser("template", help="Fetch an empty Excel template")
+    parser.add_argument("type", help="The type of template to fetch")
+    parser.add_argument("output", help="The output file to write")
+    parser.set_defaults(func=fetch_template)
+
     parser = subparsers.add_parser("validate", help="Validate data")
     parser.add_argument("type", help="The type of data to validate")
     parser.add_argument("input", help="The input file to validate")
@@ -167,12 +181,16 @@ def main():
     parser.set_defaults(func=create_dataset)
 
     parser = subparsers.add_parser(
-        "promote", help="Promote a dataset from staging to public"
+        "promote", help="Promote data from staging to public"
+    )
+    subsubparsers = parser.add_subparsers(required=True, dest="cmd")
+    parser = subsubparsers.add_parser(
+        "dataset", help="Promote a dataset from staging to public"
     )
     parser.add_argument("name", help="The submitter's name")
     parser.add_argument("email", help="The submitter's email")
     parser.add_argument("id", help="The dataset ID to promote")
-    parser.set_defaults(func=promote)
+    parser.set_defaults(func=promote_dataset)
 
     args = main_parser.parse_args()
     args.func(args)

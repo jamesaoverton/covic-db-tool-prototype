@@ -35,14 +35,12 @@ def test_validate_submission():
     response = datasets.validate("VLP ELISA", table)
     assert succeeded(response)
 
-
-def test_validate_request():
     upload = UploadedFile("examples/neutralization-submission.xlsx")
-    response = api.validate_request("neutralization", {"file": upload})
+    response = api.validate("neutralization", {"file": upload})
     assert succeeded(response)
 
     upload = UploadedFile("examples/neutralization-submission-invalid.xlsx")
-    response = api.validate_request("neutralization", {"file": upload})
+    response = api.validate("neutralization", {"file": upload})
     assert failed(response)
     assert response["table"][0]["Antibody name"] == "COVIC 1"
 
