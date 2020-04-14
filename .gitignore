@@ -7,7 +7,7 @@
 __pycache__/
 _venv/
 build/
-data/
+/data/
 dist/
 junk/
 shell.nix

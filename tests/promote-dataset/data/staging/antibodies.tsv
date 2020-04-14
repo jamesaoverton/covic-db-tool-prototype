@@ -1,0 +1,11 @@
+ab_id	host_type_id	host_type_label	isotype_id	isotype_label
+COVIC:1	NCBITaxon:9606	Homo sapiens	PR:000050176	IgA
+COVIC:2	NCBITaxon:9606	Homo sapiens	PR:000050186	IgD
+COVIC:3	NCBITaxon:10090	Mus musculus	PR:000050252	IgG
+COVIC:4	NCBITaxon:9606	Homo sapiens	PR:000050259	IgG2a
+COVIC:5	NCBITaxon:10090	Mus musculus	PR:000050177	IgA1
+COVIC:6	NCBITaxon:10090	Mus musculus	PR:000050176	IgA
+COVIC:7	NCBITaxon:9606	Homo sapiens	PR:000050258	IgE
+COVIC:8	NCBITaxon:10090	Mus musculus	PR:000050178	IgA2
+COVIC:9	NCBITaxon:9606	Homo sapiens	PR:000050253	IgG1
+COVIC:10	NCBITaxon:10090	Mus musculus	PR:000050257	IgM

@@ -13,10 +13,10 @@ IFS=$'\n\t'
 ### Initialization
 
 ROOT="$(pwd)"
-TEMP="${ROOT}/temp"
-export CVDB_SECRET="${TEMP}/secret"
-export CVDB_STAGING="${TEMP}/staging"
-export CVDB_PUBLIC="${TEMP}/public"
+export CVDB_DATA="${ROOT}/temp"
+CVDB_SECRET="${CVDB_DATA}/secret"
+CVDB_STAGING="${CVDB_DATA}/staging"
+CVDB_PUBLIC="${CVDB_DATA}/public"
 EXAMPLES="${ROOT}/examples"
 CVDB=src/covicdbtools/cli.py
 
@@ -25,10 +25,21 @@ step() {
   echo "${STEP}"
 }
 
+# Compare two strings
 MESSAGE=""
 assert() {
   MESSAGE="$1"
   diff <(echo "$2") <(echo "$3")
+}
+
+# Compare CVDB_DATA files and logs to a test directory
+check() {
+  MESSAGE="'${CVDB_DATA}' should match '$1/data'"
+  diff <(cd "${CVDB_DATA}" && tree) <(cd "$1/data" && tree)
+  MESSAGE="'${CVDB_DATA}' git shortlog should match '$1/*.log'"
+  diff <(cd "${CVDB_SECRET}" && git shortlog HEAD) "$1/secret.log"
+  diff <(cd "${CVDB_STAGING}" && git shortlog HEAD) "$1/staging.log"
+  diff <(cd "${CVDB_PUBLIC}" && git shortlog HEAD) "$1/public.log"
 }
 
 # If the script exits early, print the current step.
@@ -42,22 +53,23 @@ trap 'print_failure' INT TERM EXIT
 ### Script
 
 step "Create git data repositories for testing"
-mkdir -p "${CVDB_SECRET}"
-cd "${CVDB_SECRET}"
-git init
-mkdir -p "${CVDB_STAGING}"
-cd "${CVDB_STAGING}"
-git init
-mkdir -p "${CVDB_PUBLIC}"
-cd "${CVDB_PUBLIC}"
-git init
-cd "${ROOT}"
+assert "submission should fail" \
+  "$(${CVDB} initialize)" \
+  "Initialized data repositories in '${CVDB_DATA}'"
+assert "directories should be created" \
+  "$(tree "${CVDB_DATA}")" \
+  "${CVDB_DATA}
+├── public
+├── secret
+└── staging
+
+3 directories, 0 files"
 
 
 step "Submit antibodies invalid"
 assert "submission should fail" \
-"$(${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
-"There were 6 errors
+  "$(${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
+  "There were 6 errors
 Error in row 3: Missing required value for 'Antibody name'
 Error in row 6: Missing required value for 'Host'
 Error in row 6: 'Ig1' is not a recognized value for 'Isotype'
@@ -68,239 +80,53 @@ Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'"
 
 step "Submit antibodies valid"
 ${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-valid.xlsx"
-
-cd "${CVDB_SECRET}"
-assert "secret: antibodies.tsv should exist" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "secret: git log should show one commit" \
-"$(git shortlog)" \
-"Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_STAGING}"
-assert "staging: antibodies.tsv should exist" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "staging: git log should show one commit" \
-"$(git shortlog)" \
-"Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_PUBLIC}"
-assert "public: antibodies.tsv should exist" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "public: git log should show one commit" \
-"$(git shortlog)" \
-"CoVIC (1):
-      Submit antibodies"
-
-cd "${ROOT}"
+check "${ROOT}/tests/submit-antibodies"
 
 
 step "Create Dataset"
 assert "staging: dataset 1 created" \
-"$(${CVDB} create "Jon Yewdell" "jyewdell@niaid.nih.gov" "neutralization")" \
-"Created dataset 1"
-
-cd "${CVDB_SECRET}"
-assert "secret: files not changed" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "secret: git log not changed" \
-"$(git shortlog)" \
-"Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_STAGING}"
-assert "staging: dataets/1/dataset.yml should exist" \
-"$(tree)" \
-".
-├── antibodies.tsv
-└── datasets
-    └── 1
-        └── dataset.yml
-
-2 directories, 2 files"
-
-assert "staging: git log should show two commits" \
-"$(git shortlog)" \
-"Jon Yewdell (1):
-      Create dataset 1
-
-Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_PUBLIC}"
-assert "public: files not changed" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "public: git log not changed" \
-"$(git shortlog)" \
-"CoVIC (1):
-      Submit antibodies"
-
-cd "${ROOT}"
+  "$(${CVDB} create "Jon Yewdell" "jyewdell@niaid.nih.gov" "neutralization")" \
+  "Created dataset 1"
+check "${ROOT}/tests/create-dataset"
 # TODO: fetch .xlsx for dataset
-# TODO: check .xlsx
 
 
 step "Submit Invalid Assays"
 assert "invalid submission should fail" \
-"$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
-"There were 5 errors
+  "$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
+  "There were 5 errors
 Error in row 2: Missing required value for 'Antibody name'
 Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody name'
 Error in row 5: 'postive' is not a recognized value for 'Qualitative measure'
 Error in row 5: 'none' is not of type 'float' in 'Titer'
 Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measure'"
 
+
 step "Submit Valid Assays"
 assert "valid submission should succeed" \
-"$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-valid.xlsx")" \
-"Submitted assays to dataset 1"
-
-cd "${CVDB_SECRET}"
-assert "secret: files not changed" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "secret: git log not changed" \
-"$(git shortlog)" \
-"Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_STAGING}"
-assert "staging: datasets/1/ should contain tsv" \
-"$(tree)" \
-".
-├── antibodies.tsv
-└── datasets
-    └── 1
-        ├── assays.tsv
-        └── dataset.yml
-
-2 directories, 3 files"
-
-assert "staging: git log should show three commits" \
-"$(git shortlog)" \
-"Jon Yewdell (2):
-      Create dataset 1
-      Submit assays to dataset 1
-
-Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_PUBLIC}"
-assert "public: files not changed" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "public: git log not changed" \
-"$(git shortlog)" \
-"CoVIC (1):
-      Submit antibodies"
-
-cd "${ROOT}"
+  "$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-valid.xlsx")" \
+  "Submitted assays to dataset 1"
+check "${ROOT}/tests/submit-assays"
 
 
 step "Promote Dataset"
 assert "promotion should succeed" \
-"$(${CVDB} promote "Sharon Schendel" "schendel@lji.org" 1)" \
-"Promoted dataset 1 from staging to public"
+  "$(${CVDB} promote "Sharon Schendel" "schendel@lji.org" 1)" \
+  "Promoted dataset 1 from staging to public"
+check "${ROOT}/tests/promote-dataset"
 
-cd "${CVDB_SECRET}"
-assert "secret: files not changed" \
-"$(tree)" \
-".
-└── antibodies.tsv
-
-0 directories, 1 file"
-
-assert "secret: git log not changed" \
-"$(git shortlog)" \
-"Shane Crotty (1):
-      Submit antibodies"
-
-cd "${CVDB_STAGING}"
-assert "staging: same files" \
-"$(tree)" \
-".
-├── antibodies.tsv
-└── datasets
-    └── 1
-        ├── assays.tsv
-        └── dataset.yml
-
-2 directories, 3 files"
-
-assert "staging: git log should show four commits" \
-"$(git shortlog)" \
-"Jon Yewdell (2):
-      Create dataset 1
-      Submit assays to dataset 1
-
-Shane Crotty (1):
-      Submit antibodies
-
-Sharon Schendel (1):
-      Promote dataset 1"
-cd "${CVDB_PUBLIC}"
-assert "public: added datasets/1" \
-"$(tree)" \
-".
-├── antibodies.tsv
-└── datasets
-    └── 1
-        ├── assays.tsv
-        └── dataset.yml
-
-2 directories, 3 files"
-
-assert "public: git log should show two commits" \
-"$(git shortlog)" \
-"CoVIC (2):
-      Submit antibodies
-      Promote dataset 1"
-
-cd "${ROOT}"
 
 #step "Update Dataset"
 #${CVDB} submit assays "${EXAMPLES}/neutralization-submission-valid-update.xlsx"
 # TODO: check repos (files and git log): staging, public
 # TODO: build and check SQL tables
 
+
 #step "Promote Updated Dataset"
 #${CVDB} promote dataset 1
 # TODO: check repos (files and git log): staging, public
 # TODO: build and check SQL tables: staging, public
+
 
 # Clear trap to exit cleanly
 trap '' INT TERM EXIT
