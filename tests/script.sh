@@ -35,7 +35,7 @@ assert() {
 # Compare CVDB_DATA files and logs to a test directory
 check() {
   MESSAGE="'${CVDB_DATA}' should match '$1/data'"
-  diff <(cd "${CVDB_DATA}" && tree) <(cd "$1/data" && tree)
+  diff -rq --exclude=".git" "${CVDB_DATA}" "$1/data"
   MESSAGE="'${CVDB_DATA}' git shortlog should match '$1/*.log'"
   diff <(cd "${CVDB_SECRET}" && git shortlog HEAD) "$1/secret.log"
   diff <(cd "${CVDB_STAGING}" && git shortlog HEAD) "$1/staging.log"
@@ -68,7 +68,7 @@ assert "directories should be created" \
 
 step "Submit antibodies invalid"
 assert "submission should fail" \
-  "$(${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
+  "$(${CVDB} submit antibodies "Shane Crotty" "shane@lji.org" "LJI" "${EXAMPLES}/antibodies-submission-invalid.xlsx")" \
   "There were 6 errors
 Error in row 3: Missing required value for 'Antibody name'
 Error in row 6: Missing required value for 'Host'
@@ -79,13 +79,13 @@ Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'"
 
 
 step "Submit antibodies valid"
-${CVDB} submit "Shane Crotty" "shane@lji.org" "antibodies" "${EXAMPLES}/antibodies-submission-valid.xlsx"
+${CVDB} submit antibodies "Shane Crotty" "shane@lji.org" "LJI" "${EXAMPLES}/antibodies-submission-valid.xlsx"
 check "${ROOT}/tests/submit-antibodies"
 
 
 step "Create Dataset"
 assert "staging: dataset 1 created" \
-  "$(${CVDB} create "Jon Yewdell" "jyewdell@niaid.nih.gov" "neutralization")" \
+  "$(${CVDB} create dataset "Jon Yewdell" "jyewdell@niaid.nih.gov" "neutralization")" \
   "Created dataset 1"
 check "${ROOT}/tests/create-dataset"
 # TODO: fetch .xlsx for dataset
@@ -93,7 +93,7 @@ check "${ROOT}/tests/create-dataset"
 
 step "Submit Invalid Assays"
 assert "invalid submission should fail" \
-  "$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
+  "$(${CVDB} submit assays "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-invalid.xlsx")" \
   "There were 5 errors
 Error in row 2: Missing required value for 'Antibody name'
 Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody name'
@@ -104,7 +104,7 @@ Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measur
 
 step "Submit Valid Assays"
 assert "valid submission should succeed" \
-  "$(${CVDB} submit "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-valid.xlsx")" \
+  "$(${CVDB} submit assays "Jon Yewdell" "jyewdell@niaid.nih.gov" 1 "${EXAMPLES}/neutralization-submission-valid.xlsx")" \
   "Submitted assays to dataset 1"
 check "${ROOT}/tests/submit-assays"
 

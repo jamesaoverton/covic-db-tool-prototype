@@ -170,19 +170,24 @@ def validate_request(datatype, request_files):
     return validate(datatype, table)
 
 
-def create(name, email, datatype):
+def create_dataset(name, email, datatype):
     return datasets.create(name, email, datatype)
 
 
-def submit(name, email, dataset_id, table_or_path):
+def submit_antibodies(name, email, organization, table_or_path):
+    response = validate("antibodies", table_or_path)
+    if failed(response):
+        return response
+    table = response["table"]
+    return antibodies.submit(name, email, organization, table)
+
+
+def submit_assays(name, email, dataset_id, table_or_path):
     response = validate(dataset_id, table_or_path)
     if failed(response):
         return response
     table = response["table"]
-    if dataset_id == "antibodies":
-        return antibodies.submit(name, email, table)
-    else:
-        return datasets.submit(name, email, dataset_id, table)
+    return datasets.submit(name, email, dataset_id, table)
 
 
 def promote(name, email, dataset_id):

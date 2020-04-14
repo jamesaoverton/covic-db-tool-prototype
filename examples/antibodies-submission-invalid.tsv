@@ -1,10 +1,10 @@
-Antibody name	Host	Isotype
-A6	Homo sapiens	IgA
-B12	Mus musculus	IgD
-	Mus musculus	IgD
-C2	Mus musculus	IgG
-C3	Homo sapiens	IgG2a
-C6		Ig1
-D12	Homo sapiens	IgE
-E8	Mus musclus	Igm
-C3	Homo sapiens	IgG2a
+Antibody name	Host	Isotype	Antibody details	Antibody comment
+A6	Homo sapiens	IgA		
+B12	Mus musculus	IgD		
+	Mus musculus	IgD		
+C2	Mus musculus	IgG		
+C3	Homo sapiens	IgG2a		
+C6		Ig1		
+D12	Homo sapiens	IgE		
+E8	Mus musclus	Igm		
+C3	Homo sapiens	IgG2a		

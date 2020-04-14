@@ -33,7 +33,7 @@ light_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "li
 
 headers = [
     {
-        "value": "ab_label",
+        "value": "ab_name",
         "label": "Antibody name",
         "description": "Your institution's preferred name for the antibody.",
         "locked": True,
@@ -69,6 +69,18 @@ headers = [
                 "allow_blank": True,
             }
         ],
+    },
+    {
+        "value": "ab_details",
+        "label": "Antibody details",
+        "description": "Measurements or characteristics of the antibody",
+        "locked": True,
+    },
+    {
+        "value": "ab_comment",
+        "label": "Antibody comment",
+        "description": "Other comments on the antibody",
+        "locked": True,
     },
 ]
 
@@ -123,7 +135,7 @@ def validate(table):
     return submissions.validate(headers, table)
 
 
-def submit(name, email, table):
+def submit(name, email, organization, table):
     """Given a new table of antibodies:
     1. validate it
     2. assign IDs and append them to the secrets,
@@ -164,17 +176,18 @@ def submit(name, email, table):
         secret_row = OrderedDict()
         secret_row["ab_id"] = current_id
         secret_row["ab_name"] = row["Antibody name"]
-        secret_row["creator_name"] = name
-        secret_row["creator_email"] = email
+        secret_row["ab_details"] = row["Antibody details"]
+        secret_row["ab_comment"] = row["Antibody comment"]
+        secret_row["organization"] = organization
+        secret_row["submitter_name"] = name
+        secret_row["submitter_email"] = email
         secret.append(secret_row)
 
         # blind
         blind_row = OrderedDict()
         blind_row["ab_id"] = current_id
         blind_row["host_type_id"] = config.ids[row["Host"]]
-        blind_row["host_type_label"] = row["Host"]
         blind_row["isotype_id"] = config.ids[row["Isotype"]]
-        blind_row["isotype_label"] = row["Isotype"]
         blind.append(blind_row)
 
         # submission
@@ -185,6 +198,8 @@ def submit(name, email, table):
         submission_row["host_type_label"] = row["Host"]
         submission_row["isotype_id"] = config.ids[row["Isotype"]]
         submission_row["isotype_label"] = row["Isotype"]
+        submission_row["ab_details"] = row["Antibody details"]
+        submission_row["ab_comment"] = row["Antibody comment"]
         submission.append(submission_row)
 
     # secret

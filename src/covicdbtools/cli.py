@@ -60,6 +60,8 @@ def fill(args):
 def maybe_write(response, datatype, output):
     if output and output.endswith(".xlsx"):
         response = guard(api.fill_rows(datatype, response["grid"]["rows"]))
+        response["path"] = output
+        responses.write(response)
     elif output:
         response = guard(api.convert(response["grid"], output))
         response["path"] = output
@@ -73,15 +75,23 @@ def validate(args):
     guard(maybe_write(response, args.type, args.output))
 
 
-def submit(args):
+def submit_antibodies(args):
     """Submit a table, validate, store, and optionally write the result."""
-    response = api.submit(args.name, args.email, args.type, args.input)
-    guard(maybe_write(response, args.type, args.output))
+    response = api.submit_antibodies(
+        args.name, args.email, args.organization, args.input
+    )
+    guard(maybe_write(response, "antibodies", args.output))
 
 
-def create(args):
+def submit_assays(args):
+    """Submit a table, validate, store, and optionally write the result."""
+    response = api.submit_assays(args.name, args.email, args.id, args.input)
+    guard(maybe_write(response, args.id, args.output))
+
+
+def create_dataset(args):
     """Create a new dataset with a given assay type."""
-    guard(api.create(args.name, args.email, args.type))
+    guard(api.create_dataset(args.name, args.email, args.type))
 
 
 def promote(args):
@@ -132,18 +142,29 @@ def main():
     parser.set_defaults(func=validate)
 
     parser = subparsers.add_parser("submit", help="Submit data")
+    subsubparsers = parser.add_subparsers(required=True, dest="cmd")
+    parser = subsubparsers.add_parser("antibodies", help="Submit antibodies")
     parser.add_argument("name", help="The submitter's name")
     parser.add_argument("email", help="The submitter's email")
-    parser.add_argument("type", help="The type of data to submit")
+    parser.add_argument("organization", help="The submitter's organization")
     parser.add_argument("input", help="The input file to submit")
     parser.add_argument("output", help="The output file to write", nargs="?")
-    parser.set_defaults(func=submit)
+    parser.set_defaults(func=submit_antibodies)
+    parser = subsubparsers.add_parser("assays", help="Submit assays")
+    parser.add_argument("name", help="The submitter's name")
+    parser.add_argument("email", help="The submitter's email")
+    parser.add_argument("id", help="The dataset id")
+    parser.add_argument("input", help="The input file to submit")
+    parser.add_argument("output", help="The output file to write", nargs="?")
+    parser.set_defaults(func=submit_assays)
 
-    parser = subparsers.add_parser("create", help="Create a new dataset")
+    parser = subparsers.add_parser("create", help="Create a new entry")
+    subsubparsers = parser.add_subparsers(required=True, dest="cmd")
+    parser = subsubparsers.add_parser("dataset", help="Create a new dataset")
     parser.add_argument("name", help="The submitter's name")
     parser.add_argument("email", help="The submitter's email")
     parser.add_argument("type", help="The type of data to submit")
-    parser.set_defaults(func=create)
+    parser.set_defaults(func=create_dataset)
 
     parser = subparsers.add_parser(
         "promote", help="Promote a dataset from staging to public"
