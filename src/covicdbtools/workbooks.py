@@ -1,12 +1,10 @@
 from collections import OrderedDict
 from openpyxl import Workbook, load_workbook
 from openpyxl.comments import Comment
-from openpyxl.styles import Font, PatternFill, Color
+from openpyxl.styles import Font, PatternFill
 from openpyxl.styles.protection import Protection
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
-
-from covicdbtools import tables
 
 MIN_COLUMN_WIDTH = 15
 MAX_EXPECTED_ROWS = 100
@@ -42,8 +40,8 @@ def write(grids, output):
     - activeCell string: sets the selected cell in Excel
     - locked bool: locks the sheet in Excel"""
     bold = Font(bold=True)
-    yellow = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
-    orange = PatternFill(start_color="FFF1D8", end_color="FFF1D8", fill_type="solid")
+    # yellow = PatternFill(start_color="FFFF00", end_color="FFFF00", fill_type="solid")
+    # orange = PatternFill(start_color="FFF1D8", end_color="FFF1D8", fill_type="solid")
     red = PatternFill(start_color="FFD8D8", end_color="FFD8D8", fill_type="solid")
 
     wb = Workbook()
@@ -75,12 +73,10 @@ def write(grids, output):
                         for validation in header[j]["validations"]:
                             data_val = DataValidation(**validation)
                             ws.add_data_validation(data_val)
-                            data_val.add(
-                                "{0}{1}:{0}{2}".format(c, x, MAX_EXPECTED_ROWS)
-                            )
+                            data_val.add("{0}{1}:{0}{2}".format(c, x, MAX_EXPECTED_ROWS))
                 i += 1
             ws.freeze_panes = ws.cell(column=1, row=i + 1)
-        h = i
+
         if "rows" in grid:
             for row in grid["rows"]:
                 for j in range(0, len(row)):

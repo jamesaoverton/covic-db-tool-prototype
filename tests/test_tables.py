@@ -5,19 +5,19 @@ from covicdbtools import tables
 
 def test_is_table():
     table = "Foo"
-    assert tables.is_table(table) == False
+    assert not tables.is_table(table)
 
     table = [{"foo": "bar"}]
-    assert tables.is_table(table) == False
+    assert not tables.is_table(table)
 
     table = [OrderedDict({"foo": "bar"}), OrderedDict({"zoo": "baz"})]
-    assert tables.is_table(table) == False
+    assert not tables.is_table(table)
 
     table = [OrderedDict({"foo": 1})]
-    assert tables.is_table(table) == False
+    assert not tables.is_table(table)
 
     table = [OrderedDict({"foo": "bar"}), OrderedDict({"foo": "baz"})]
-    assert tables.is_table(table) == True
+    assert tables.is_table(table)
 
 
 def test_tsv_string():

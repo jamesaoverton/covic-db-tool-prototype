@@ -2,11 +2,8 @@
 
 import argparse
 import os
-import yaml
 
-from collections import OrderedDict
-
-from covicdbtools import config, tables, grids, templates, antibodies
+from covicdbtools import config, tables, grids, templates
 
 
 def read_data(
@@ -25,14 +22,10 @@ def read_data(
                 continue
             if name.endswith("-valid-expanded.tsv"):
                 assays_tsv_path = os.path.join(root, name)
-                assay_name = name.replace("-submission-valid-expanded.tsv", "").replace(
-                    "-", " "
-                )
+                assay_name = name.replace("-submission-valid-expanded.tsv", "").replace("-", " ")
                 assay_table = tables.read_tsv(assays_tsv_path)
                 columns = len(assay_table[0].keys()) - 1
-                assay_grid = grids.table_to_grid(
-                    config.prefixes, config.fields, assay_table
-                )
+                assay_grid = grids.table_to_grid(config.prefixes, config.fields, assay_table)
 
                 ab_map = {}
                 for row in assay_grid["rows"]:
@@ -53,9 +46,7 @@ def read_data(
                         for column in range(0, columns):
                             row.append(grids.value_cell(""))
 
-    grid[
-        "message"
-    ] = "This is the public view with all antibodies (blinded) and assays."
+    grid["message"] = "This is the public view with all antibodies (blinded) and assays."
     return grid
 
 
@@ -69,7 +60,5 @@ if __name__ == "__main__":
 
     grid = read_data(args.antibodies, args.datasets)
     templates.write_html(
-        args.template,
-        {"message": grid["message"], "html": grids.grid_to_html(grid)},
-        args.output,
+        args.template, {"message": grid["message"], "html": grids.grid_to_html(grid)}, args.output,
     )

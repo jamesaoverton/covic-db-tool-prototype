@@ -11,7 +11,7 @@ from collections import OrderedDict
 from tabulate import tabulate
 
 
-### Tables
+# # Tables
 
 
 def validate_table(table):
@@ -30,9 +30,7 @@ def validate_table(table):
             return "Keys for row 0 do not match keys for row {0}".format(i)
         for key, value in row.items():
             if type(value) is not str:
-                return "In row {0} key '{1}' the value '{2}' is not a string".format(
-                    i, key, value
-                )
+                return "In row {0} key '{1}' the value '{2}' is not a string".format(i, key, value)
     return None
 
 
@@ -46,7 +44,7 @@ def is_table(table):
     return True
 
 
-### Reading and Writing
+# # Reading and Writing
 
 
 def read_tsv(path):

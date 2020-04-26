@@ -7,11 +7,10 @@
 
 import json
 
-from collections import OrderedDict
 from covicdbtools import names
 
 
-### Cells
+# # Cells
 #
 # A cell is a dictionary of strings that MUST have a "value" key and "label" key.
 
@@ -56,7 +55,7 @@ def error_cell(value, comment):
     return cell
 
 
-### Grids
+# # Grids
 #
 # A grid is a dictionary that MUST have a "rows" key and MAY have a "headers" key.
 # The rows and headers are lists of lists of cells.
@@ -151,7 +150,7 @@ def table_to_grid(prefixes, fields, table):
     return grid
 
 
-### HTML Output
+# # HTML Output
 
 
 def cell_to_html(cell, header=False):

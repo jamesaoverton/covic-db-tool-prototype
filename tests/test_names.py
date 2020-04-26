@@ -16,24 +16,24 @@ def test_prefixes():
 
 def test_concise_table():
     table = [OrderedDict({"foo": "bar"})]
-    assert names.is_concise_table(table) == True
+    assert names.is_concise_table(table)
 
     table = [OrderedDict({"foo_id": "bar"})]
-    assert names.is_concise_table(table) == True
+    assert names.is_concise_table(table)
 
     table = [OrderedDict({"foo_label": "bar"})]
-    assert names.is_concise_table(table) == False
+    assert not names.is_concise_table(table)
 
 
 def test_labelled_table():
     table = [OrderedDict({"foo": "bar"})]
-    assert names.is_labelled_table(table) == True
+    assert names.is_labelled_table(table)
 
     table = [OrderedDict({"foo_id": "bar"})]
-    assert names.is_labelled_table(table) == False
+    assert not names.is_labelled_table(table)
 
     table = [OrderedDict({"foo_id": "bar", "foo_label": "Bar"})]
-    assert names.is_labelled_table(table) == True
+    assert names.is_labelled_table(table)
 
     labels = {"bar": "Bar"}
     concise_table = [OrderedDict({"foo_id": "bar"})]

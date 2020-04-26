@@ -31,7 +31,7 @@ public = None
 covic = Actor("CoVIC", "covic@lji.org")
 
 
-### Prefixes
+# # Prefixes
 #
 # The prefixes map takes short prefixes to long base URLs.
 # We can then convert IDs (CURIES) to IRIs (URIs).
@@ -45,7 +45,7 @@ def read_prefixes(prefixes_tsv_path):
     return prefixes
 
 
-### Terms
+# # Terms
 #
 # We have several sheets of terms, which we store by their label.
 # These tables always have 'id' and 'label' columns,
@@ -63,7 +63,7 @@ def read_terms(terms_tsv_path):
     return terms
 
 
-### Fields
+# # Fields
 #
 # A field describes a column of that may occur in multiple tables,
 # and its SQL name, human friendly label, and eventually validation rules.
@@ -78,7 +78,7 @@ def read_fields(fields_tsv_path):
     return fields
 
 
-### Labels
+# # Labels
 #
 # The labels map takes ID strings to label strings.
 
@@ -91,7 +91,7 @@ def read_labels(labels_tsv_path):
     return labels
 
 
-### IDs
+# # IDs
 #
 # The ids map takes label strings to ID strings.
 
@@ -104,7 +104,7 @@ def read_ids(labels_tsv_path):
     return ids
 
 
-### Configuration
+# # Configuration
 #
 # A configuration object is just a dictionary with certain keys.
 
@@ -240,13 +240,7 @@ def main():
     args = parser.parse_args()
 
     config = build(
-        args.prefixes,
-        args.core,
-        args.hosts,
-        args.isotypes,
-        args.assays,
-        args.fields,
-        args.labels,
+        args.prefixes, args.core, args.hosts, args.isotypes, args.assays, args.fields, args.labels,
     )
     result = validate(config)
     if result:

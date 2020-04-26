@@ -14,7 +14,7 @@ from collections import OrderedDict
 
 from covicdbtools import tables
 
-### Prefixes
+# # Prefixes
 #
 # The prefixes map takes short prefixes to long base URLs.
 # We can then convert IDs (CURIES) to IRIs (URIs).
@@ -31,7 +31,7 @@ def is_id(prefixes, i):
         return False
     if type(i) is not str:
         return False
-    if not ":" in i:
+    if ":" not in i:
         return False
     prefix, localname = split_id(i)
     return prefix in prefixes
@@ -53,7 +53,7 @@ def id_to_iri(prefixes, i):
     return i
 
 
-### Concise Tables
+# # Concise Tables
 #
 # A concise table is a table that does not have any _label columns.
 
@@ -78,7 +78,7 @@ def is_concise_table(concise_table):
     return True
 
 
-### Labelled Tables
+# # Labelled Tables
 #
 # A labelled table is a tabel that has a _label column following each _id column.
 
@@ -104,13 +104,9 @@ def validate_labelled_table(labelled_table):
         id_key = label_key_to_id_key(key)
         label_key = id_key_to_label_key(key)
         if key.endswith("_id") and label_key not in keys:
-            return "ID key {0} does not have corresponding label key {1}".format(
-                key, label_key
-            )
+            return "ID key {0} does not have corresponding label key {1}".format(key, label_key)
         elif key.endswith("_label") and id_key not in keys:
-            return "Label key {0} does not have corresponding id key {1}".format(
-                key, id_key
-            )
+            return "Label key {0} does not have corresponding id key {1}".format(key, id_key)
     return None
 
 

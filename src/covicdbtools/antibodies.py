@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import os
 
 from collections import OrderedDict
@@ -13,24 +12,16 @@ from covicdbtools import (
     tables,
     grids,
     workbooks,
-    templates,
-    requests,
     responses,
     submissions,
 )
 from covicdbtools.responses import success, failure, failed
 
 
-### Hardcoded fields
-# TODO: Make this configurable
+hosts = list(config.hosts.keys())
 
-
-hosts_table = tables.read_tsv("ontology/hosts.tsv")
-hosts = [h["label"] for h in hosts_table[1:]]
-
-isotypes_table = tables.read_tsv("ontology/isotypes.tsv")
-heavy_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "heavy"]
-light_chains = [i["label"] for i in isotypes_table[1:] if i["chain type"] == "light"]
+heavy_chains = [i["label"] for i in config.isotypes.values() if i["chain type"] == "heavy"]
+light_chains = [i["label"] for i in config.isotypes.values() if i["chain type"] == "light"]
 
 headers = [
     {
@@ -155,23 +146,21 @@ def submit(name, email, organization, table):
         return response
 
     if not config.secret:
-        return Failure("CVDB_SECRET directory is not configured")
+        return failure("CVDB_SECRET directory is not configured")
     secret = []
     path = os.path.join(config.secret.working_tree_dir, "antibodies.tsv")
     if os.path.isfile(path):
         secret = tables.read_tsv(path)
 
     if not config.staging:
-        return Failure("CVDB_STAGING directory is not configured")
+        return failure("CVDB_STAGING directory is not configured")
     blind = []
     path = os.path.join(config.staging.working_tree_dir, "antibodies.tsv")
     if os.path.isfile(path):
         blind = tables.read_tsv(path)
 
     if len(secret) != len(blind):
-        return failure(
-            f"Different number of antibody rows: {len(secret)} != {len(blind)}"
-        )
+        return failure(f"Different number of antibody rows: {len(secret)} != {len(blind)}")
 
     current_id = "COVIC:0"
     if len(blind) > 0:
@@ -220,9 +209,7 @@ def submit(name, email, organization, table):
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         config.secret.index.add([path])
-        config.secret.index.commit(
-            f"Submit antibodies", author=author, committer=config.covic
-        )
+        config.secret.index.commit(f"Submit antibodies", author=author, committer=config.covic)
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -234,15 +221,13 @@ def submit(name, email, organization, table):
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         config.staging.index.add([path])
-        config.staging.index.commit(
-            f"Submit antibodies", author=author, committer=config.covic
-        )
+        config.staging.index.commit(f"Submit antibodies", author=author, committer=config.covic)
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
     # public
     if not config.public:
-        return Failure("CVDB_PUBLIC directory is not configured")
+        return failure("CVDB_PUBLIC directory is not configured")
     try:
         path = os.path.join(config.public.working_tree_dir, "antibodies.tsv")
         tables.write_tsv(blind, path)

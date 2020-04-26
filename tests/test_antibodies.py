@@ -1,7 +1,3 @@
-import os
-
-from collections import OrderedDict
-
 from covicdbtools import tables, workbooks, antibodies, api
 from covicdbtools.responses import succeeded, failed
 from .test_requests import UploadedFile

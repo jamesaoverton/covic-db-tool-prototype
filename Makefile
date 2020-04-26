@@ -50,15 +50,23 @@ clean:
 update:
 	make clobber all
 
+PYTHON_FILES := src/covicdbtools tests
+
 .PHONY: test
 test:
 	pytest tests
 	rm -rf temp
 	tests/script.sh
 
+.PHONY: lint
+lint:
+	flake8 --max-line-length 100 --ignore E203,W503 $(PYTHON_FILES)
+	black --line-length 100 --check $(PYTHON_FILES)
+	shellcheck tests/*.sh
+
 .PHONY: format
 format:
-	black src/covicdbtools/*.py tests/*.py
+	black --line-length 100 $(PYTHON_FILES)
 	shellcheck tests/*.sh
 
 

@@ -1,4 +1,4 @@
-### Responses Utilities
+# # Responses Utilities
 #
 # A "response" is a dictionary that with an HTTP status and some other optional values:
 #
@@ -28,7 +28,7 @@ def success(data={}):
     """Return a success response with given data."""
     if not isinstance(data, dict):
         data_type = type(data)
-        raise Exception("Response data must be dict not '{data_type}'")
+        raise Exception(f"Response data must be dict not '{data_type}'")
     data["status"] = 200
     data["message"] = "Success"
     return data
@@ -38,7 +38,7 @@ def failure(message, data={}):
     """Return a failure response with given message and data."""
     if not isinstance(data, dict):
         data_type = type(data)
-        raise Exception("Response data must be dict not '{data_type}'")
+        raise Exception(f"Response data must be dict not '{data_type}'")
     data["status"] = 400
     data["message"] = message
     return data
@@ -49,12 +49,12 @@ def validate(response):
     otherwise return a string describing the problem."""
     if not isinstance(response, dict):
         return "Response must be a dictionary"
-    if not "status" in response:
+    if "status" not in response:
         return "Response must have a status"
     status = response["status"]
     if status not in [200, 201, 400]:
         return "Unrecognized response status '{status}'"
-    if not "message" in response:
+    if "message" not in response:
         return "Response must have a message"
     if "content" in response and "content type" not in response:
         return "Response has 'content' but is missing 'content type'"
@@ -96,9 +96,7 @@ def to_html(response, prefixes={}, fields={}):
     if "grid" in response:
         lines.append(grids.grid_to_html(response["grid"]))
     elif "table" in response:
-        lines.append(
-            grids.grid_to_html(grids.table_to_grid(prefixes, fields, response["table"]))
-        )
+        lines.append(grids.grid_to_html(grids.table_to_grid(prefixes, fields, response["table"])))
     lines.append("</div>")
     return "\n".join(lines)
 

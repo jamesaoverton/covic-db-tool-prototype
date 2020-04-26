@@ -18,7 +18,7 @@ from covicdbtools import (
 from covicdbtools.responses import success, failure, failed
 
 
-### Inputs
+# # Inputs
 #
 # A "source" can be:
 # - a table: list of OrderedDicts
@@ -32,7 +32,7 @@ from covicdbtools.responses import success, failure, failed
 # - an assay type name or ID
 # - a dataset ID: integer
 
-### Outputs
+# # Outputs
 #
 # Almost all of these functions return a response dictionary,
 # see `responses.py` for details.
@@ -99,9 +99,7 @@ def convert(source, destination):
         output_format = extension.lower().lstrip(".")
     if output_format.lower() == "tsv":
         content = tables.table_to_tsv_string(table)
-        return success(
-            {"table": table, "content type": responses.tsv, "content": content,}
-        )
+        return success({"table": table, "content type": responses.tsv, "content": content})
     elif output_format.lower() == "html":
         if not grid:
             grid = grids.table_to_grid(config.prefixes, config.fields, table)

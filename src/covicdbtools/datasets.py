@@ -17,13 +17,12 @@ from covicdbtools import (
     grids,
     workbooks,
     templates,
-    requests,
     responses,
     submissions,
 )
 from covicdbtools.responses import success, failure, failed
 
-### Hardcoded fields
+# # Hardcoded fields
 # TODO: Make this configurable
 
 qualitative_measures = ["positive", "negative", "unknown"]
@@ -46,9 +45,7 @@ headers = {
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!$A$2:$A${0}".format(
-                    len(qualitative_measures) + 1
-                ),
+                "formula1": "=Terminology!$A$2:$A${0}".format(len(qualitative_measures) + 1),
                 "allow_blank": True,
             }
         ],
@@ -110,9 +107,7 @@ def get_assay_headers(assay_type):
 def get_status(dataset_id):
     if not config.staging:
         raise Exception("CVDB_STAGING directory is not configured")
-    path = os.path.join(
-        config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml"
-    )
+    path = os.path.join(config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml")
     if os.path.isfile(path):
         with open(path, "r") as f:
             dataset = yaml.load(f, Loader=yaml.SafeLoader)
@@ -123,9 +118,7 @@ def get_status(dataset_id):
 def set_status(dataset_id, status):
     if not config.staging:
         raise Exception("CVDB_STAGING directory is not configured")
-    path = os.path.join(
-        config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml"
-    )
+    path = os.path.join(config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml")
     with open(path, "r") as f:
         dataset = yaml.load(f, Loader=yaml.SafeLoader)
         dataset["Dataset status"] = status
@@ -219,7 +212,7 @@ def validate(assay_type, table):
 
 def create(name, email, assay_type):
     if not config.staging:
-        return Failure("CVDB_STAGING directory is not configured")
+        return failure("CVDB_STAGING directory is not configured")
 
     assay_type_id = get_assay_type_id(assay_type)
     datasets_path = os.path.join(config.staging.working_tree_dir, "datasets")
@@ -307,10 +300,8 @@ def submit(name, email, dataset_id, table):
 
     # staging
     if not config.staging:
-        return Failure("CVDB_STAGING directory is not configured")
-    dataset_path = os.path.join(
-        config.staging.working_tree_dir, "datasets", str(dataset_id)
-    )
+        return failure("CVDB_STAGING directory is not configured")
+    dataset_path = os.path.join(config.staging.working_tree_dir, "datasets", str(dataset_id))
     paths = []
     try:
         set_status(dataset_id, "submitted")
@@ -327,9 +318,7 @@ def submit(name, email, dataset_id, table):
     try:
         config.staging.index.add(paths)
         config.staging.index.commit(
-            f"Submit assays to dataset {dataset_id}",
-            author=author,
-            committer=config.covic,
+            f"Submit assays to dataset {dataset_id}", author=author, committer=config.covic,
         )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
@@ -343,7 +332,7 @@ def promote(name, email, dataset_id):
 
     # staging
     if not config.staging:
-        return Failure("CVDB_STAGING directory is not configured")
+        return failure("CVDB_STAGING directory is not configured")
     staging_dataset_path = os.path.join(
         config.staging.working_tree_dir, "datasets", str(dataset_id)
     )
@@ -364,10 +353,8 @@ def promote(name, email, dataset_id):
 
     # public
     if not config.public:
-        return Failure("CVDB_PUBLIC directory is not configured")
-    public_dataset_path = os.path.join(
-        config.public.working_tree_dir, "datasets", str(dataset_id)
-    )
+        return failure("CVDB_PUBLIC directory is not configured")
+    public_dataset_path = os.path.join(config.public.working_tree_dir, "datasets", str(dataset_id))
     try:
         os.makedirs(public_dataset_path)
     except Exception as e:

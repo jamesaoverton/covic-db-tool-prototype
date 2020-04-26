@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-import csv
 import os
-import yaml
 
 from jinja2 import Environment, FileSystemLoader
 

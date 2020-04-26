@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-from covicdbtools import api, config, responses, tables
+from covicdbtools import api, responses, tables
 
 
 def guard(response):
@@ -84,9 +84,7 @@ def validate(args):
 
 def submit_antibodies(args):
     """Submit a table, validate, store, and optionally write the result."""
-    response = api.submit_antibodies(
-        args.name, args.email, args.organization, args.input
-    )
+    response = api.submit_antibodies(args.name, args.email, args.organization, args.input)
     guard(maybe_write(response, "antibodies", args.output))
 
 
@@ -110,9 +108,7 @@ def main():
     main_parser = argparse.ArgumentParser()
     subparsers = main_parser.add_subparsers(required=True, dest="cmd")
 
-    parser = subparsers.add_parser(
-        "initialize", help="Initialize the data repositories"
-    )
+    parser = subparsers.add_parser("initialize", help="Initialize the data repositories")
     parser.set_defaults(func=initialize)
 
     parser = subparsers.add_parser("read", help="Read a table to STDOUT")
@@ -126,17 +122,13 @@ def main():
     parser.add_argument("output", help="The file to write")
     parser.set_defaults(func=convert)
 
-    parser = subparsers.add_parser(
-        "expand", help="Expand a concise table to a labelled table"
-    )
+    parser = subparsers.add_parser("expand", help="Expand a concise table to a labelled table")
     parser.add_argument("input", help="The table file to read")
     parser.add_argument("sheet", help="The sheet to read", nargs="?", default=None)
     parser.add_argument("output", help="The file to write")
     parser.set_defaults(func=expand)
 
-    parser = subparsers.add_parser(
-        "fill", help="Use a TSV table to fill an Excel template"
-    )
+    parser = subparsers.add_parser("fill", help="Use a TSV table to fill an Excel template")
     parser.add_argument("type", help="The type of template to fill")
     parser.add_argument("input", help="The TSV file to read")
     parser.add_argument("output", help="The Excel file to write")
@@ -180,13 +172,9 @@ def main():
     parser.add_argument("type", help="The type of data to submit")
     parser.set_defaults(func=create_dataset)
 
-    parser = subparsers.add_parser(
-        "promote", help="Promote data from staging to public"
-    )
+    parser = subparsers.add_parser("promote", help="Promote data from staging to public")
     subsubparsers = parser.add_subparsers(required=True, dest="cmd")
-    parser = subsubparsers.add_parser(
-        "dataset", help="Promote a dataset from staging to public"
-    )
+    parser = subsubparsers.add_parser("dataset", help="Promote a dataset from staging to public")
     parser.add_argument("name", help="The submitter's name")
     parser.add_argument("email", help="The submitter's email")
     parser.add_argument("id", help="The dataset ID to promote")

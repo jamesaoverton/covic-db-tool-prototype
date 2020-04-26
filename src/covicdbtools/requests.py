@@ -1,5 +1,3 @@
-import os
-
 from io import BytesIO
 from covicdbtools.responses import success, failure, xlsx
 
