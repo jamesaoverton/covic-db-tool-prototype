@@ -96,7 +96,8 @@ def submit_assays(args):
 
 def create_dataset(args):
     """Create a new dataset with a given assay type."""
-    guard(api.create_dataset(args.name, args.email, args.type))
+    columns = args.columns.split(",")
+    guard(api.create_dataset(args.name, args.email, columns=columns))
 
 
 def promote_dataset(args):
@@ -169,7 +170,7 @@ def main():
     parser = subsubparsers.add_parser("dataset", help="Create a new dataset")
     parser.add_argument("name", help="The submitter's name")
     parser.add_argument("email", help="The submitter's email")
-    parser.add_argument("type", help="The type of data to submit")
+    parser.add_argument("--columns", help="The columns for the dataset")
     parser.set_defaults(func=create_dataset)
 
     parser = subparsers.add_parser("promote", help="Promote data from staging to public")

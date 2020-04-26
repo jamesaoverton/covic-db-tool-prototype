@@ -14,5 +14,3 @@ PR:000050261	IgG2c	owl:Class	IgG2	IgG2c heavy chain protein	heavy
 PR:000050255	IgG3	owl:Class	IgG	IgG3 heavy chain protein	heavy
 PR:000050256	IgG4	owl:Class	IgG	IgG4 heavy chain protein	heavy
 PR:000050257	IgM	owl:Class	immunoglobulin heavy chain protein	IgM heavy chain protein	heavy
-PR:000050181	kappa	owl:Class	immunoglobulin light chain protein	Ig kappa light chain protein	light
-PR:000050182	lambda	owl:Class	immunoglobulin light chain protein	Ig lambda light chain protein	light

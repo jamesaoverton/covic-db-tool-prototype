@@ -16,7 +16,7 @@ from covicdbtools import names
 
 
 def validate_cell(cell):
-    if type(cell) is not dict:
+    if not isinstance(cell, dict):
         return "Input is not a dictionary"
     if "value" not in cell:
         return "Cell is missing 'value' key"
@@ -62,18 +62,18 @@ def error_cell(value, comment):
 
 
 def validate_grid(grid):
-    if type(grid) is not dict:
+    if not isinstance(grid, dict):
         return "Input is not a dictionary"
 
     if "headers" in grid:
         headers = grid["headers"]
-        if type(headers) is not list:
+        if not isinstance(headers, list):
             return "Grid 'headers' is not a list"
         if len(headers) < 1:
             return "Grid 'headers' has no rows"
         for i in range(0, len(headers)):
             row = headers[i]
-            if type(row) is not list:
+            if not isinstance(row, list):
                 return "Row {0} is not a list".format(i)
             for j in range(0, len(row)):
                 cell = headers[i][j]
@@ -86,13 +86,13 @@ def validate_grid(grid):
     if "rows" not in grid:
         return "Missing 'rows' key"
     rows = grid["rows"]
-    if type(rows) is not list:
+    if not isinstance(rows, list):
         return "Grid 'rows' is not a list"
     if len(rows) < 1:
         return "Grid 'rows' has no rows"
     for i in range(0, len(rows)):
         row = rows[i]
-        if type(row) is not list:
+        if not isinstance(row, list):
             return "Row {0} is not a list".format(i)
         for j in range(0, len(row)):
             cell = rows[i][j]

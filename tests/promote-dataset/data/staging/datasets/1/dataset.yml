@@ -1,3 +1,14 @@
 Dataset ID: ds:1
 Dataset status: promoted
-Assay type ID: OBI:0001643
+Columns:
+- ab_label
+- tested_antigen
+- n
+- obi_0001741
+- obi_0001741_stddev
+- obi_0001739
+- obi_0001739_stddev
+- obi_0001731
+- obi_0001731_stddev
+- qualitative_measure
+- comment

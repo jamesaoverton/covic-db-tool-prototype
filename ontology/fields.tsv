@@ -1,11 +1,19 @@
-field	label	type
-ab_id	Antibody	id
-ab_label	Antibody name	label
-submitter_id	Submitter	id
-submitter_label	Submitter name	label
-host_type_id	Host	id
-host_type_label	Host name	label
-isotype	Isotype	label
-qualitative_measure	Qualitiative measure
-titer	Titer	float
-comment	Comment
+field	label	type	terminology	secret	example	description	comment	used in
+ab_id	Antibody	id			COVIC:1	TODO	blinded	antibodies.tsv assays.tsv
+ab_label	Antibody label	label			COVIC 1	TODO	blinded	antibodies.tsv
+ab_name	Antibody name	label		TRUE	VD-Crotty 1	TODO	confidential submitter's preferred name	secret/antibodies.tsv
+ab_details	Antibody details	text		TRUE		TODO	confidential, unstructured assay details on antibody from the sumbitter	secret/antibodies.tsv
+ab_comment	Antibody comment	text		TRUE		TODO	confidential free text about the antibody	secret/antibodies.tsv
+org_name	Organization name	label		TRUE	LJI	TODO	the organization that is submitted the antibody	secret/antibodies.tsv
+submitter_email	Submitter email	email		TRUE	shane@lji.org	TODO		secret/antibodies.tsv secret/datasets.tsv
+ds_id	Dataset	id			ds:1	TODO		secret/datasets.tsv dataset.yml
+ds_label	Dataset label	label			Dataset 1	TODO		dataset.yml
+host_type_id	Host	id	hosts		NCBITaxon:9606	TODO		antibodies.tsv
+host_type_label	Host name	label			Homo sapiens	TODO
+isotype_id	Isotype	id	isotypes		PR:000050177	TODO		antibodies.tsv
+isotype_label	Isotype label	label			IgA1	TODO
+qualitative_measure	Qualitiative measure	label	qualitative_measures		positive	TODO		assays.tsv
+titer	Titer	float			0.52	TODO		assays.tsv
+comment	Comment	text			did not bind positive control	TODO		assays.tsv
+tested_antigen	Tested antigen	label			Spike protein 1	TODO		assays.tsv
+n	n	int			6	TODO		assays.tsv

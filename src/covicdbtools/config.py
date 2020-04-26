@@ -14,12 +14,13 @@ from covicdbtools import tables
 
 
 # Global config dictionaries.
+fields = {}
 prefixes = {}
 core = {}
 hosts = {}
 isoforms = {}
 assays = {}
-fields = {}
+qualitative_measures = {}
 labels = {}
 ids = {}
 
@@ -29,6 +30,21 @@ secret = None
 staging = None
 public = None
 covic = Actor("CoVIC", "covic@lji.org")
+
+
+# # Fields
+#
+# A field describes a column of that may occur in multiple tables,
+# and its SQL name, human friendly label, and eventually validation rules.
+# The fields map takes column names to dictionaries.
+
+
+def read_fields(fields_tsv_path):
+    """Read the fields table and return the fields map."""
+    fields = {}
+    for row in tables.read_tsv(fields_tsv_path):
+        fields[row["field"]] = {k: v for k, v in row.items() if v is not None and v.strip() != ""}
+    return fields
 
 
 # # Prefixes
@@ -61,21 +77,6 @@ def read_terms(terms_tsv_path):
             continue
         terms[row["label"]] = row
     return terms
-
-
-# # Fields
-#
-# A field describes a column of that may occur in multiple tables,
-# and its SQL name, human friendly label, and eventually validation rules.
-# The fields map takes column names to dictionaries.
-
-
-def read_fields(fields_tsv_path):
-    """Read the fields table and return the fields map."""
-    fields = {}
-    for row in tables.read_tsv(fields_tsv_path):
-        fields[row["field"]] = row
-    return fields
 
 
 # # Labels
@@ -115,12 +116,13 @@ def validate(config):
     if not isinstance(config, dict):
         return "Config is not a dictionary"
     for key in [
+        "fields",
         "prefixes",
         "core",
         "hosts",
         "isotypes",
         "assays",
-        "fields",
+        "qualitative_measures",
         "labels",
         "ids",
     ]:
@@ -137,22 +139,24 @@ def is_config(config):
 
 
 def build(
+    fields_tsv_path,
     prefixes_tsv_path,
     core_tsv_path,
     hosts_tsv_path,
     isotypes_tsv_path,
     assays_tsv_path,
-    fields_tsv_path,
+    qualitative_measures_tsv_path,
     labels_tsv_path,
 ):
     """Read TSV files and return a new config dictionary."""
     config = {}
+    config["fields"] = read_fields(fields_tsv_path)
     config["prefixes"] = read_prefixes(prefixes_tsv_path)
     config["core"] = read_terms(core_tsv_path)
     config["hosts"] = read_terms(hosts_tsv_path)
     config["isotypes"] = read_terms(isotypes_tsv_path)
     config["assays"] = read_terms(assays_tsv_path)
-    config["fields"] = read_fields(fields_tsv_path)
+    config["qualitative_measures"] = read_terms(qualitative_measures_tsv_path)
     config["labels"] = read_labels(labels_tsv_path)
     config["ids"] = read_ids(labels_tsv_path)
     return config
@@ -178,12 +182,13 @@ def read(config_json_path="config.json"):
 
 def load(config):
     """Load a new config into the global dictionaries."""
-    global prefixes, core, hosts, isotypes, assays, fields, labels, ids
+    global prefixes, core, hosts, isotypes, assays, qualitative_measures, fields, labels, ids
     prefixes = config["prefixes"]
     core = config["core"]
     hosts = config["hosts"]
     isotypes = config["isotypes"]
     assays = config["assays"]
+    qualitative_measures = config["qualitative_measures"]
     fields = config["fields"]
     labels = config["labels"]
     ids = config["ids"]
@@ -229,18 +234,26 @@ def initialize():
 def main():
     """Read a new configuration from TSV files and save it as JSON."""
     parser = argparse.ArgumentParser(description="Read configuration and save it")
+    parser.add_argument("fields", type=str, help="The fields table")
     parser.add_argument("prefixes", type=str, help="The prefixes table")
     parser.add_argument("core", type=str, help="The core table")
     parser.add_argument("hosts", type=str, help="The hosts table")
     parser.add_argument("isotypes", type=str, help="The isotypes table")
     parser.add_argument("assays", type=str, help="The assays table")
-    parser.add_argument("fields", type=str, help="The fields table")
+    parser.add_argument("qualitative_measures", type=str, help="The qualitative_measures table")
     parser.add_argument("labels", type=str, help="The labels table")
     parser.add_argument("output", type=str, help="The output JSON file")
     args = parser.parse_args()
 
     config = build(
-        args.prefixes, args.core, args.hosts, args.isotypes, args.assays, args.fields, args.labels,
+        args.fields,
+        args.prefixes,
+        args.core,
+        args.hosts,
+        args.isotypes,
+        args.assays,
+        args.qualitative_measures,
+        args.labels,
     )
     result = validate(config)
     if result:

@@ -31,7 +31,7 @@ SHELL := bash
 ### General Tasks
 
 .PHONY: all
-all: examples views
+all: config examples views
 
 .PHONY: tidy
 tidy:
@@ -94,8 +94,8 @@ build/robot-tree.jar: | build
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
 
-ONTOLOGY_SHEETS = core hosts isotypes assays
-SHEETS = prefixes $(ONTOLOGY_SHEETS) fields
+ONTOLOGY_SHEETS = core hosts isotypes assays qualitative_measures
+SHEETS = fields prefixes $(ONTOLOGY_SHEETS)
 SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
 
 build/CoVIC-DB.xlsx: | build
@@ -131,6 +131,11 @@ src/covicdbtools/config.json: src/covicdbtools/config.py $(SHEET_TSVS) build/lab
 
 src/covicdbtools/cli.py: src/covicdbtools/config.json
 
+.PHONY: config
+config:
+	touch src/covicdbtools/config.py
+	make src/covicdbtools/config.json
+
 CVDB := python src/covicdbtools/cli.py
 
 
@@ -146,17 +151,13 @@ examples/antibodies-submission-invalid-highlighted.xlsx \
 build/antibodies-submission-invalid-highlighted.html
 
 DATASETS_EXAMPLES = \
-examples/neutralization-submission.xlsx \
-examples/neutralization-submission-valid.xlsx \
-build/neutralization-submission-valid-expanded.tsv \
-build/neutralization-submission-valid-expanded.html \
-examples/neutralization-submission-invalid.xlsx \
-examples/neutralization-submission-invalid-highlighted.xlsx \
-build/neutralization-submission-invalid-highlighted.html \
-examples/VLP-ELISA-submission.xlsx \
-examples/VLP-ELISA-submission-valid.xlsx \
-build/VLP-ELISA-submission-valid-expanded.tsv \
-build/VLP-ELISA-submission-valid-expanded.html
+examples/spr-submission.xlsx \
+examples/spr-submission-valid.xlsx \
+build/spr-submission-valid-expanded.tsv \
+build/spr-submission-valid-expanded.html \
+examples/spr-submission-invalid.xlsx \
+examples/spr-submission-invalid-highlighted.xlsx \
+build/spr-submission-invalid-highlighted.html
 
 examples/%-submission.xlsx: | src/covicdbtools/cli.py
 	$(CVDB) fill $* "" $@
@@ -186,13 +187,13 @@ examples: $(ANTIBODIES_EXAMPLES) $(DATASETS_EXAMPLES)
 
 ### Views
 
-build/antibodies.tsv: build/antibodies-submission-valid-expanded.tsv | build
-	cut -f1,4- $< | sed 's/VD-Crotty/COVIC/' > $@
+build/antibodies.tsv: tests/submit-antibodies/data/staging/antibodies.tsv | build
+	$(CVDB) expand $< $@
 
 build/antibodies.html: build/antibodies.tsv | src/covicdbtools/cli.py
 	$(CVDB) convert $< $@
 
-build/datasets/%/dataset.html: src/covicdbtools/datasets.py templates/dataset.html data/datasets/%/ | build/datasets
+build/datasets/%/dataset.html: src/covicdbtools/datasets.py templates/dataset.html tests/submit-assays/data/staging/datasets/%/ | build/datasets
 	mkdir -p build/datasets/$*
 	python $^ $@
 

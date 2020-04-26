@@ -22,86 +22,51 @@ from covicdbtools import (
 )
 from covicdbtools.responses import success, failure, failed
 
-# # Hardcoded fields
-# TODO: Make this configurable
 
-qualitative_measures = ["positive", "negative", "unknown"]
-
-headers = {
-    "ab_label": {
-        "value": "ab_label",
-        "label": "Antibody label",
-        "description": "The antibody's CoVIC ID.",
-        "locked": True,
-        "required": True,
-        "unique": True,
-    },
-    "qualitative_measure": {
-        "value": "qualitative_measure",
-        "label": "Qualitative measure",
-        "description": "The qualitative assay result.",
-        "locked": True,
-        "terminology": qualitative_measures,
-        "validations": [
-            {
-                "type": "list",
-                "formula1": "=Terminology!$A$2:$A${0}".format(len(qualitative_measures) + 1),
-                "allow_blank": True,
-            }
-        ],
-    },
-    "titer": {
-        "value": "titer",
-        "label": "Titer",
-        "description": "The concentration",
-        "locked": True,
-        "type": "float",
-    },
-    "comment": {
-        "value": "comment",
-        "label": "Comment",
-        "description": "A free-text comment on the assay",
-        "locked": True,
-    },
-}
-
-assay_types = {
-    "OBI:0001643": ["ab_label", "qualitative_measure", "titer"],
-    "OBI:0000661": ["ab_label", "qualitative_measure", "comment"],
-}
-
-
-def get_assay_type_id(assay_type):
-    """Given an assay type name or ID, return the assay type ID."""
-    assay_type_id = None
-    if names.is_id(config.prefixes, assay_type):
-        assay_type_id = assay_type
+def get_assay_headers(dataset_id):
+    """Given dataset ID, return the assay headers."""
+    if dataset_id == "spr":
+        path = "examples/spr-dataset.yml"
+    elif not config.staging:
+        raise Exception("CVDB_STAGING directory is not configured")
     else:
-        assay_name = assay_type.replace("-", " ")
-        if assay_name in config.ids:
-            assay_type_id = config.ids[assay_name]
-        else:
-            if not config.staging:
-                raise Exception("CVDB_STAGING directory is not configured")
-            path = os.path.join(
-                config.staging.working_tree_dir, "datasets", assay_type, "dataset.yml"
-            )
-            if os.path.isfile(path):
-                with open(path, "r") as f:
-                    dataset = yaml.load(f, Loader=yaml.SafeLoader)
-                if "Assay type ID" in dataset:
-                    assay_type_id = dataset["Assay type ID"]
-    if not assay_type_id:
-        raise Exception(f"Unrecognized assay type: {assay_type}")
-    if assay_type_id not in assay_types:
-        raise Exception(f"Not an assay type: {assay_type_id} {assay_type}")
-    return assay_type_id
+        path = os.path.join(config.staging.working_tree_dir, "datasets", dataset_id, "dataset.yml")
 
+    if not os.path.isfile(path):
+        raise Exception(f"File does not exist '{path}'")
+    with open(path, "r") as f:
+        dataset = yaml.load(f, Loader=yaml.SafeLoader)
+    columns = dataset["Columns"]
 
-def get_assay_headers(assay_type):
-    """Given an assay type name or ID, return the assay headers."""
-    assay_type_id = get_assay_type_id(assay_type)
-    return [headers[key] for key in assay_types[assay_type_id]]
+    headers = []
+    terminology_count = 0
+    for column in columns:
+        header = None
+        if column in config.fields:
+            header = config.fields[column].copy()
+        elif column.startswith("obi_"):
+            assay_id = column.replace("obi_", "OBI:")
+            stddev = assay_id.replace("_stddev", "")
+            if assay_id in config.labels:
+                header = config.assays[config.labels[assay_id]].copy()
+            elif stddev in config.labels:
+                header = config.assays[config.labels[stddev]].copy()
+                header["label"] = f"Standard deviation in {header['units']}"
+        if not header:
+            return failure(f"Unrecognized column '{column}'")
+        header["value"] = column
+        header["locked"] = True
+        if "terminology" in header and header["terminology"] != "":
+            terms = list(getattr(config, header["terminology"]))
+            col = chr(65 + terminology_count)
+            end = len(terms) + 1
+            formula = f"=Terminology!${col}$2:${col}${end}"
+            header["terminology"] = terms
+            header["validations"] = [{"type": "list", "formula1": formula, "allow_blank": True,}]
+            terminology_count += 1
+        headers.append(header)
+
+    return headers
 
 
 def get_status(dataset_id):
@@ -137,8 +102,10 @@ def read_data(dataset_path):
         if names.is_id(config.prefixes, value):
             iri = names.id_to_iri(config.prefixes, value)
         label = value
-        if value in config.labels:
+        if isinstance(value, str) and value in config.labels:
             label = value + " " + config.labels[value]
+        if isinstance(value, list):
+            label = ", ".join(value)
         fields.append({"field": key, "iri": iri, "label": label, "value": value})
 
     assays_tsv_path = os.path.join(dataset_path, "assays.tsv")
@@ -174,12 +141,15 @@ Columns:
     terminology_tables_lengths = [len(t) for t in terminology_tables.values()]
     terminology_table = []
 
-    for i in range(0, max(terminology_tables_lengths)):
-        newrow = OrderedDict()
-        for key, values in terminology_tables.items():
-            newrow[key] = values[i] if i < len(values) else ""
-        terminology_table.append(newrow)
-    terminology_grid = grids.table_to_grid({}, {}, terminology_table)
+    if len(terminology_tables) > 0:
+        for i in range(0, max(terminology_tables_lengths)):
+            newrow = OrderedDict()
+            for key, values in terminology_tables.items():
+                newrow[key] = values[i] if i < len(values) else ""
+            terminology_table.append(newrow)
+        terminology_grid = grids.table_to_grid({}, {}, terminology_table)
+    else:
+        terminology_grid = {}
     terminology_grid["title"] = "Terminology"
     terminology_grid["locked"] = True
 
@@ -210,11 +180,22 @@ def validate(assay_type, table):
     return response
 
 
-def create(name, email, assay_type):
+def create(name, email, columns=[]):
     if not config.staging:
         return failure("CVDB_STAGING directory is not configured")
 
-    assay_type_id = get_assay_type_id(assay_type)
+    for column in columns:
+        if column in config.fields:
+            continue
+        if column.startswith("obi_"):
+            assay_id = column.replace("obi_", "OBI:")
+            if assay_id in config.labels:
+                continue
+            stddev = assay_id.replace("_stddev", "")
+            if stddev in config.labels:
+                continue
+        return failure(f"Unrecognized column '{column}'")
+
     datasets_path = os.path.join(config.staging.working_tree_dir, "datasets")
     current_id = 0
     if not os.path.exists(datasets_path):
@@ -257,7 +238,7 @@ def create(name, email, assay_type):
         dataset = {
             "Dataset ID": f"ds:{dataset_id}",
             "Dataset status": "submitted",
-            "Assay type ID": assay_type_id,
+            "Columns": columns,
         }
         path = os.path.join(dataset_path, "dataset.yml")
         with open(path, "w") as outfile:

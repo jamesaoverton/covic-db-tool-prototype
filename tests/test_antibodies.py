@@ -14,12 +14,12 @@ def test_validate():
     response = antibodies.validate(table)
     assert failed(response)
     assert response["errors"] == [
-        "Error in row 3: Missing required value for 'Antibody name'",
-        "Error in row 6: Missing required value for 'Host'",
-        "Error in row 6: 'Ig1' is not a recognized value for 'Isotype'",
-        "Error in row 8: 'Mus musclus' is not a recognized value for 'Host'",
-        "Error in row 8: 'Igm' is not a recognized value for 'Isotype'",
-        "Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'",
+        "Error in row 3: Missing required value in column 'Antibody name'",
+        "Error in row 6: Missing required value in column 'Host'",
+        "Error in row 6: 'Ig1' is not a valid term in column 'Isotype'",
+        "Error in row 8: 'Mus musclus' is not a valid term in column 'Host'",
+        "Error in row 8: 'Igm' is not a valid term in column 'Isotype'",
+        "Error in row 9: Duplicate value 'C3' is not allowed in column 'Antibody name'",
     ]
 
     upload = UploadedFile("examples/antibodies-submission-valid.xlsx")

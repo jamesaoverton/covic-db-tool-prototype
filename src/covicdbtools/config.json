@@ -1,4 +1,160 @@
 {
+  "fields": {
+    "ab_id": {
+      "field": "ab_id",
+      "label": "Antibody",
+      "type": "id",
+      "example": "COVIC:1",
+      "description": "TODO",
+      "comment": "blinded",
+      "used in": "antibodies.tsv assays.tsv"
+    },
+    "ab_label": {
+      "field": "ab_label",
+      "label": "Antibody label",
+      "type": "label",
+      "example": "COVIC 1",
+      "description": "TODO",
+      "comment": "blinded",
+      "used in": "antibodies.tsv"
+    },
+    "ab_name": {
+      "field": "ab_name",
+      "label": "Antibody name",
+      "type": "label",
+      "secret": "TRUE",
+      "example": "VD-Crotty 1",
+      "description": "TODO",
+      "comment": "confidential submitter's preferred name",
+      "used in": "secret/antibodies.tsv"
+    },
+    "ab_details": {
+      "field": "ab_details",
+      "label": "Antibody details",
+      "type": "text",
+      "secret": "TRUE",
+      "description": "TODO",
+      "comment": "confidential, unstructured assay details on antibody from the sumbitter",
+      "used in": "secret/antibodies.tsv"
+    },
+    "ab_comment": {
+      "field": "ab_comment",
+      "label": "Antibody comment",
+      "type": "text",
+      "secret": "TRUE",
+      "description": "TODO",
+      "comment": "confidential free text about the antibody",
+      "used in": "secret/antibodies.tsv"
+    },
+    "org_name": {
+      "field": "org_name",
+      "label": "Organization name",
+      "type": "label",
+      "secret": "TRUE",
+      "example": "LJI",
+      "description": "TODO",
+      "comment": "the organization that is submitted the antibody",
+      "used in": "secret/antibodies.tsv"
+    },
+    "submitter_email": {
+      "field": "submitter_email",
+      "label": "Submitter email",
+      "type": "email",
+      "secret": "TRUE",
+      "example": "shane@lji.org",
+      "description": "TODO",
+      "used in": "secret/antibodies.tsv secret/datasets.tsv"
+    },
+    "ds_id": {
+      "field": "ds_id",
+      "label": "Dataset",
+      "type": "id",
+      "example": "ds:1",
+      "description": "TODO",
+      "used in": "secret/datasets.tsv dataset.yml"
+    },
+    "ds_label": {
+      "field": "ds_label",
+      "label": "Dataset label",
+      "type": "label",
+      "example": "Dataset 1",
+      "description": "TODO",
+      "used in": "dataset.yml"
+    },
+    "host_type_id": {
+      "field": "host_type_id",
+      "label": "Host",
+      "type": "id",
+      "terminology": "hosts",
+      "example": "NCBITaxon:9606",
+      "description": "TODO",
+      "used in": "antibodies.tsv"
+    },
+    "host_type_label": {
+      "field": "host_type_label",
+      "label": "Host name",
+      "type": "label",
+      "example": "Homo sapiens",
+      "description": "TODO"
+    },
+    "isotype_id": {
+      "field": "isotype_id",
+      "label": "Isotype",
+      "type": "id",
+      "terminology": "isotypes",
+      "example": "PR:000050177",
+      "description": "TODO",
+      "used in": "antibodies.tsv"
+    },
+    "isotype_label": {
+      "field": "isotype_label",
+      "label": "Isotype label",
+      "type": "label",
+      "example": "IgA1",
+      "description": "TODO"
+    },
+    "qualitative_measure": {
+      "field": "qualitative_measure",
+      "label": "Qualitiative measure",
+      "type": "label",
+      "terminology": "qualitative_measures",
+      "example": "positive",
+      "description": "TODO",
+      "used in": "assays.tsv"
+    },
+    "titer": {
+      "field": "titer",
+      "label": "Titer",
+      "type": "float",
+      "example": "0.52",
+      "description": "TODO",
+      "used in": "assays.tsv"
+    },
+    "comment": {
+      "field": "comment",
+      "label": "Comment",
+      "type": "text",
+      "example": "did not bind positive control",
+      "description": "TODO",
+      "used in": "assays.tsv"
+    },
+    "tested_antigen": {
+      "field": "tested_antigen",
+      "label": "Tested antigen",
+      "type": "label",
+      "example": "Spike protein 1",
+      "description": "TODO",
+      "used in": "assays.tsv"
+    },
+    "n": {
+      "field": "n",
+      "label": "n",
+      "type": "int",
+      "example": "6",
+      "description": "TODO",
+      "used in": "assays.tsv"
+    }
+  },
   "prefixes": {
     "BFO": "http://purl.obolibrary.org/obo/BFO_",
     "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
@@ -34,6 +190,26 @@
       "label": "immunoglobulin light chain protein",
       "type": "owl:Class",
       "parent": "protein"
+    },
+    "kappa": {
+      "id": "PR:000050181",
+      "label": "kappa",
+      "type": "owl:Class",
+      "parent": "immunoglobulin light chain protein",
+      "null": [
+        "Ig kappa light chain protein",
+        "light"
+      ]
+    },
+    "lambda": {
+      "id": "PR:000050182",
+      "label": "lambda",
+      "type": "owl:Class",
+      "parent": "immunoglobulin light chain protein",
+      "null": [
+        "Ig lambda light chain protein",
+        "light"
+      ]
     },
     "organism": {
       "id": "OBI:0100026",
@@ -88,6 +264,12 @@
       "label": "assay",
       "type": "owl:Class",
       "parent": "planned process"
+    },
+    "qualitative measure": {
+      "id": "ONTIE:qualitiative-measure",
+      "label": "qualitative measure",
+      "type": "owl:Class",
+      "parent": null
     }
   },
   "hosts": {
@@ -222,88 +404,88 @@
       "parent": "immunoglobulin heavy chain protein",
       "PR label": "IgM heavy chain protein",
       "chain type": "heavy"
-    },
-    "kappa": {
-      "id": "PR:000050181",
-      "label": "kappa",
-      "type": "owl:Class",
-      "parent": "immunoglobulin light chain protein",
-      "PR label": "Ig kappa light chain protein",
-      "chain type": "light"
-    },
-    "lambda": {
-      "id": "PR:000050182",
-      "label": "lambda",
-      "type": "owl:Class",
-      "parent": "immunoglobulin light chain protein",
-      "PR label": "Ig lambda light chain protein",
-      "chain type": "light"
     }
   },
   "assays": {
     "neutralization": {
       "id": "OBI:0001643",
       "label": "neutralization",
-      "type": "owl:Class",
-      "parent": "assay"
+      "description": "TODO",
+      "type": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": null,
+      "units": null
     },
     "VLP ELISA": {
       "id": "OBI:0000661",
       "label": "VLP ELISA",
-      "type": "owl:Class",
-      "parent": "assay"
+      "description": "TODO",
+      "type": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": ""
+    },
+    "SPR": {
+      "id": "OBI:0000923",
+      "label": "SPR",
+      "description": "TODO",
+      "type": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": ""
+    },
+    "on rate; Ka in M^-1s^-1": {
+      "id": "OBI:0001741",
+      "label": "on rate; Ka in M^-1s^-1",
+      "description": "TODO",
+      "type": "float_threshold_na",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "SPR",
+      "units": "M^-1s^-1"
+    },
+    "off rate; Kd in 1/s": {
+      "id": "OBI:0001739",
+      "label": "off rate; Kd in 1/s",
+      "description": "TODO",
+      "type": "float_threshold_na",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "SPR",
+      "units": "1/s"
+    },
+    "dissociation constant; KD in nM": {
+      "id": "OBI:0001731",
+      "label": "dissociation constant; KD in nM",
+      "description": "TODO",
+      "type": "float_threshold_na",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "SPR",
+      "units": "nM"
     }
   },
-  "fields": {
-    "ab_id": {
-      "field": "ab_id",
-      "label": "Antibody",
-      "type": "id"
+  "qualitative_measures": {
+    "positive": {
+      "id": "ONTIE:positive",
+      "label": "positive",
+      "type": "owl:Class",
+      "parent": "qualitative measure"
     },
-    "ab_label": {
-      "field": "ab_label",
-      "label": "Antibody name",
-      "type": "label"
+    "negative": {
+      "id": "ONTIE:negative",
+      "label": "negative",
+      "type": "owl:Class",
+      "parent": "qualitative measure"
     },
-    "submitter_id": {
-      "field": "submitter_id",
-      "label": "Submitter",
-      "type": "id"
-    },
-    "submitter_label": {
-      "field": "submitter_label",
-      "label": "Submitter name",
-      "type": "label"
-    },
-    "host_type_id": {
-      "field": "host_type_id",
-      "label": "Host",
-      "type": "id"
-    },
-    "host_type_label": {
-      "field": "host_type_label",
-      "label": "Host name",
-      "type": "label"
-    },
-    "isotype": {
-      "field": "isotype",
-      "label": "Isotype",
-      "type": "label"
-    },
-    "qualitative_measure": {
-      "field": "qualitative_measure",
-      "label": "Qualitiative measure",
-      "type": null
-    },
-    "titer": {
-      "field": "titer",
-      "label": "Titer",
-      "type": "float"
-    },
-    "comment": {
-      "field": "comment",
-      "label": "Comment",
-      "type": null
+    "unknown": {
+      "id": "ONTIE:unknown",
+      "label": "unknown",
+      "type": "owl:Class",
+      "parent": "qualitative measure"
     }
   },
   "labels": {
@@ -319,9 +501,17 @@
     "OBI:0000011": "planned process",
     "OBI:0000070": "assay",
     "OBI:0000661": "VLP ELISA",
+    "OBI:0000923": "SPR",
     "OBI:0001643": "neutralization",
+    "OBI:0001731": "dissociation constant; KD in nM",
+    "OBI:0001739": "off rate; Kd in 1/s",
+    "OBI:0001741": "on rate; Ka in M^-1s^-1",
     "OBI:0100026": "organism",
     "ONTIE:0000001": "Mus musculus BALB/C",
+    "ONTIE:negative": "negative",
+    "ONTIE:positive": "positive",
+    "ONTIE:qualitiative-measure": "qualitative measure",
+    "ONTIE:unknown": "unknown",
     "PR:000000001": "protein",
     "PR:000050174": "immunoglobulin heavy chain protein",
     "PR:000050175": "immunoglobulin light chain protein",
@@ -355,9 +545,17 @@
     "planned process": "OBI:0000011",
     "assay": "OBI:0000070",
     "VLP ELISA": "OBI:0000661",
+    "SPR": "OBI:0000923",
     "neutralization": "OBI:0001643",
+    "dissociation constant; KD in nM": "OBI:0001731",
+    "off rate; Kd in 1/s": "OBI:0001739",
+    "on rate; Ka in M^-1s^-1": "OBI:0001741",
     "organism": "OBI:0100026",
     "Mus musculus BALB/C": "ONTIE:0000001",
+    "negative": "ONTIE:negative",
+    "positive": "ONTIE:positive",
+    "qualitative measure": "ONTIE:qualitiative-measure",
+    "unknown": "ONTIE:unknown",
     "protein": "PR:000000001",
     "immunoglobulin heavy chain protein": "PR:000050174",
     "immunoglobulin light chain protein": "PR:000050175",

@@ -1,11 +1,2 @@
-ab_id	qualitative_measure	titer
-COVIC:1	positive	0.52
-COVIC:2	negative	20.2
-COVIC:3	negative	23.7
-COVIC:4	positive	1.5
-COVIC:5	unknown	3.6
-COVIC:6	negative	64
-COVIC:7		
-COVIC:8		
-COVIC:9		
-COVIC:10		
+ab_id	tested_antigen	n	obi_0001741	obi_0001741_stddev	obi_0001739	obi_0001739_stddev	obi_0001731	obi_0001731_stddev	qualitative_measure	comment
+COVIC:1	Spike protein 1	6	491000	70000	126	21	<.1	0.01	positive	

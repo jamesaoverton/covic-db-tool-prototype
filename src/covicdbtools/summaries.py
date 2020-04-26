@@ -39,7 +39,7 @@ def read_data(
                 grid["headers"][1] += assay_grid["headers"][0][1:]
 
                 for row in grid["rows"]:
-                    ab_label = row[0]["value"]
+                    ab_label = row[0]["value"].replace(":", " ")
                     if ab_label in ab_map:
                         row += ab_map[ab_label]
                     else:

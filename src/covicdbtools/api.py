@@ -76,7 +76,7 @@ def read(source, sheet=None):
             return response
         table = workbooks.read(response["content"], sheet)
         return success({"table": table})
-    return failure(f"Unknown input '{source}'")
+    raise Exception(f"Unknown input '{source}'")
 
 
 def convert(source, destination):
@@ -85,6 +85,7 @@ def convert(source, destination):
     and return a response with a "content" key."""
     table = None
     grid = None
+
     if grids.is_grid(source):
         grid = source
     else:
@@ -184,10 +185,10 @@ def validate(datatype, source):
         return datasets.validate(datatype, table)
 
 
-def create_dataset(name, email, assay_type):
+def create_dataset(name, email, columns=[]):
     """Given the submitter's name, email, and an assay_type, create a dataset.
     The response will have a "dataset" key with the new id."""
-    return datasets.create(name, email, assay_type)
+    return datasets.create(name, email, columns=columns)
 
 
 def submit_antibodies(name, email, organization, source):

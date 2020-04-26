@@ -82,12 +82,12 @@ FILE="${EXAMPLES}/antibodies-submission-invalid.xlsx"
 cvdb submit antibodies "Shane Crotty" shane@lji.org LJI "${FILE}" \
   > "${RESULT}" && fail "Submit invalid should fail"
 check_result "There were 6 errors
-Error in row 3: Missing required value for 'Antibody name'
-Error in row 6: Missing required value for 'Host'
-Error in row 6: 'Ig1' is not a recognized value for 'Isotype'
-Error in row 8: 'Mus musclus' is not a recognized value for 'Host'
-Error in row 8: 'Igm' is not a recognized value for 'Isotype'
-Error in row 9: Duplicate value 'C3' is not allowed for 'Antibody name'"
+Error in row 3: Missing required value in column 'Antibody name'
+Error in row 6: Missing required value in column 'Host'
+Error in row 6: 'Ig1' is not a valid term in column 'Isotype'
+Error in row 8: 'Mus musclus' is not a valid term in column 'Host'
+Error in row 8: 'Igm' is not a valid term in column 'Isotype'
+Error in row 9: Duplicate value 'C3' is not allowed in column 'Antibody name'"
 
 
 step "Submit antibodies valid"
@@ -99,33 +99,32 @@ check_repos "${ROOT}/tests/submit-antibodies"
 
 
 step "Create Dataset"
-cvdb create dataset "Jon Yewdell" jyewdell@niaid.nih.gov neutralization \
+COLUMNS="ab_label,tested_antigen,n,obi_0001741,obi_0001741_stddev,obi_0001739,obi_0001739_stddev,obi_0001731,obi_0001731_stddev,qualitative_measure,comment"
+cvdb create dataset "Jon Yewdell" jyewdell@niaid.nih.gov --columns "${COLUMNS}" \
   > "${RESULT}" || fail "Failed to create"
 check_result "Created dataset 1"
 check_repos "${ROOT}/tests/create-dataset"
 
 
 step "Fetch assays template"
-FILE="${TEMP}/neutralization-submission.xlsx"
+FILE="${TEMP}/spr-submission.xlsx"
 cvdb fetch template 1 "${FILE}" || fail "Failed to fetch"
 cvdb read "${FILE}" Dataset > "${RESULT}" || fail "Failed to read"
 check_result "Empty table"
 
 
 step "Submit Invalid Assays"
-FILE="${EXAMPLES}/neutralization-submission-invalid.xlsx"
+FILE="${EXAMPLES}/spr-submission-invalid.xlsx"
 cvdb submit assays "Jon Yewdell" jyewdell@niaid.nih.gov 1 "${FILE}" \
   > "${RESULT}" && fail "Submit invalid should fail"
-check_result "There were 5 errors
-Error in row 2: Missing required value for 'Antibody label'
-Error in row 3: Duplicate value 'COVIC 1' is not allowed for 'Antibody label'
-Error in row 5: 'postive' is not a recognized value for 'Qualitative measure'
-Error in row 5: 'none' is not of type 'float' in 'Titer'
-Error in row 6: 'intermediate' is not a recognized value for 'Qualitative measure'"
+check_result "There were 3 errors
+Error in row 1: 'X' is not of type 'int' in column 'n'
+Error in row 1: '7000O' is not of type 'float_threshold_na' in column 'Standard deviation in M^-1s^-1'
+Error in row 1: 'Positive' is not a valid term in column 'Qualitiative measure'"
 
 
 step "Submit Valid Assays"
-FILE="${EXAMPLES}/neutralization-submission-valid.xlsx"
+FILE="${EXAMPLES}/spr-submission-valid.xlsx"
 cvdb submit assays "Jon Yewdell" jyewdell@niaid.nih.gov 1 "${FILE}" \
   > "${RESULT}" || fail "Failed to submit"
 check_result "Submitted assays to dataset 1"

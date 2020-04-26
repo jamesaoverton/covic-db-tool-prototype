@@ -4,6 +4,8 @@ BFO:0000040	material entity	owl:Class
 PR:000000001	protein	owl:Class	material entity
 PR:000050174	immunoglobulin heavy chain protein	owl:Class	protein
 PR:000050175	immunoglobulin light chain protein	owl:Class	protein
+PR:000050181	kappa	owl:Class	immunoglobulin light chain protein	Ig kappa light chain protein	light
+PR:000050182	lambda	owl:Class	immunoglobulin light chain protein	Ig lambda light chain protein	light
 OBI:0100026	organism	owl:Class	material entity
 NCBITaxon:7742 	Vertebrata	owl:Class	organism
 NCBITaxon:10239	Virus	owl:Class	organism
@@ -13,3 +15,4 @@ NCBITaxon:2697049	Severe acute respiratory syndrome coronavirus 2	owl:Class	Seve
 BFO:0000015	process	owl:Class
 OBI:0000011	planned process	owl:Class	process
 OBI:0000070	assay	owl:Class	planned process
+ONTIE:qualitiative-measure	qualitative measure	owl:Class

@@ -19,6 +19,53 @@ def store(ids, headers, table):
     return submission
 
 
+def validate_field(column, field_type, value):
+    if field_type == "text":
+        return None
+
+    elif field_type == "label":
+        return None
+
+    elif field_type == "id":
+        if names.is_id(value):
+            return None
+        return f"'{value}' is not a valid ID in column '{column}'"
+
+    elif field_type == "int":
+        try:
+            _ = int(value)
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
+    elif field_type == "float":
+        try:
+            _ = float(value)
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
+    elif field_type == "float_na":
+        if value == "" or value.lower() == "na":
+            return None
+        try:
+            _ = float(value)
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
+    elif field_type == "float_threshold_na":
+        if value == "" or value.lower() == "na":
+            return None
+        try:
+            _ = float(value.lstrip("<"))
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
+    return f"Unrecognized field type '{field_type}' in column '{column}'"
+
+
 def validate(headers, table):
     """Given the headers and a (validated!) table,
     return a response with "grid" and maybe "errors"."""
@@ -40,20 +87,13 @@ def validate(headers, table):
             value = row[column].strip() if column in row else ""
             error = None
             if "required" in header and header["required"] and value == "":
-                error = "Missing required value for '{0}'".format(column)
+                error = f"Missing required value in column '{column}'"
             elif "unique" in header and header["unique"] and value in unique[column]:
-                error = "Duplicate value '{0}' is not allowed for '{1}'".format(value, column)
+                error = f"Duplicate value '{value}' is not allowed in column '{column}'"
             elif "terminology" in header and value != "" and value not in header["terminology"]:
-                error = "'{0}' is not a recognized value for '{1}'".format(value, column)
-            if "type" in header and value != "":
-                if header["type"] == "float":
-                    try:
-                        _ = float(value)
-                    except ValueError:
-                        error = "'{0}' is not of type '{1}' in '{2}'".format(
-                            value, header["type"], column
-                        )
-                # TODO: Handle bad types
+                error = f"'{value}' is not a valid term in column '{column}'"
+            elif "type" in header and value != "":
+                error = validate_field(column, header["type"], value)
             if "unique" in header and header["unique"]:
                 unique[column].add(value)
 
