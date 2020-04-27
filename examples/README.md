@@ -3,6 +3,7 @@
 Submission templates:
 
 - `antibody-submission.xlsx`: The template for submitting new antibodies.
+- `spr-submission.xlsx`: A full example template with multiple assays.
 - `neutralization-submission.xlsx`: The template for submitting a neutralization assay dataset.
 - `VLP-ELISA-submission.xlsx`: The template for submitting a Virus Like Particle (VLP) binding assay dataset.
 
