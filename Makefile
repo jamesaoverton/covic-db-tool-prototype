@@ -48,6 +48,7 @@ clean:
 
 .PHONY: update
 update:
+	touch examples/*.tsv
 	make clobber all
 
 PYTHON_FILES := src/covicdbtools tests

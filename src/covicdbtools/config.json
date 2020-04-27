@@ -4,8 +4,8 @@
       "field": "ab_id",
       "label": "Antibody",
       "type": "id",
+      "description": "the COVID ID for the antibody",
       "example": "COVIC:1",
-      "description": "TODO",
       "comment": "blinded",
       "used in": "antibodies.tsv assays.tsv"
     },
@@ -13,8 +13,8 @@
       "field": "ab_label",
       "label": "Antibody label",
       "type": "label",
+      "description": "the COVIC label for the antibody",
       "example": "COVIC 1",
-      "description": "TODO",
       "comment": "blinded",
       "used in": "antibodies.tsv"
     },
@@ -23,8 +23,8 @@
       "label": "Antibody name",
       "type": "label",
       "secret": "TRUE",
+      "description": "the submitter's name for the antibody",
       "example": "VD-Crotty 1",
-      "description": "TODO",
       "comment": "confidential submitter's preferred name",
       "used in": "secret/antibodies.tsv"
     },
@@ -33,7 +33,7 @@
       "label": "Antibody details",
       "type": "text",
       "secret": "TRUE",
-      "description": "TODO",
+      "description": "assay details about the antibody",
       "comment": "confidential, unstructured assay details on antibody from the sumbitter",
       "used in": "secret/antibodies.tsv"
     },
@@ -42,7 +42,7 @@
       "label": "Antibody comment",
       "type": "text",
       "secret": "TRUE",
-      "description": "TODO",
+      "description": "general comments about the antibody",
       "comment": "confidential free text about the antibody",
       "used in": "secret/antibodies.tsv"
     },
@@ -51,8 +51,8 @@
       "label": "Organization name",
       "type": "label",
       "secret": "TRUE",
+      "description": "the name of the organization that submitted the antibody",
       "example": "LJI",
-      "description": "TODO",
       "comment": "the organization that is submitted the antibody",
       "used in": "secret/antibodies.tsv"
     },
@@ -61,24 +61,24 @@
       "label": "Submitter email",
       "type": "email",
       "secret": "TRUE",
+      "description": "the email of the person who submitted this data",
       "example": "shane@lji.org",
-      "description": "TODO",
       "used in": "secret/antibodies.tsv secret/datasets.tsv"
     },
     "ds_id": {
       "field": "ds_id",
       "label": "Dataset",
       "type": "id",
+      "description": "the ID of the dataset",
       "example": "ds:1",
-      "description": "TODO",
       "used in": "secret/datasets.tsv dataset.yml"
     },
     "ds_label": {
       "field": "ds_label",
       "label": "Dataset label",
       "type": "label",
+      "description": "the label of the dataset",
       "example": "Dataset 1",
-      "description": "TODO",
       "used in": "dataset.yml"
     },
     "host_type_id": {
@@ -86,72 +86,72 @@
       "label": "Host",
       "type": "id",
       "terminology": "hosts",
+      "description": "the ID of the host species",
       "example": "NCBITaxon:9606",
-      "description": "TODO",
       "used in": "antibodies.tsv"
     },
     "host_type_label": {
       "field": "host_type_label",
       "label": "Host name",
       "type": "label",
-      "example": "Homo sapiens",
-      "description": "TODO"
+      "description": "the label of the host species",
+      "example": "Homo sapiens"
     },
     "isotype_id": {
       "field": "isotype_id",
       "label": "Isotype",
       "type": "id",
       "terminology": "isotypes",
+      "description": "the ID of the antibody isotype",
       "example": "PR:000050177",
-      "description": "TODO",
       "used in": "antibodies.tsv"
     },
     "isotype_label": {
       "field": "isotype_label",
       "label": "Isotype label",
       "type": "label",
-      "example": "IgA1",
-      "description": "TODO"
+      "description": "the label of the antibody isotype",
+      "example": "IgA1"
     },
     "qualitative_measure": {
       "field": "qualitative_measure",
       "label": "Qualitiative measure",
       "type": "label",
       "terminology": "qualitative_measures",
+      "description": "the qualitative measure of the assay",
       "example": "positive",
-      "description": "TODO",
       "used in": "assays.tsv"
     },
     "titer": {
       "field": "titer",
       "label": "Titer",
       "type": "float",
+      "description": "the titer value of the assay",
       "example": "0.52",
-      "description": "TODO",
       "used in": "assays.tsv"
     },
     "comment": {
       "field": "comment",
       "label": "Comment",
       "type": "text",
+      "description": "general comments about the assay",
       "example": "did not bind positive control",
-      "description": "TODO",
       "used in": "assays.tsv"
     },
     "tested_antigen": {
       "field": "tested_antigen",
       "label": "Tested antigen",
       "type": "label",
+      "description": "the name of the tested antigen",
       "example": "Spike protein 1",
-      "description": "TODO",
       "used in": "assays.tsv"
     },
     "n": {
       "field": "n",
       "label": "n",
       "type": "int",
+      "description": "the number of runs for the assay",
       "example": "6",
-      "description": "TODO",
       "used in": "assays.tsv"
     }
   },
@@ -410,8 +410,9 @@
     "neutralization": {
       "id": "OBI:0001643",
       "label": "neutralization",
-      "description": "TODO",
       "type": "",
+      "description": "",
+      "example": "",
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": null,
@@ -420,8 +421,9 @@
     "VLP ELISA": {
       "id": "OBI:0000661",
       "label": "VLP ELISA",
-      "description": "TODO",
       "type": "",
+      "description": "",
+      "example": "",
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
@@ -430,8 +432,9 @@
     "SPR": {
       "id": "OBI:0000923",
       "label": "SPR",
-      "description": "TODO",
       "type": "",
+      "description": "",
+      "example": "",
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
@@ -440,8 +443,9 @@
     "on rate; Ka in M^-1s^-1": {
       "id": "OBI:0001741",
       "label": "on rate; Ka in M^-1s^-1",
-      "description": "TODO",
       "type": "float_threshold_na",
+      "description": "an SPR assay measuring on rate [Ka] in M^-1s^-1",
+      "example": "491000",
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",
@@ -450,8 +454,9 @@
     "off rate; Kd in 1/s": {
       "id": "OBI:0001739",
       "label": "off rate; Kd in 1/s",
-      "description": "TODO",
       "type": "float_threshold_na",
+      "description": "an SPR assay measuring off rate [Kd] in 1/s",
+      "example": "126",
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",
@@ -460,8 +465,9 @@
     "dissociation constant; KD in nM": {
       "id": "OBI:0001731",
       "label": "dissociation constant; KD in nM",
-      "description": "TODO",
       "type": "float_threshold_na",
+      "description": "an SPR assay measuring dissociation constant [KD] in nM",
+      "example": "<.1",
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",

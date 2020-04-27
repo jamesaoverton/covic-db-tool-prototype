@@ -1,8 +1,8 @@
-id	label	description	type	OWL type	parent	technique	units
-ID	LABEL			TYPE	C %
-OBI:0001643	neutralization	TODO		owl:Class	assay
-OBI:0000661	VLP ELISA	TODO		owl:Class	assay		
-OBI:0000923	SPR	TODO		owl:Class	assay		
-OBI:0001741	on rate; Ka in M^-1s^-1	TODO	float_threshold_na	owl:Class	assay	SPR	M^-1s^-1
-OBI:0001739	off rate; Kd in 1/s	TODO	float_threshold_na	owl:Class	assay	SPR	1/s
-OBI:0001731	dissociation constant; KD in nM	TODO	float_threshold_na	owl:Class	assay	SPR	nM
+id	label	type	description	example	OWL type	parent	technique	units
+ID	LABEL				TYPE	C %
+OBI:0001643	neutralization				owl:Class	assay
+OBI:0000661	VLP ELISA				owl:Class	assay		
+OBI:0000923	SPR				owl:Class	assay		
+OBI:0001741	on rate; Ka in M^-1s^-1	float_threshold_na	an SPR assay measuring on rate [Ka] in M^-1s^-1	491000	owl:Class	assay	SPR	M^-1s^-1
+OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off rate [Kd] in 1/s	126	owl:Class	assay	SPR	1/s
+OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM

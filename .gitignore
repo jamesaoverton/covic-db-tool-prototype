@@ -10,5 +10,6 @@ build/
 /data/
 dist/
 junk/
+settings.env
 shell.nix
 temp/

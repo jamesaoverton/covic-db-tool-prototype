@@ -52,6 +52,10 @@ def get_assay_headers(dataset_id):
             elif stddev in config.labels:
                 header = config.assays[config.labels[stddev]].copy()
                 header["label"] = f"Standard deviation in {header['units']}"
+                header[
+                    "description"
+                ] = f"The standard deviation of the value in '{header['label']}'"
+                header.pop("example", None)
         if not header:
             return failure(f"Unrecognized column '{column}'")
         header["value"] = column
@@ -62,7 +66,7 @@ def get_assay_headers(dataset_id):
             end = len(terms) + 1
             formula = f"=Terminology!${col}$2:${col}${end}"
             header["terminology"] = terms
-            header["validations"] = [{"type": "list", "formula1": formula, "allow_blank": True,}]
+            header["validations"] = [{"type": "list", "formula1": formula, "allow_blank": True}]
             terminology_count += 1
         headers.append(header)
 
@@ -127,7 +131,10 @@ Add your results to the 'Dataset' sheet. Do not edit the other sheets.
 Columns:
 """
     for header in assay_headers:
-        instructions += "- {0}: {1}\n".format(header["label"], header["description"])
+        example = ""
+        if "example" in header:
+            example = f" (e.g. {header['example']})"
+        instructions += f"- {header['label']}: {header['description']}{example}\n"
 
     instructions_rows = []
     for line in instructions.strip().splitlines():

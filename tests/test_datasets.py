@@ -1,4 +1,4 @@
-from covicdbtools import config, tables, workbooks, datasets, api
+from covicdbtools import tables, workbooks, datasets, api
 from covicdbtools.responses import succeeded, failed
 from .test_requests import UploadedFile
 
@@ -15,7 +15,8 @@ def test_validate_submission():
     assert failed(response)
     assert response["errors"] == [
         "Error in row 1: 'X' is not of type 'int' in column 'n'",
-        "Error in row 1: '7000O' is not of type 'float_threshold_na' in column 'Standard deviation in M^-1s^-1'",
+        "Error in row 1: '7000O' is not of type 'float_threshold_na'"
+        " in column 'Standard deviation in M^-1s^-1'",
         "Error in row 1: 'Positive' is not a valid term in column 'Qualitiative measure'",
     ]
 

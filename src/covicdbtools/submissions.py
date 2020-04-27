@@ -1,5 +1,5 @@
 from collections import defaultdict, OrderedDict
-from covicdbtools import grids
+from covicdbtools import names, grids
 from covicdbtools.responses import success, failure
 
 
