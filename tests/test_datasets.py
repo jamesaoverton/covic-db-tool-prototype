@@ -44,4 +44,4 @@ def test_examples():
     for example in examples:
         tsv = tables.read_tsv("examples/{0}.tsv".format(example))
         excel = workbooks.read("examples/{0}.xlsx".format(example))
-        assert tsv[1:] == excel[1:]
+        assert tables.table_to_lists(tsv)[1:] == tables.table_to_lists(excel)[1:]

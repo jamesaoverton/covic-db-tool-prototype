@@ -58,7 +58,7 @@ def validate_field(column, field_type, value):
         if value == "" or value.lower() == "na":
             return None
         try:
-            _ = float(value.lstrip("<"))
+            _ = float(value.lstrip("<>"))
             return None
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
