@@ -311,8 +311,9 @@ def submit(name, email, dataset_id, table):
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
+    grid = grids.table_to_grid(config.prefixes, config.fields, table)
     print(f"Submitted assays to dataset {dataset_id}")
-    return success({"dataset_id": dataset_id})
+    return success({"table": table, "grid": grid, "dataset_id": dataset_id})
 
 
 def promote(name, email, dataset_id):
