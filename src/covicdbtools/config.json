@@ -156,11 +156,20 @@
     }
   },
   "prefixes": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "oio": "http://www.geneontology.org/formats/oboInOwl#",
     "BFO": "http://purl.obolibrary.org/obo/BFO_",
     "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
     "OBI": "http://purl.obolibrary.org/obo/OBI_",
     "PR": "http://purl.obolibrary.org/obo/PR_",
+    "uniprot": "http://www.uniprot.org/uniprot/",
+    "uniprot-protein": "http://www.uniprot.org/annotation/PRO_",
     "ONTIE": "https://ontology.iedb.org/ontology/ONTIE_",
+    "iedb": "http://iedb.org/",
+    "iedb-protein": "http://iedb.org/taxon-protein/",
     "CoVIC": "https://cvdb.ontodev.com/antibody/",
     "ds": "https://cvdb.ontodev.com/dataset/",
     "org": "https://cvdb.ontodev.com/organization/",
@@ -218,7 +227,7 @@
       "parent": "material entity"
     },
     "Vertebrata": {
-      "id": "NCBITaxon:7742 ",
+      "id": "NCBITaxon:7742",
       "label": "Vertebrata",
       "type": "owl:Class",
       "parent": "organism"
@@ -502,7 +511,7 @@
     "NCBITaxon:11118": "Coronavirus",
     "NCBITaxon:2697049": "Severe acute respiratory syndrome coronavirus 2",
     "NCBITaxon:694009": "Severe acute respiratory syndrome-related coronavirus",
-    "NCBITaxon:7742%20": "Vertebrata",
+    "NCBITaxon:7742": "Vertebrata",
     "NCBITaxon:9606": "Homo sapiens",
     "OBI:0000011": "planned process",
     "OBI:0000070": "assay",
@@ -546,7 +555,7 @@
     "Coronavirus": "NCBITaxon:11118",
     "Severe acute respiratory syndrome coronavirus 2": "NCBITaxon:2697049",
     "Severe acute respiratory syndrome-related coronavirus": "NCBITaxon:694009",
-    "Vertebrata": "NCBITaxon:7742%20",
+    "Vertebrata": "NCBITaxon:7742",
     "Homo sapiens": "NCBITaxon:9606",
     "planned process": "OBI:0000011",
     "assay": "OBI:0000070",

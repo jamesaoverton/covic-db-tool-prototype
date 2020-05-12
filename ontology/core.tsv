@@ -7,7 +7,7 @@ PR:000050175	immunoglobulin light chain protein	owl:Class	protein
 PR:000050181	kappa	owl:Class	immunoglobulin light chain protein	Ig kappa light chain protein	light
 PR:000050182	lambda	owl:Class	immunoglobulin light chain protein	Ig lambda light chain protein	light
 OBI:0100026	organism	owl:Class	material entity
-NCBITaxon:7742 	Vertebrata	owl:Class	organism
+NCBITaxon:7742	Vertebrata	owl:Class	organism
 NCBITaxon:10239	Virus	owl:Class	organism
 NCBITaxon:11118	Coronavirus	owl:Class	Virus
 NCBITaxon:694009	Severe acute respiratory syndrome-related coronavirus	owl:Class	Coronavirus
