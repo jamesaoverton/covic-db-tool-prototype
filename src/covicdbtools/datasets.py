@@ -296,7 +296,7 @@ def submit(name, email, dataset_id, table):
         path = os.path.join(dataset_path, "dataset.yml")
         paths.append(path)
     except Exception as e:
-        return failure(f"Failed to update dataset status", {"exception": e})
+        return failure("Failed to update dataset status", {"exception": e})
     try:
         path = os.path.join(dataset_path, "assays.tsv")
         tables.write_tsv(assays, path)
@@ -331,7 +331,7 @@ def promote(name, email, dataset_id):
         path = os.path.join(staging_dataset_path, "dataset.yml")
         paths.append(path)
     except Exception as e:
-        return failure(f"Failed to update dataset status", {"exception": e})
+        return failure("Failed to update dataset status", {"exception": e})
     try:
         config.staging.index.add(paths)
         config.staging.index.commit(

@@ -27,7 +27,7 @@ headers = [
     {
         "value": "ab_name",
         "label": "Antibody name",
-        "description": "Your institution's preferred name for the antibody.",
+        "description": "Your preferred code name for the antibody.",
         "locked": True,
         "required": True,
         "unique": True,
@@ -209,7 +209,7 @@ def submit(name, email, organization, table):
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         config.secret.index.add([path])
-        config.secret.index.commit(f"Submit antibodies", author=author, committer=config.covic)
+        config.secret.index.commit("Submit antibodies", author=author, committer=config.covic)
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -221,7 +221,7 @@ def submit(name, email, organization, table):
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         config.staging.index.add([path])
-        config.staging.index.commit(f"Submit antibodies", author=author, committer=config.covic)
+        config.staging.index.commit("Submit antibodies", author=author, committer=config.covic)
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
@@ -235,9 +235,7 @@ def submit(name, email, organization, table):
         return failure(f"Failed to write '{path}'", {"exception": e})
     try:
         config.public.index.add([path])
-        config.public.index.commit(
-            f"Submit antibodies", author=config.covic, committer=config.covic
-        )
+        config.public.index.commit("Submit antibodies", author=config.covic, committer=config.covic)
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})
 
