@@ -1,4 +1,24 @@
 {
+  "prefixes": {
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "oio": "http://www.geneontology.org/formats/oboInOwl#",
+    "BFO": "http://purl.obolibrary.org/obo/BFO_",
+    "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
+    "OBI": "http://purl.obolibrary.org/obo/OBI_",
+    "PR": "http://purl.obolibrary.org/obo/PR_",
+    "uniprot": "http://www.uniprot.org/uniprot/",
+    "uniprot-protein": "http://www.uniprot.org/annotation/PRO_",
+    "ONTIE": "https://ontology.iedb.org/ontology/ONTIE_",
+    "iedb": "http://iedb.org/",
+    "iedb-protein": "http://iedb.org/taxon-protein/",
+    "CoVIC": "https://cvdb.ontodev.com/antibody/",
+    "ds": "https://cvdb.ontodev.com/dataset/",
+    "org": "https://cvdb.ontodev.com/organization/",
+    "user": "https://cvdb.ontodev.com/user/"
+  },
   "fields": {
     "ab_id": {
       "field": "ab_id",
@@ -155,26 +175,6 @@
       "used in": "assays.tsv"
     }
   },
-  "prefixes": {
-    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "owl": "http://www.w3.org/2002/07/owl#",
-    "oio": "http://www.geneontology.org/formats/oboInOwl#",
-    "BFO": "http://purl.obolibrary.org/obo/BFO_",
-    "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
-    "OBI": "http://purl.obolibrary.org/obo/OBI_",
-    "PR": "http://purl.obolibrary.org/obo/PR_",
-    "uniprot": "http://www.uniprot.org/uniprot/",
-    "uniprot-protein": "http://www.uniprot.org/annotation/PRO_",
-    "ONTIE": "https://ontology.iedb.org/ontology/ONTIE_",
-    "iedb": "http://iedb.org/",
-    "iedb-protein": "http://iedb.org/taxon-protein/",
-    "CoVIC": "https://cvdb.ontodev.com/antibody/",
-    "ds": "https://cvdb.ontodev.com/dataset/",
-    "org": "https://cvdb.ontodev.com/organization/",
-    "user": "https://cvdb.ontodev.com/user/"
-  },
   "core": {
     "material entity": {
       "id": "BFO:0000040",
@@ -199,26 +199,6 @@
       "label": "immunoglobulin light chain protein",
       "type": "owl:Class",
       "parent": "protein"
-    },
-    "kappa": {
-      "id": "PR:000050181",
-      "label": "kappa",
-      "type": "owl:Class",
-      "parent": "immunoglobulin light chain protein",
-      "null": [
-        "Ig kappa light chain protein",
-        "light"
-      ]
-    },
-    "lambda": {
-      "id": "PR:000050182",
-      "label": "lambda",
-      "type": "owl:Class",
-      "parent": "immunoglobulin light chain protein",
-      "null": [
-        "Ig lambda light chain protein",
-        "light"
-      ]
     },
     "organism": {
       "id": "OBI:0100026",
@@ -307,112 +287,98 @@
       "label": "IgA",
       "type": "owl:Class",
       "parent": "immunoglobulin heavy chain protein",
-      "PR label": "IgA heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgA heavy chain protein"
     },
     "IgA1": {
       "id": "PR:000050177",
       "label": "IgA1",
       "type": "owl:Class",
       "parent": "IgA",
-      "PR label": "IgA1 heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgA1 heavy chain protein"
     },
     "IgA2": {
       "id": "PR:000050178",
       "label": "IgA2",
       "type": "owl:Class",
       "parent": "IgA",
-      "PR label": "IgA2 heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgA2 heavy chain protein"
     },
     "IgD": {
       "id": "PR:000050186",
       "label": "IgD",
       "type": "owl:Class",
       "parent": "immunoglobulin heavy chain protein",
-      "PR label": "IgD heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgD heavy chain protein"
     },
     "IgE": {
       "id": "PR:000050258",
       "label": "IgE",
       "type": "owl:Class",
       "parent": "immunoglobulin heavy chain protein",
-      "PR label": "IgE heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgE heavy chain protein"
     },
     "IgG": {
       "id": "PR:000050252",
       "label": "IgG",
       "type": "owl:Class",
       "parent": "immunoglobulin heavy chain protein",
-      "PR label": "IgG heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG heavy chain protein"
     },
     "IgG1": {
       "id": "PR:000050253",
       "label": "IgG1",
       "type": "owl:Class",
       "parent": "IgG",
-      "PR label": "IgG1 heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG1 heavy chain protein"
     },
     "IgG2": {
       "id": "PR:000050254",
       "label": "IgG2",
       "type": "owl:Class",
       "parent": "IgG",
-      "PR label": "IgG2 heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG2 heavy chain protein"
     },
     "IgG2a": {
       "id": "PR:000050259",
       "label": "IgG2a",
       "type": "owl:Class",
       "parent": "IgG2",
-      "PR label": "IgG2a heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG2a heavy chain protein"
     },
     "IgG2b": {
       "id": "PR:000050260",
       "label": "IgG2b",
       "type": "owl:Class",
       "parent": "IgG2",
-      "PR label": "IgG2b heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG2b heavy chain protein"
     },
     "IgG2c": {
       "id": "PR:000050261",
       "label": "IgG2c",
       "type": "owl:Class",
       "parent": "IgG2",
-      "PR label": "IgG2c heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG2c heavy chain protein"
     },
     "IgG3": {
       "id": "PR:000050255",
       "label": "IgG3",
       "type": "owl:Class",
       "parent": "IgG",
-      "PR label": "IgG3 heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG3 heavy chain protein"
     },
     "IgG4": {
       "id": "PR:000050256",
       "label": "IgG4",
       "type": "owl:Class",
       "parent": "IgG",
-      "PR label": "IgG4 heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgG4 heavy chain protein"
     },
     "IgM": {
       "id": "PR:000050257",
       "label": "IgM",
       "type": "owl:Class",
       "parent": "immunoglobulin heavy chain protein",
-      "PR label": "IgM heavy chain protein",
-      "chain type": "heavy"
+      "PR label": "IgM heavy chain protein"
     }
   },
   "assays": {
@@ -533,8 +499,6 @@
     "PR:000050176": "IgA",
     "PR:000050177": "IgA1",
     "PR:000050178": "IgA2",
-    "PR:000050181": "kappa",
-    "PR:000050182": "lambda",
     "PR:000050186": "IgD",
     "PR:000050252": "IgG",
     "PR:000050253": "IgG1",
@@ -577,8 +541,6 @@
     "IgA": "PR:000050176",
     "IgA1": "PR:000050177",
     "IgA2": "PR:000050178",
-    "kappa": "PR:000050181",
-    "lambda": "PR:000050182",
     "IgD": "PR:000050186",
     "IgG": "PR:000050252",
     "IgG1": "PR:000050253",

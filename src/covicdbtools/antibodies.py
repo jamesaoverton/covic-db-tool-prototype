@@ -20,8 +20,7 @@ from covicdbtools.responses import success, failure, failed
 
 hosts = list(config.hosts.keys())
 
-heavy_chains = [i["label"] for i in config.isotypes.values() if i["chain type"] == "heavy"]
-light_chains = [i["label"] for i in config.isotypes.values() if i["chain type"] == "light"]
+heavy_chains = [i["label"] for i in config.isotypes.values()]
 
 headers = [
     {

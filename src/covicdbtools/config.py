@@ -139,8 +139,8 @@ def is_config(config):
 
 
 def build(
-    fields_tsv_path,
     prefixes_tsv_path,
+    fields_tsv_path,
     core_tsv_path,
     hosts_tsv_path,
     isotypes_tsv_path,
@@ -150,8 +150,8 @@ def build(
 ):
     """Read TSV files and return a new config dictionary."""
     config = {}
-    config["fields"] = read_fields(fields_tsv_path)
     config["prefixes"] = read_prefixes(prefixes_tsv_path)
+    config["fields"] = read_fields(fields_tsv_path)
     config["core"] = read_terms(core_tsv_path)
     config["hosts"] = read_terms(hosts_tsv_path)
     config["isotypes"] = read_terms(isotypes_tsv_path)
@@ -234,8 +234,8 @@ def initialize():
 def main():
     """Read a new configuration from TSV files and save it as JSON."""
     parser = argparse.ArgumentParser(description="Read configuration and save it")
-    parser.add_argument("fields", type=str, help="The fields table")
     parser.add_argument("prefixes", type=str, help="The prefixes table")
+    parser.add_argument("fields", type=str, help="The fields table")
     parser.add_argument("core", type=str, help="The core table")
     parser.add_argument("hosts", type=str, help="The hosts table")
     parser.add_argument("isotypes", type=str, help="The isotypes table")
@@ -246,8 +246,8 @@ def main():
     args = parser.parse_args()
 
     config = build(
-        args.fields,
         args.prefixes,
+        args.fields,
         args.core,
         args.hosts,
         args.isotypes,

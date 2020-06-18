@@ -95,8 +95,8 @@ build/robot-tree.jar: | build
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
 
-ONTOLOGY_SHEETS = core hosts isotypes assays qualitative_measures
-SHEETS = fields prefixes $(ONTOLOGY_SHEETS)
+ONTOLOGY_SHEETS = core host isotype assay qualitative_measure
+SHEETS = prefix field $(ONTOLOGY_SHEETS)
 SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
 
 build/CoVIC-DB.xlsx: | build
