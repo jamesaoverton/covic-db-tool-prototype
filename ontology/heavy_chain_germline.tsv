@@ -1,0 +1,13 @@
+id	label	type	parent	PR label
+ID	LABEL	TYPE	C %
+PR:P0DP01	IGHV1-8	owl:Class	protein	immunoglobulin heavy variable 1-8 (human)
+PR:A0A0C4DH31	IGHV1-18	owl:Class	protein	immunoglobulin heavy variable 1-18 (human)
+PR:P01817	IGHV2-5	owl:Class	protein	immunoglobulin heavy variable 2-5 (human)
+PR:P01780	IGHV3-7	owl:Class	protein	immunoglobulin heavy variable 3-7 (human)
+PR:P01762	IGHV3-11	owl:Class	protein	immunoglobulin heavy variable 3-11 (human)
+PR:A0A0B4J1V1	IGHV3-21	owl:Class	protein	immunoglobulin heavy variable 3-21 (human)
+PR:P01764	IGHV3-23	owl:Class	protein	immunoglobulin heavy variable 3-23 (human)
+PR:P01824	IGHV4-39	owl:Class	protein	immunoglobulin heavy variable 4-39 (human)
+PR:P01825	IGHV4-59	owl:Class	protein	immunoglobulin heavy variable 4-59 (human)
+PR:A0A0C4DH38	IGHV5-51	owl:Class	protein	immunoglobulin heavy variable 5-51 (human)
+PR:A0A0B4J1U7	IGHV6-1	owl:Class	protein	immunoglobulin heavy variable 6-1 (human)

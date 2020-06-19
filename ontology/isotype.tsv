@@ -1,16 +1,16 @@
-id	label	type	parent	PR label	chain type
+id	label	type	parent	PR label
 ID	LABEL	TYPE	C %
-PR:000050176	IgA	owl:Class	immunoglobulin heavy chain protein	IgA heavy chain protein	heavy
-PR:000050177	IgA1	owl:Class	IgA	IgA1 heavy chain protein	heavy
-PR:000050178	IgA2	owl:Class	IgA	IgA2 heavy chain protein	heavy
-PR:000050186	IgD	owl:Class	immunoglobulin heavy chain protein	IgD heavy chain protein	heavy
-PR:000050258	IgE	owl:Class	immunoglobulin heavy chain protein	IgE heavy chain protein	heavy
-PR:000050252	IgG	owl:Class	immunoglobulin heavy chain protein	IgG heavy chain protein	heavy
-PR:000050253	IgG1	owl:Class	IgG	IgG1 heavy chain protein	heavy
-PR:000050254	IgG2	owl:Class	IgG	IgG2 heavy chain protein	heavy
-PR:000050259	IgG2a	owl:Class	IgG2	IgG2a heavy chain protein	heavy
-PR:000050260	IgG2b	owl:Class	IgG2	IgG2b heavy chain protein	heavy
-PR:000050261	IgG2c	owl:Class	IgG2	IgG2c heavy chain protein	heavy
-PR:000050255	IgG3	owl:Class	IgG	IgG3 heavy chain protein	heavy
-PR:000050256	IgG4	owl:Class	IgG	IgG4 heavy chain protein	heavy
-PR:000050257	IgM	owl:Class	immunoglobulin heavy chain protein	IgM heavy chain protein	heavy
+PR:000050176	IgA	owl:Class	immunoglobulin heavy chain protein	IgA heavy chain protein
+PR:000050177	IgA1	owl:Class	IgA	IgA1 heavy chain protein
+PR:000050178	IgA2	owl:Class	IgA	IgA2 heavy chain protein
+PR:000050186	IgD	owl:Class	immunoglobulin heavy chain protein	IgD heavy chain protein
+PR:000050258	IgE	owl:Class	immunoglobulin heavy chain protein	IgE heavy chain protein
+PR:000050252	IgG	owl:Class	immunoglobulin heavy chain protein	IgG heavy chain protein
+PR:000050253	IgG1	owl:Class	IgG	IgG1 heavy chain protein
+PR:000050254	IgG2	owl:Class	IgG	IgG2 heavy chain protein
+PR:000050259	IgG2a	owl:Class	IgG2	IgG2a heavy chain protein
+PR:000050260	IgG2b	owl:Class	IgG2	IgG2b heavy chain protein
+PR:000050261	IgG2c	owl:Class	IgG2	IgG2c heavy chain protein
+PR:000050255	IgG3	owl:Class	IgG	IgG3 heavy chain protein
+PR:000050256	IgG4	owl:Class	IgG	IgG4 heavy chain protein
+PR:000050257	IgM	owl:Class	immunoglobulin heavy chain protein	IgM heavy chain protein

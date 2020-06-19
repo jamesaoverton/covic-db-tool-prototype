@@ -89,6 +89,9 @@ def write(grids, output):
                         cell.comment = Comment(c["comment"], "Validation service")
                     if "bold" in c and c["bold"]:
                         cell.font = bold
+                    if "width" in c and c["width"]:
+                        a = get_column_letter(j + 1)
+                        ws.column_dimensions[a].width = c["width"]
                 i += 1
 
     for grid in grids:

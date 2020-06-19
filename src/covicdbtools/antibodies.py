@@ -20,13 +20,16 @@ from covicdbtools.responses import success, failure, failed
 
 hosts = list(config.hosts.keys())
 
-heavy_chains = [i["label"] for i in config.isotypes.values()]
+isotypes = [i["label"] for i in config.isotypes.values()]
+light_chains = [i["label"] for i in config.light_chains.values()]
+heavy_chain_germline = [i["label"] for i in config.heavy_chain_germline.values()]
+
 
 headers = [
     {
         "value": "ab_name",
         "label": "Antibody name",
-        "description": "Your preferred code name for the antibody.",
+        "description": "Your preferred code name for the antibody",
         "locked": True,
         "required": True,
         "unique": True,
@@ -34,7 +37,7 @@ headers = [
     {
         "value": "host_label",
         "label": "Host",
-        "description": "The name of the host species that is the source of the antibody.",
+        "description": "Specify the host species that is the source of the antibody",
         "locked": True,
         "required": True,
         "terminology": hosts,
@@ -49,14 +52,41 @@ headers = [
     {
         "value": "isotype_label",
         "label": "Isotype",
-        "description": "The name of the isotype of the antibody's heavy chain.",
+        "description": "Specify the antibody isotype, if known",
         "locked": True,
-        "required": True,
-        "terminology": heavy_chains,
+        "terminology": isotypes,
         "validations": [
             {
                 "type": "list",
-                "formula1": "=Terminology!$B$2:$B${0}".format(len(heavy_chains) + 1),
+                "formula1": "=Terminology!$B$2:$B${0}".format(len(isotypes) + 1),
+                "allow_blank": True,
+            }
+        ],
+    },
+    {
+        "value": "light_chain_label",
+        "label": "Light chain",
+        "description": "Specify the antibody light chain, if known (kappa or lambda)",
+        "locked": True,
+        "terminology": light_chains,
+        "validations": [
+            {
+                "type": "list",
+                "formula1": "=Terminology!$C$2:$C${0}".format(len(light_chains) + 1),
+                "allow_blank": True,
+            }
+        ],
+    },
+    {
+        "value": "heavy_chain_germline_label",
+        "label": "Heavy chain germline",
+        "description": "Specify the antibody heavy chain germline gene, if known",
+        "locked": True,
+        "terminology": heavy_chain_germline,
+        "validations": [
+            {
+                "type": "list",
+                "formula1": "=Terminology!$D$2:$D${0}".format(len(heavy_chain_germline) + 1),
                 "allow_blank": True,
             }
         ],
@@ -64,13 +94,29 @@ headers = [
     {
         "value": "ab_details",
         "label": "Antibody details",
-        "description": "Measurements or characteristics of the antibody",
+        "description": """Measurements or characteristics of the antibody.
+This column is optional, and meant to capture data you might have on the antibody.
+These data will not be released to the partner reference labs that will perform the analyses.
+For example:
+- Affinity: Spike protein binding affinity; inhibition of ACE2 binding; ELISA for Spike
+- Neutralization: IC50 value
+- Neutralization assay platform
+- Epitope: Binning or competition data""",
+        "locked": True,
+    },
+    {
+        "value": "ab_structure",
+        "label": "Structural data",
+        "description": """Would you like structural analyses of this antibody?
+If no, leave blank.
+If yes, rank the antibodies in order of priority, starting with '1' for the highest priority.""",
+        "type": "integer",
         "locked": True,
     },
     {
         "value": "ab_comment",
         "label": "Antibody comment",
-        "description": "Other comments on the antibody",
+        "description": "Please provide any other details about the antibody.",
         "locked": True,
     },
 ]
@@ -78,19 +124,28 @@ headers = [
 
 def fill(rows=[]):
     """Fill the antibodies submission template, returning a list of grids."""
+    instructions_rows = []
     instructions = """CoVIC-DB Antibodies Submission
+Version 1.2
 
 Add your antibodies to the 'Antibodies' sheet. Do not edit the other sheets.
-
-Columns:
 """
-    for header in headers:
-        instructions += "- {0}: {1}\n".format(header["label"], header["description"])
-
-    instructions_rows = []
     for line in instructions.strip().splitlines():
         instructions_rows.append([grids.value_cell(line)])
     instructions_rows[0][0]["bold"] = True
+    instructions_rows[0][0]["width"] = 18
+    instructions_rows[0].append(grids.value_cell(""))
+    instructions_rows[0][1]["width"] = 70
+    instructions_rows.append([])
+
+    for header in headers:
+        description = header["description"].strip().splitlines()
+        d = description.pop(0)
+        instructions_rows.append([grids.value_cell(header["label"]), grids.value_cell(d)])
+        instructions_rows[-1][0]["bold"] = True
+        for d in description:
+            instructions_rows.append([grids.value_cell(""), grids.value_cell(d)])
+    instructions_rows[-1][0]["bold"] = True
 
     terminology_tables = OrderedDict()
     for header in headers:

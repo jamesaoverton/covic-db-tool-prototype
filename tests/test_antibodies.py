@@ -14,12 +14,13 @@ def test_validate():
     response = antibodies.validate(table)
     assert failed(response)
     assert response["errors"] == [
-        "Error in row 3: Missing required value in column 'Antibody name'",
-        "Error in row 6: Missing required value in column 'Host'",
-        "Error in row 6: 'Ig1' is not a valid term in column 'Isotype'",
-        "Error in row 8: 'Mus musclus' is not a valid term in column 'Host'",
-        "Error in row 8: 'Igm' is not a valid term in column 'Isotype'",
-        "Error in row 9: Duplicate value 'C3' is not allowed in column 'Antibody name'",
+        "Error in row 3: Duplicate value 'VD-Crotty 1' is not allowed in column 'Antibody name'",
+        "Error in row 4: Missing required value in column 'Antibody name'",
+        "Error in row 5: Missing required value in column 'Host'",
+        "Error in row 6: 'IggA1' is not a valid term in column 'Isotype'",
+        "Error in row 7: 'kapa' is not a valid term in column 'Light chain'",
+        "Error in row 8: 'IGVH1-8' is not a valid term in column 'Heavy chain germline'",
+        "Error in row 9: 'top' is not of type 'integer' in column 'Structural data'",
     ]
 
     upload = UploadedFile("examples/antibodies-submission-valid.xlsx")
@@ -29,7 +30,7 @@ def test_validate():
     upload = UploadedFile("examples/antibodies-submission-invalid.xlsx")
     response = api.validate("antibodies", {"file": upload})
     assert failed(response)
-    assert response["table"][0]["Antibody name"] == "A6"
+    assert response["table"][0]["Antibody name"] == "VD-Crotty 1"
 
 
 def test_examples():

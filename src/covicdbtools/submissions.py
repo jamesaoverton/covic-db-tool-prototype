@@ -31,7 +31,7 @@ def validate_field(column, field_type, value):
             return None
         return f"'{value}' is not a valid ID in column '{column}'"
 
-    elif field_type == "int":
+    elif field_type == "integer":
         try:
             _ = int(value)
             return None
@@ -100,7 +100,7 @@ def validate(headers, table):
             cell = None
             if error:
                 cell = grids.error_cell(value, error)
-                errors.append("Error in row {0}: {1}".format(i + 1, error))
+                errors.append("Error in row {0}: {1}".format(i + 2, error))
             else:
                 cell = grids.value_cell(value)
             newrow.append(cell)

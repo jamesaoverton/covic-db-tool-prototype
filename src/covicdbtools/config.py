@@ -19,6 +19,8 @@ prefixes = {}
 core = {}
 hosts = {}
 isoforms = {}
+light_chains = {}
+heavy_chain_germline = {}
 assays = {}
 qualitative_measures = {}
 labels = {}
@@ -144,6 +146,8 @@ def build(
     core_tsv_path,
     hosts_tsv_path,
     isotypes_tsv_path,
+    light_chain_tsv_path,
+    heavy_chain_germline_tsv_path,
     assays_tsv_path,
     qualitative_measures_tsv_path,
     labels_tsv_path,
@@ -155,6 +159,8 @@ def build(
     config["core"] = read_terms(core_tsv_path)
     config["hosts"] = read_terms(hosts_tsv_path)
     config["isotypes"] = read_terms(isotypes_tsv_path)
+    config["light_chains"] = read_terms(light_chain_tsv_path)
+    config["heavy_chain_germline"] = read_terms(heavy_chain_germline_tsv_path)
     config["assays"] = read_terms(assays_tsv_path)
     config["qualitative_measures"] = read_terms(qualitative_measures_tsv_path)
     config["labels"] = read_labels(labels_tsv_path)
@@ -182,11 +188,14 @@ def read(config_json_path="config.json"):
 
 def load(config):
     """Load a new config into the global dictionaries."""
-    global prefixes, core, hosts, isotypes, assays, qualitative_measures, fields, labels, ids
+    global prefixes, core, hosts, isotypes, light_chains, heavy_chain_germline
+    global assays, qualitative_measures, fields, labels, ids
     prefixes = config["prefixes"]
     core = config["core"]
     hosts = config["hosts"]
     isotypes = config["isotypes"]
+    light_chains = config["light_chains"]
+    heavy_chain_germline = config["heavy_chain_germline"]
     assays = config["assays"]
     qualitative_measures = config["qualitative_measures"]
     fields = config["fields"]
@@ -234,26 +243,30 @@ def initialize():
 def main():
     """Read a new configuration from TSV files and save it as JSON."""
     parser = argparse.ArgumentParser(description="Read configuration and save it")
-    parser.add_argument("prefixes", type=str, help="The prefixes table")
-    parser.add_argument("fields", type=str, help="The fields table")
+    parser.add_argument("prefix", type=str, help="The prefix table")
+    parser.add_argument("field", type=str, help="The field table")
     parser.add_argument("core", type=str, help="The core table")
-    parser.add_argument("hosts", type=str, help="The hosts table")
-    parser.add_argument("isotypes", type=str, help="The isotypes table")
-    parser.add_argument("assays", type=str, help="The assays table")
-    parser.add_argument("qualitative_measures", type=str, help="The qualitative_measures table")
-    parser.add_argument("labels", type=str, help="The labels table")
+    parser.add_argument("host", type=str, help="The host table")
+    parser.add_argument("isotype", type=str, help="The isotype table")
+    parser.add_argument("light_chain", type=str, help="The light_chain table")
+    parser.add_argument("heavy_chain_germline", type=str, help="The heavy_chain_germline table")
+    parser.add_argument("assay", type=str, help="The assay table")
+    parser.add_argument("qualitative_measure", type=str, help="The qualitative_measure table")
+    parser.add_argument("label", type=str, help="The label table")
     parser.add_argument("output", type=str, help="The output JSON file")
     args = parser.parse_args()
 
     config = build(
-        args.prefixes,
-        args.fields,
+        args.prefix,
+        args.field,
         args.core,
-        args.hosts,
-        args.isotypes,
-        args.assays,
-        args.qualitative_measures,
-        args.labels,
+        args.host,
+        args.isotype,
+        args.light_chain,
+        args.heavy_chain_germline,
+        args.assay,
+        args.qualitative_measure,
+        args.label,
     )
     result = validate(config)
     if result:
@@ -261,9 +274,8 @@ def main():
     save(config, args.output)
 
 
-# Load config.json and data repositories
-init()
-
-
 if __name__ == "__main__":
     main()
+else:
+    # Load config.json and data repositories
+    init()

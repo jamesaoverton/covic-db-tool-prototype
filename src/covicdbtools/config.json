@@ -169,7 +169,7 @@
     "n": {
       "field": "n",
       "label": "n",
-      "type": "int",
+      "type": "integer",
       "description": "the number of runs for the assay",
       "example": "6",
       "used in": "assays.tsv"
@@ -381,6 +381,101 @@
       "PR label": "IgM heavy chain protein"
     }
   },
+  "light_chains": {
+    "kappa": {
+      "id": "PR:000050181",
+      "label": "kappa",
+      "type": "owl:Class",
+      "parent": "immunoglobulin light chain protein",
+      "PR label": "Ig kappa light chain protein"
+    },
+    "lambda": {
+      "id": "PR:000050182",
+      "label": "lambda",
+      "type": "owl:Class",
+      "parent": "immunoglobulin light chain protein",
+      "PR label": "Ig lambda light chain protein"
+    }
+  },
+  "heavy_chain_germline": {
+    "IGHV1-8": {
+      "id": "PR:P0DP01",
+      "label": "IGHV1-8",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 1-8 (human)"
+    },
+    "IGHV1-18": {
+      "id": "PR:A0A0C4DH31",
+      "label": "IGHV1-18",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 1-18 (human)"
+    },
+    "IGHV2-5": {
+      "id": "PR:P01817",
+      "label": "IGHV2-5",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 2-5 (human)"
+    },
+    "IGHV3-7": {
+      "id": "PR:P01780",
+      "label": "IGHV3-7",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 3-7 (human)"
+    },
+    "IGHV3-11": {
+      "id": "PR:P01762",
+      "label": "IGHV3-11",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 3-11 (human)"
+    },
+    "IGHV3-21": {
+      "id": "PR:A0A0B4J1V1",
+      "label": "IGHV3-21",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 3-21 (human)"
+    },
+    "IGHV3-23": {
+      "id": "PR:P01764",
+      "label": "IGHV3-23",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 3-23 (human)"
+    },
+    "IGHV4-39": {
+      "id": "PR:P01824",
+      "label": "IGHV4-39",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 4-39 (human)"
+    },
+    "IGHV4-59": {
+      "id": "PR:P01825",
+      "label": "IGHV4-59",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 4-59 (human)"
+    },
+    "IGHV5-51": {
+      "id": "PR:A0A0C4DH38",
+      "label": "IGHV5-51",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 5-51 (human)"
+    },
+    "IGHV6-1": {
+      "id": "PR:A0A0B4J1U7",
+      "label": "IGHV6-1",
+      "type": "owl:Class",
+      "parent": "protein",
+      "PR label": "immunoglobulin heavy variable 6-1 (human)"
+    }
+  },
   "assays": {
     "neutralization": {
       "id": "OBI:0001643",
@@ -499,6 +594,8 @@
     "PR:000050176": "IgA",
     "PR:000050177": "IgA1",
     "PR:000050178": "IgA2",
+    "PR:000050181": "kappa",
+    "PR:000050182": "lambda",
     "PR:000050186": "IgD",
     "PR:000050252": "IgG",
     "PR:000050253": "IgG1",
@@ -509,7 +606,18 @@
     "PR:000050258": "IgE",
     "PR:000050259": "IgG2a",
     "PR:000050260": "IgG2b",
-    "PR:000050261": "IgG2c"
+    "PR:000050261": "IgG2c",
+    "PR:A0A0B4J1U7": "IGHV6-1",
+    "PR:A0A0B4J1V1": "IGHV3-21",
+    "PR:A0A0C4DH31": "IGHV1-18",
+    "PR:A0A0C4DH38": "IGHV5-51",
+    "PR:P01762": "IGHV3-11",
+    "PR:P01764": "IGHV3-23",
+    "PR:P01780": "IGHV3-7",
+    "PR:P01817": "IGHV2-5",
+    "PR:P01824": "IGHV4-39",
+    "PR:P01825": "IGHV4-59",
+    "PR:P0DP01": "IGHV1-8"
   },
   "ids": {
     "process": "BFO:0000015",
@@ -541,6 +649,8 @@
     "IgA": "PR:000050176",
     "IgA1": "PR:000050177",
     "IgA2": "PR:000050178",
+    "kappa": "PR:000050181",
+    "lambda": "PR:000050182",
     "IgD": "PR:000050186",
     "IgG": "PR:000050252",
     "IgG1": "PR:000050253",
@@ -551,6 +661,17 @@
     "IgE": "PR:000050258",
     "IgG2a": "PR:000050259",
     "IgG2b": "PR:000050260",
-    "IgG2c": "PR:000050261"
+    "IgG2c": "PR:000050261",
+    "IGHV6-1": "PR:A0A0B4J1U7",
+    "IGHV3-21": "PR:A0A0B4J1V1",
+    "IGHV1-18": "PR:A0A0C4DH31",
+    "IGHV5-51": "PR:A0A0C4DH38",
+    "IGHV3-11": "PR:P01762",
+    "IGHV3-23": "PR:P01764",
+    "IGHV3-7": "PR:P01780",
+    "IGHV2-5": "PR:P01817",
+    "IGHV4-39": "PR:P01824",
+    "IGHV4-59": "PR:P01825",
+    "IGHV1-8": "PR:P0DP01"
   }
 }

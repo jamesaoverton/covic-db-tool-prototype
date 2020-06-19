@@ -1,0 +1,4 @@
+id	label	type	parent	PR label
+ID	LABEL	TYPE	C %
+PR:000050181	kappa	owl:Class	immunoglobulin light chain protein	Ig kappa light chain protein
+PR:000050182	lambda	owl:Class	immunoglobulin light chain protein	Ig lambda light chain protein

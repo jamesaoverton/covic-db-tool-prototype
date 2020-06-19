@@ -16,4 +16,4 @@ qualitative_measure	Qualitiative measure	label	qualitative_measures		the qualita
 titer	Titer	float			the titer value of the assay	0.52		assays.tsv
 comment	Comment	text			general comments about the assay	did not bind positive control		assays.tsv
 tested_antigen	Tested antigen	label			the name of the tested antigen	Spike protein 1		assays.tsv
-n	n	int			the number of runs for the assay	6		assays.tsv
+n	n	integer			the number of runs for the assay	6		assays.tsv

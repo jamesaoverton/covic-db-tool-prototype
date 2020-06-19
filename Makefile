@@ -62,12 +62,12 @@ test:
 .PHONY: lint
 lint:
 	flake8 --max-line-length 100 --ignore E203,W503 $(PYTHON_FILES)
-	black --line-length 100 --check $(PYTHON_FILES)
+	black --quiet --line-length 100 --check $(PYTHON_FILES)
 	shellcheck tests/*.sh
 
 .PHONY: format
 format:
-	black --line-length 100 $(PYTHON_FILES)
+	black --quiet --line-length 100 $(PYTHON_FILES)
 	shellcheck tests/*.sh
 
 
@@ -95,7 +95,7 @@ build/robot-tree.jar: | build
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
 
-ONTOLOGY_SHEETS = core host isotype assay qualitative_measure
+ONTOLOGY_SHEETS = core host isotype light_chain heavy_chain_germline assay qualitative_measure
 SHEETS = prefix field $(ONTOLOGY_SHEETS)
 SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
 

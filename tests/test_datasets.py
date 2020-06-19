@@ -14,10 +14,10 @@ def test_validate_submission():
     response = datasets.validate("spr", table)
     assert failed(response)
     assert response["errors"] == [
-        "Error in row 1: 'X' is not of type 'int' in column 'n'",
-        "Error in row 1: '7000O' is not of type 'float_threshold_na'"
+        "Error in row 2: 'X' is not of type 'integer' in column 'n'",
+        "Error in row 2: '7000O' is not of type 'float_threshold_na'"
         " in column 'Standard deviation in M^-1s^-1'",
-        "Error in row 1: 'Positive' is not a valid term in column 'Qualitiative measure'",
+        "Error in row 2: 'Positive' is not a valid term in column 'Qualitiative measure'",
     ]
 
     upload = UploadedFile("examples/spr-submission-valid.xlsx")

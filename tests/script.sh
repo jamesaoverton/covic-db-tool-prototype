@@ -81,13 +81,14 @@ step "Submit antibodies invalid"
 FILE="${EXAMPLES}/antibodies-submission-invalid.xlsx" 
 cvdb submit antibodies "Shane Crotty" shane@lji.org LJI "${FILE}" \
   > "${RESULT}" && fail "Submit invalid should fail"
-check_result "There were 6 errors
-Error in row 3: Missing required value in column 'Antibody name'
-Error in row 6: Missing required value in column 'Host'
-Error in row 6: 'Ig1' is not a valid term in column 'Isotype'
-Error in row 8: 'Mus musclus' is not a valid term in column 'Host'
-Error in row 8: 'Igm' is not a valid term in column 'Isotype'
-Error in row 9: Duplicate value 'C3' is not allowed in column 'Antibody name'"
+check_result "There were 7 errors
+Error in row 3: Duplicate value 'VD-Crotty 1' is not allowed in column 'Antibody name'
+Error in row 4: Missing required value in column 'Antibody name'
+Error in row 5: Missing required value in column 'Host'
+Error in row 6: 'IggA1' is not a valid term in column 'Isotype'
+Error in row 7: 'kapa' is not a valid term in column 'Light chain'
+Error in row 8: 'IGVH1-8' is not a valid term in column 'Heavy chain germline'
+Error in row 9: 'top' is not of type 'integer' in column 'Structural data'"
 
 
 step "Submit antibodies valid"
@@ -118,9 +119,9 @@ FILE="${EXAMPLES}/spr-submission-invalid.xlsx"
 cvdb submit assays "Jon Yewdell" jyewdell@niaid.nih.gov 1 "${FILE}" \
   > "${RESULT}" && fail "Submit invalid should fail"
 check_result "There were 3 errors
-Error in row 1: 'X' is not of type 'int' in column 'n'
-Error in row 1: '7000O' is not of type 'float_threshold_na' in column 'Standard deviation in M^-1s^-1'
-Error in row 1: 'Positive' is not a valid term in column 'Qualitiative measure'"
+Error in row 2: 'X' is not of type 'integer' in column 'n'
+Error in row 2: '7000O' is not of type 'float_threshold_na' in column 'Standard deviation in M^-1s^-1'
+Error in row 2: 'Positive' is not a valid term in column 'Qualitiative measure'"
 
 
 step "Submit Valid Assays"
