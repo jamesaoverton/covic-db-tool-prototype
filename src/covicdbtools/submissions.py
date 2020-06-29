@@ -77,14 +77,14 @@ def validate(headers, table):
         row = table[i]
         values = ""
         for value in row.values():
-            values += value.strip()
+            values += str(value).strip()
         if values == "":
             continue
 
         newrow = []
         for header in headers:
             column = header["label"]
-            value = row[column].strip() if column in row else ""
+            value = str(row[column]).strip() if column in row else ""
             error = None
             if "required" in header and header["required"] and value == "":
                 error = f"Missing required value in column '{column}'"
