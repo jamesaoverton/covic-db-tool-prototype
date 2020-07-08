@@ -17,3 +17,5 @@ titer	Titer	float			the titer value of the assay	0.52		assays.tsv
 comment	Comment	text			general comments about the assay	did not bind positive control		assays.tsv
 tested_antigen	Tested antigen	label			the name of the tested antigen	Spike protein 1		assays.tsv
 n	n	integer			the number of runs for the assay	6		assays.tsv
+experiment_identifier	Experiment identifier	text			the ID of the experiment	DU-DMB-00001		assays.tsv
+status	Status	text			the status of the experiment	approved		assays.tsv

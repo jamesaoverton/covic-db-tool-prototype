@@ -63,6 +63,13 @@ def validate_field(column, field_type, value):
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
+    elif field_type == "percent":
+        try:
+            _ = float(value)
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
     return f"Unrecognized field type '{field_type}' in column '{column}'"
 
 

@@ -44,17 +44,16 @@ def get_assay_headers(dataset_id):
         header = None
         if column in config.fields:
             header = config.fields[column].copy()
-        elif column.startswith("obi_"):
-            assay_id = column.replace("obi_", "OBI:")
+        elif column.startswith("obi_") or column.startswith("ontie_"):
+            assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
             stddev = assay_id.replace("_stddev", "")
             if assay_id in config.labels:
                 header = config.assays[config.labels[assay_id]].copy()
             elif stddev in config.labels:
+                assay_label = config.labels[stddev]
                 header = config.assays[config.labels[stddev]].copy()
                 header["label"] = f"Standard deviation in {header['units']}"
-                header[
-                    "description"
-                ] = f"The standard deviation of the value in '{header['label']}'"
+                header["description"] = f"The standard deviation of the value in '{assay_label}'"
                 header.pop("example", None)
         if not header:
             return failure(f"Unrecognized column '{column}'")
@@ -194,8 +193,8 @@ def create(name, email, columns=[]):
     for column in columns:
         if column in config.fields:
             continue
-        if column.startswith("obi_"):
-            assay_id = column.replace("obi_", "OBI:")
+        if column.startswith("obi_") or column.startswith("ontie_"):
+            assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
             if assay_id in config.labels:
                 continue
             stddev = assay_id.replace("_stddev", "")

@@ -173,6 +173,22 @@
       "description": "the number of runs for the assay",
       "example": "6",
       "used in": "assays.tsv"
+    },
+    "experiment_identifier": {
+      "field": "experiment_identifier",
+      "label": "Experiment identifier",
+      "type": "text",
+      "description": "the ID of the experiment",
+      "example": "DU-DMB-00001",
+      "used in": "assays.tsv"
+    },
+    "status": {
+      "field": "status",
+      "label": "Status",
+      "type": "text",
+      "description": "the status of the experiment",
+      "example": "approved",
+      "used in": "assays.tsv"
     }
   },
   "core": {
@@ -542,6 +558,39 @@
       "parent": "assay",
       "technique": "SPR",
       "units": "nM"
+    },
+    "dissociation constant; KD in M": {
+      "id": "ONTIE:0003550",
+      "label": "dissociation constant; KD in M",
+      "type": "float_threshold_na",
+      "description": "an SPR assay measuring dissociation constant [KD] in M",
+      "example": "<.001",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "SPR",
+      "units": "M"
+    },
+    "ACE 2 response; in nM": {
+      "id": "ONTIE:0003551",
+      "label": "ACE 2 response; in nM",
+      "type": "float_threshold_na",
+      "description": "a neutralization assay measuring ACE 2 response in nM",
+      "example": "0.3049",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "nM"
+    },
+    "ACE 2 response; percent blocking": {
+      "id": "ONTIE:0003552",
+      "label": "ACE 2 response; percent blocking",
+      "type": "float_threshold_na",
+      "description": "a neutralization assay measuring ACE 2 response in percent blocking",
+      "example": "38.35",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "percent"
     }
   },
   "qualitative_measures": {
@@ -584,6 +633,9 @@
     "OBI:0001741": "on rate; Ka in M^-1s^-1",
     "OBI:0100026": "organism",
     "ONTIE:0000001": "Mus musculus BALB/C",
+    "ONTIE:0003550": "dissociation constant; KD in M",
+    "ONTIE:0003551": "ACE 2 response; in nM",
+    "ONTIE:0003552": "ACE 2 response; percent blocking",
     "ONTIE:negative": "negative",
     "ONTIE:positive": "positive",
     "ONTIE:qualitiative-measure": "qualitative measure",
@@ -639,6 +691,9 @@
     "on rate; Ka in M^-1s^-1": "OBI:0001741",
     "organism": "OBI:0100026",
     "Mus musculus BALB/C": "ONTIE:0000001",
+    "dissociation constant; KD in M": "ONTIE:0003550",
+    "ACE 2 response; in nM": "ONTIE:0003551",
+    "ACE 2 response; percent blocking": "ONTIE:0003552",
     "negative": "ONTIE:negative",
     "positive": "ONTIE:positive",
     "qualitative measure": "ONTIE:qualitiative-measure",
