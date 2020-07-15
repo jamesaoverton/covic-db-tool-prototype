@@ -224,7 +224,7 @@ def submit(name, email, organization, table):
     for row in table:
         current_id = names.increment_id(current_id)
 
-        # secrets
+        # secrets: write this to the secret repo
         secret_row = OrderedDict()
         secret_row["ab_id"] = current_id
         secret_row["ab_name"] = row["Antibody name"]
@@ -234,23 +234,29 @@ def submit(name, email, organization, table):
         secret_row["submitter_email"] = email
         secret.append(secret_row)
 
-        # blind
+        # blind: write this to staging/public repos
         blind_row = OrderedDict()
         blind_row["ab_id"] = current_id
-        blind_row["host_type_id"] = config.ids[row["Host"]]
-        blind_row["isotype_id"] = config.ids[row["Isotype"]]
-        blind.append(blind_row)
 
-        # submission
+        # submission: return this to the submitter
         submission_row = OrderedDict()
         submission_row["ab_id"] = current_id
         submission_row["ab_name"] = row["Antibody name"]
-        submission_row["host_type_id"] = config.ids[row["Host"]]
-        submission_row["host_type_label"] = row["Host"]
-        submission_row["isotype_id"] = config.ids[row["Isotype"]]
-        submission_row["isotype_label"] = row["Isotype"]
-        submission_row["ab_details"] = row["Antibody details"]
-        submission_row["ab_comment"] = row["Antibody comment"]
+
+        # for each header, add cells to blind and submission
+        for header in headers[1:]:
+            column = header["value"]
+            value = row[header["label"]]
+            if column.endswith("_label"):
+                i = config.ids.get(value, "")
+                blind_row[column.replace("_label", "_id")] = i
+                submission_row[column.replace("_label", "_id")] = i
+                submission_row[column] = value
+            else:
+                blind_row[column] = value
+                submission_row[column] = value
+
+        blind.append(blind_row)
         submission.append(submission_row)
 
     author = Actor(name, email)

@@ -132,7 +132,9 @@ def table_to_grid(prefixes, fields, table):
         for key, value in row.items():
             cell = None
             if key.endswith("_id"):
-                iri = names.id_to_iri(prefixes, value)
+                iri = ""
+                if value:
+                    iri = names.id_to_iri(prefixes, value)
                 label = value
                 label_key = names.id_key_to_label_key(key)
                 if label_key in row and row[label_key] and row[label_key].strip() != "":
