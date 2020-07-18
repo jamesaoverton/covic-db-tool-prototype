@@ -414,82 +414,815 @@
     }
   },
   "heavy_chain_germline": {
-    "IGHV1-8": {
-      "id": "PR:P0DP01",
-      "label": "IGHV1-8",
+    "IGHA1": {
+      "id": "PR:P01876",
+      "label": "IGHA1",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 1-8 (human)"
+      "parent": "protein"
+    },
+    "IGHA2": {
+      "id": "PR:P01877",
+      "label": "IGHA2",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHD": {
+      "id": "PR:P01880",
+      "label": "IGHD",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHD1-1": {
+      "id": "PR:P0DOY5",
+      "label": "IGHD1-1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHE": {
+      "id": "PR:P01854",
+      "label": "IGHE",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHG1": {
+      "id": "PR:P01857",
+      "label": "IGHG1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHG2": {
+      "id": "PR:P01859",
+      "label": "IGHG2",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHG3": {
+      "id": "PR:P01860",
+      "label": "IGHG3",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHG4": {
+      "id": "PR:P01861",
+      "label": "IGHG4",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHJ1": {
+      "id": "PR:A0A0C4DH62",
+      "label": "IGHJ1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHM": {
+      "id": "PR:P01871",
+      "label": "IGHM",
+      "type": "owl:Class",
+      "parent": "protein"
     },
     "IGHV1-18": {
       "id": "PR:A0A0C4DH31",
       "label": "IGHV1-18",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 1-18 (human)"
+      "parent": "protein"
+    },
+    "IGHV1-2": {
+      "id": "PR:P23083",
+      "label": "IGHV1-2",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-24": {
+      "id": "PR:A0A0C4DH33",
+      "label": "IGHV1-24",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-3": {
+      "id": "PR:A0A0C4DH29",
+      "label": "IGHV1-3",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-45": {
+      "id": "PR:A0A0A0MS14",
+      "label": "IGHV1-45",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-46": {
+      "id": "PR:P01743",
+      "label": "IGHV1-46",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-58": {
+      "id": "PR:A0A0C4DH39",
+      "label": "IGHV1-58",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-69": {
+      "id": "PR:P01742",
+      "label": "IGHV1-69",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-69-2": {
+      "id": "PR:A0A0G2JMI3",
+      "label": "IGHV1-69-2",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-69D": {
+      "id": "PR:A0A0B4J2H0",
+      "label": "IGHV1-69D",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV1-8": {
+      "id": "PR:P0DP01",
+      "label": "IGHV1-8",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV2-26": {
+      "id": "PR:A0A0B4J1V2",
+      "label": "IGHV2-26",
+      "type": "owl:Class",
+      "parent": "protein"
     },
     "IGHV2-5": {
       "id": "PR:P01817",
       "label": "IGHV2-5",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 2-5 (human)"
+      "parent": "protein"
     },
-    "IGHV3-7": {
-      "id": "PR:P01780",
-      "label": "IGHV3-7",
+    "IGHV2-70": {
+      "id": "PR:P01814",
+      "label": "IGHV2-70",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 3-7 (human)"
+      "parent": "protein"
     },
     "IGHV3-11": {
       "id": "PR:P01762",
       "label": "IGHV3-11",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 3-11 (human)"
+      "parent": "protein"
+    },
+    "IGHV3-13": {
+      "id": "PR:P01766",
+      "label": "IGHV3-13",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-15": {
+      "id": "PR:A0A0B4J1V0",
+      "label": "IGHV3-15",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-20": {
+      "id": "PR:A0A0C4DH32",
+      "label": "IGHV3-20",
+      "type": "owl:Class",
+      "parent": "protein"
     },
     "IGHV3-21": {
       "id": "PR:A0A0B4J1V1",
       "label": "IGHV3-21",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 3-21 (human)"
+      "parent": "protein"
     },
     "IGHV3-23": {
       "id": "PR:P01764",
       "label": "IGHV3-23",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 3-23 (human)"
+      "parent": "protein"
+    },
+    "IGHV3-30": {
+      "id": "PR:P01768",
+      "label": "IGHV3-30",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-30-3": {
+      "id": "PR:P0DP02",
+      "label": "IGHV3-30-3",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-30-5": {
+      "id": "PR:P0DP03",
+      "label": "IGHV3-30-5",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-33": {
+      "id": "PR:P01772",
+      "label": "IGHV3-33",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-43": {
+      "id": "PR:A0A0B4J1X8",
+      "label": "IGHV3-43",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-43D": {
+      "id": "PR:P0DP04",
+      "label": "IGHV3-43D",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-48": {
+      "id": "PR:P01763",
+      "label": "IGHV3-48",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-49": {
+      "id": "PR:A0A0A0MS15",
+      "label": "IGHV3-49",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-53": {
+      "id": "PR:P01767",
+      "label": "IGHV3-53",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-64": {
+      "id": "PR:A0A075B6Q5",
+      "label": "IGHV3-64",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-66": {
+      "id": "PR:A0A0C4DH42",
+      "label": "IGHV3-66",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-7": {
+      "id": "PR:P01780",
+      "label": "IGHV3-7",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-72": {
+      "id": "PR:A0A0B4J1Y9",
+      "label": "IGHV3-72",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-73": {
+      "id": "PR:A0A0B4J1V6",
+      "label": "IGHV3-73",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-74": {
+      "id": "PR:A0A0B4J1X5",
+      "label": "IGHV3-74",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV3-9": {
+      "id": "PR:P01782",
+      "label": "IGHV3-9",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV4-28": {
+      "id": "PR:A0A0C4DH34",
+      "label": "IGHV4-28",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV4-30-2": {
+      "id": "PR:A0A087WSY4",
+      "label": "IGHV4-30-2",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV4-30-4": {
+      "id": "PR:P0DP06",
+      "label": "IGHV4-30-4",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV4-31": {
+      "id": "PR:P0DP07",
+      "label": "IGHV4-31",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV4-34": {
+      "id": "PR:P06331",
+      "label": "IGHV4-34",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV4-38-2": {
+      "id": "PR:P0DP08",
+      "label": "IGHV4-38-2",
+      "type": "owl:Class",
+      "parent": "protein"
     },
     "IGHV4-39": {
       "id": "PR:P01824",
       "label": "IGHV4-39",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 4-39 (human)"
+      "parent": "protein"
+    },
+    "IGHV4-4": {
+      "id": "PR:A0A075B6R2",
+      "label": "IGHV4-4",
+      "type": "owl:Class",
+      "parent": "protein"
     },
     "IGHV4-59": {
       "id": "PR:P01825",
       "label": "IGHV4-59",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 4-59 (human)"
+      "parent": "protein"
+    },
+    "IGHV4-61": {
+      "id": "PR:A0A0C4DH41",
+      "label": "IGHV4-61",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGHV5-10-1": {
+      "id": "PR:A0A0J9YXX1",
+      "label": "IGHV5-10-1",
+      "type": "owl:Class",
+      "parent": "protein"
     },
     "IGHV5-51": {
       "id": "PR:A0A0C4DH38",
       "label": "IGHV5-51",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 5-51 (human)"
+      "parent": "protein"
     },
     "IGHV6-1": {
       "id": "PR:A0A0B4J1U7",
       "label": "IGHV6-1",
       "type": "owl:Class",
-      "parent": "protein",
-      "PR label": "immunoglobulin heavy variable 6-1 (human)"
+      "parent": "protein"
+    },
+    "IGHV7-4-1": {
+      "id": "PR:A0A0J9YVY3",
+      "label": "IGHV7-4-1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKJ1": {
+      "id": "PR:A0A0A0MT89",
+      "label": "IGKJ1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-12": {
+      "id": "PR:A0A0C4DH73",
+      "label": "IGKV1-12",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-13": {
+      "id": "PR:P0DP09",
+      "label": "IGKV1-13",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-16": {
+      "id": "PR:P04430",
+      "label": "IGKV1-16",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-17": {
+      "id": "PR:P01599",
+      "label": "IGKV1-17",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-27": {
+      "id": "PR:A0A075B6S5",
+      "label": "IGKV1-27",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-33": {
+      "id": "PR:P01594",
+      "label": "IGKV1-33",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-39": {
+      "id": "PR:P01597",
+      "label": "IGKV1-39",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-5": {
+      "id": "PR:P01602",
+      "label": "IGKV1-5",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-6": {
+      "id": "PR:A0A0C4DH72",
+      "label": "IGKV1-6",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-8": {
+      "id": "PR:A0A0C4DH67",
+      "label": "IGKV1-8",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1-9": {
+      "id": "PR:A0A0C4DH69",
+      "label": "IGKV1-9",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-12": {
+      "id": "PR:P01611",
+      "label": "IGKV1D-12",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-13": {
+      "id": "PR:A0A0B4J2D9",
+      "label": "IGKV1D-13",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-16": {
+      "id": "PR:P01601",
+      "label": "IGKV1D-16",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-17": {
+      "id": "PR:A0A075B6S4",
+      "label": "IGKV1D-17",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-33": {
+      "id": "PR:P01593",
+      "label": "IGKV1D-33",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-39": {
+      "id": "PR:P04432",
+      "label": "IGKV1D-39",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-43": {
+      "id": "PR:A0A0B4J1Z2",
+      "label": "IGKV1D-43",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV1D-8": {
+      "id": "PR:A0A087WSZ0",
+      "label": "IGKV1D-8",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2-24": {
+      "id": "PR:A0A0C4DH68",
+      "label": "IGKV2-24",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2-28": {
+      "id": "PR:A0A075B6P5",
+      "label": "IGKV2-28",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2-29": {
+      "id": "PR:A2NJV5",
+      "label": "IGKV2-29",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2-30": {
+      "id": "PR:P06310",
+      "label": "IGKV2-30",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2-40": {
+      "id": "PR:A0A087WW87",
+      "label": "IGKV2-40",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2D-26": {
+      "id": "PR:A0A0A0MRZ7",
+      "label": "IGKV2D-26",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2D-28": {
+      "id": "PR:P01615",
+      "label": "IGKV2D-28",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2D-29": {
+      "id": "PR:A0A075B6S2",
+      "label": "IGKV2D-29",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2D-30": {
+      "id": "PR:A0A075B6S6",
+      "label": "IGKV2D-30",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV2D-40": {
+      "id": "PR:P01614",
+      "label": "IGKV2D-40",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3-11": {
+      "id": "PR:P04433",
+      "label": "IGKV3-11",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3-15": {
+      "id": "PR:P01624",
+      "label": "IGKV3-15",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3-20": {
+      "id": "PR:P01619",
+      "label": "IGKV3-20",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3D-11": {
+      "id": "PR:A0A0A0MRZ8",
+      "label": "IGKV3D-11",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3D-15": {
+      "id": "PR:A0A087WSY6",
+      "label": "IGKV3D-15",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3D-20": {
+      "id": "PR:A0A0C4DH25",
+      "label": "IGKV3D-20",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV3D-7": {
+      "id": "PR:A0A0C4DH55",
+      "label": "IGKV3D-7",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV4-1": {
+      "id": "PR:P06312",
+      "label": "IGKV4-1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV5-2": {
+      "id": "PR:P06315",
+      "label": "IGKV5-2",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV6-21": {
+      "id": "PR:A0A0C4DH24",
+      "label": "IGKV6-21",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGKV6D-21": {
+      "id": "PR:A0A0A0MT36",
+      "label": "IGKV6D-21",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLJ1": {
+      "id": "PR:A0A0A0MT76",
+      "label": "IGLJ1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV1-36": {
+      "id": "PR:A0A0B4J1U3",
+      "label": "IGLV1-36",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV1-40": {
+      "id": "PR:P01703",
+      "label": "IGLV1-40",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV1-44": {
+      "id": "PR:P01699",
+      "label": "IGLV1-44",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV1-47": {
+      "id": "PR:P01700",
+      "label": "IGLV1-47",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV1-51": {
+      "id": "PR:P01701",
+      "label": "IGLV1-51",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV10-54": {
+      "id": "PR:A0A075B6I4",
+      "label": "IGLV10-54",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV2-11": {
+      "id": "PR:P01706",
+      "label": "IGLV2-11",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV2-14": {
+      "id": "PR:P01704",
+      "label": "IGLV2-14",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV2-18": {
+      "id": "PR:A0A075B6J9",
+      "label": "IGLV2-18",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV2-23": {
+      "id": "PR:P01705",
+      "label": "IGLV2-23",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV2-8": {
+      "id": "PR:P01709",
+      "label": "IGLV2-8",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-1": {
+      "id": "PR:P01715",
+      "label": "IGLV3-1",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-10": {
+      "id": "PR:A0A075B6K4",
+      "label": "IGLV3-10",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-12": {
+      "id": "PR:A0A075B6K2",
+      "label": "IGLV3-12",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-16": {
+      "id": "PR:A0A075B6K0",
+      "label": "IGLV3-16",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-19": {
+      "id": "PR:P01714",
+      "label": "IGLV3-19",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-21": {
+      "id": "PR:P80748",
+      "label": "IGLV3-21",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-22": {
+      "id": "PR:A0A075B6J6",
+      "label": "IGLV3-22",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-25": {
+      "id": "PR:P01717",
+      "label": "IGLV3-25",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV3-27": {
+      "id": "PR:P01718",
+      "label": "IGLV3-27",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV4-3": {
+      "id": "PR:A0A075B6K6",
+      "label": "IGLV4-3",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV4-60": {
+      "id": "PR:A0A075B6I1",
+      "label": "IGLV4-60",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV4-69": {
+      "id": "PR:A0A075B6H9",
+      "label": "IGLV4-69",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV5-37": {
+      "id": "PR:A0A075B6J1",
+      "label": "IGLV5-37",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV5-39": {
+      "id": "PR:A0A0G2JS06",
+      "label": "IGLV5-39",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV5-45": {
+      "id": "PR:A0A087WSX0",
+      "label": "IGLV5-45",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV5-52": {
+      "id": "PR:A0A0A0MRZ9",
+      "label": "IGLV5-52",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV6-57": {
+      "id": "PR:P01721",
+      "label": "IGLV6-57",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV7-43": {
+      "id": "PR:P04211",
+      "label": "IGLV7-43",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV7-46": {
+      "id": "PR:A0A075B6I9",
+      "label": "IGLV7-46",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV8-61": {
+      "id": "PR:A0A075B6I0",
+      "label": "IGLV8-61",
+      "type": "owl:Class",
+      "parent": "protein"
+    },
+    "IGLV9-49": {
+      "id": "PR:A0A0B4J1Y8",
+      "label": "IGLV9-49",
+      "type": "owl:Class",
+      "parent": "protein"
     }
   },
   "assays": {
@@ -584,7 +1317,7 @@
     "ACE 2 response; percent blocking": {
       "id": "ONTIE:0003552",
       "label": "ACE 2 response; percent blocking",
-      "type": "float_threshold_na",
+      "type": "percent",
       "description": "a neutralization assay measuring ACE 2 response in percent blocking",
       "example": "38.35",
       "OWL type": "owl:Class",
@@ -659,17 +1392,141 @@
     "PR:000050259": "IgG2a",
     "PR:000050260": "IgG2b",
     "PR:000050261": "IgG2c",
+    "PR:A0A075B6H9": "IGLV4-69",
+    "PR:A0A075B6I0": "IGLV8-61",
+    "PR:A0A075B6I1": "IGLV4-60",
+    "PR:A0A075B6I4": "IGLV10-54",
+    "PR:A0A075B6I9": "IGLV7-46",
+    "PR:A0A075B6J1": "IGLV5-37",
+    "PR:A0A075B6J6": "IGLV3-22",
+    "PR:A0A075B6J9": "IGLV2-18",
+    "PR:A0A075B6K0": "IGLV3-16",
+    "PR:A0A075B6K2": "IGLV3-12",
+    "PR:A0A075B6K4": "IGLV3-10",
+    "PR:A0A075B6K6": "IGLV4-3",
+    "PR:A0A075B6P5": "IGKV2-28",
+    "PR:A0A075B6Q5": "IGHV3-64",
+    "PR:A0A075B6R2": "IGHV4-4",
+    "PR:A0A075B6S2": "IGKV2D-29",
+    "PR:A0A075B6S4": "IGKV1D-17",
+    "PR:A0A075B6S5": "IGKV1-27",
+    "PR:A0A075B6S6": "IGKV2D-30",
+    "PR:A0A087WSX0": "IGLV5-45",
+    "PR:A0A087WSY4": "IGHV4-30-2",
+    "PR:A0A087WSY6": "IGKV3D-15",
+    "PR:A0A087WSZ0": "IGKV1D-8",
+    "PR:A0A087WW87": "IGKV2-40",
+    "PR:A0A0A0MRZ7": "IGKV2D-26",
+    "PR:A0A0A0MRZ8": "IGKV3D-11",
+    "PR:A0A0A0MRZ9": "IGLV5-52",
+    "PR:A0A0A0MS14": "IGHV1-45",
+    "PR:A0A0A0MS15": "IGHV3-49",
+    "PR:A0A0A0MT36": "IGKV6D-21",
+    "PR:A0A0A0MT76": "IGLJ1",
+    "PR:A0A0A0MT89": "IGKJ1",
+    "PR:A0A0B4J1U3": "IGLV1-36",
     "PR:A0A0B4J1U7": "IGHV6-1",
+    "PR:A0A0B4J1V0": "IGHV3-15",
     "PR:A0A0B4J1V1": "IGHV3-21",
+    "PR:A0A0B4J1V2": "IGHV2-26",
+    "PR:A0A0B4J1V6": "IGHV3-73",
+    "PR:A0A0B4J1X5": "IGHV3-74",
+    "PR:A0A0B4J1X8": "IGHV3-43",
+    "PR:A0A0B4J1Y8": "IGLV9-49",
+    "PR:A0A0B4J1Y9": "IGHV3-72",
+    "PR:A0A0B4J1Z2": "IGKV1D-43",
+    "PR:A0A0B4J2D9": "IGKV1D-13",
+    "PR:A0A0B4J2H0": "IGHV1-69D",
+    "PR:A0A0C4DH24": "IGKV6-21",
+    "PR:A0A0C4DH25": "IGKV3D-20",
+    "PR:A0A0C4DH29": "IGHV1-3",
     "PR:A0A0C4DH31": "IGHV1-18",
+    "PR:A0A0C4DH32": "IGHV3-20",
+    "PR:A0A0C4DH33": "IGHV1-24",
+    "PR:A0A0C4DH34": "IGHV4-28",
     "PR:A0A0C4DH38": "IGHV5-51",
+    "PR:A0A0C4DH39": "IGHV1-58",
+    "PR:A0A0C4DH41": "IGHV4-61",
+    "PR:A0A0C4DH42": "IGHV3-66",
+    "PR:A0A0C4DH55": "IGKV3D-7",
+    "PR:A0A0C4DH62": "IGHJ1",
+    "PR:A0A0C4DH67": "IGKV1-8",
+    "PR:A0A0C4DH68": "IGKV2-24",
+    "PR:A0A0C4DH69": "IGKV1-9",
+    "PR:A0A0C4DH72": "IGKV1-6",
+    "PR:A0A0C4DH73": "IGKV1-12",
+    "PR:A0A0G2JMI3": "IGHV1-69-2",
+    "PR:A0A0G2JS06": "IGLV5-39",
+    "PR:A0A0J9YVY3": "IGHV7-4-1",
+    "PR:A0A0J9YXX1": "IGHV5-10-1",
+    "PR:A2NJV5": "IGKV2-29",
+    "PR:P01593": "IGKV1D-33",
+    "PR:P01594": "IGKV1-33",
+    "PR:P01597": "IGKV1-39",
+    "PR:P01599": "IGKV1-17",
+    "PR:P01601": "IGKV1D-16",
+    "PR:P01602": "IGKV1-5",
+    "PR:P01611": "IGKV1D-12",
+    "PR:P01614": "IGKV2D-40",
+    "PR:P01615": "IGKV2D-28",
+    "PR:P01619": "IGKV3-20",
+    "PR:P01624": "IGKV3-15",
+    "PR:P01699": "IGLV1-44",
+    "PR:P01700": "IGLV1-47",
+    "PR:P01701": "IGLV1-51",
+    "PR:P01703": "IGLV1-40",
+    "PR:P01704": "IGLV2-14",
+    "PR:P01705": "IGLV2-23",
+    "PR:P01706": "IGLV2-11",
+    "PR:P01709": "IGLV2-8",
+    "PR:P01714": "IGLV3-19",
+    "PR:P01715": "IGLV3-1",
+    "PR:P01717": "IGLV3-25",
+    "PR:P01718": "IGLV3-27",
+    "PR:P01721": "IGLV6-57",
+    "PR:P01742": "IGHV1-69",
+    "PR:P01743": "IGHV1-46",
     "PR:P01762": "IGHV3-11",
+    "PR:P01763": "IGHV3-48",
     "PR:P01764": "IGHV3-23",
+    "PR:P01766": "IGHV3-13",
+    "PR:P01767": "IGHV3-53",
+    "PR:P01768": "IGHV3-30",
+    "PR:P01772": "IGHV3-33",
     "PR:P01780": "IGHV3-7",
+    "PR:P01782": "IGHV3-9",
+    "PR:P01814": "IGHV2-70",
     "PR:P01817": "IGHV2-5",
     "PR:P01824": "IGHV4-39",
     "PR:P01825": "IGHV4-59",
-    "PR:P0DP01": "IGHV1-8"
+    "PR:P01854": "IGHE",
+    "PR:P01857": "IGHG1",
+    "PR:P01859": "IGHG2",
+    "PR:P01860": "IGHG3",
+    "PR:P01861": "IGHG4",
+    "PR:P01871": "IGHM",
+    "PR:P01876": "IGHA1",
+    "PR:P01877": "IGHA2",
+    "PR:P01880": "IGHD",
+    "PR:P04211": "IGLV7-43",
+    "PR:P04430": "IGKV1-16",
+    "PR:P04432": "IGKV1D-39",
+    "PR:P04433": "IGKV3-11",
+    "PR:P06310": "IGKV2-30",
+    "PR:P06312": "IGKV4-1",
+    "PR:P06315": "IGKV5-2",
+    "PR:P06331": "IGHV4-34",
+    "PR:P0DOY5": "IGHD1-1",
+    "PR:P0DP01": "IGHV1-8",
+    "PR:P0DP02": "IGHV3-30-3",
+    "PR:P0DP03": "IGHV3-30-5",
+    "PR:P0DP04": "IGHV3-43D",
+    "PR:P0DP06": "IGHV4-30-4",
+    "PR:P0DP07": "IGHV4-31",
+    "PR:P0DP08": "IGHV4-38-2",
+    "PR:P0DP09": "IGKV1-13",
+    "PR:P23083": "IGHV1-2",
+    "PR:P80748": "IGLV3-21"
   },
   "ids": {
     "process": "BFO:0000015",
@@ -717,16 +1574,140 @@
     "IgG2a": "PR:000050259",
     "IgG2b": "PR:000050260",
     "IgG2c": "PR:000050261",
+    "IGLV4-69": "PR:A0A075B6H9",
+    "IGLV8-61": "PR:A0A075B6I0",
+    "IGLV4-60": "PR:A0A075B6I1",
+    "IGLV10-54": "PR:A0A075B6I4",
+    "IGLV7-46": "PR:A0A075B6I9",
+    "IGLV5-37": "PR:A0A075B6J1",
+    "IGLV3-22": "PR:A0A075B6J6",
+    "IGLV2-18": "PR:A0A075B6J9",
+    "IGLV3-16": "PR:A0A075B6K0",
+    "IGLV3-12": "PR:A0A075B6K2",
+    "IGLV3-10": "PR:A0A075B6K4",
+    "IGLV4-3": "PR:A0A075B6K6",
+    "IGKV2-28": "PR:A0A075B6P5",
+    "IGHV3-64": "PR:A0A075B6Q5",
+    "IGHV4-4": "PR:A0A075B6R2",
+    "IGKV2D-29": "PR:A0A075B6S2",
+    "IGKV1D-17": "PR:A0A075B6S4",
+    "IGKV1-27": "PR:A0A075B6S5",
+    "IGKV2D-30": "PR:A0A075B6S6",
+    "IGLV5-45": "PR:A0A087WSX0",
+    "IGHV4-30-2": "PR:A0A087WSY4",
+    "IGKV3D-15": "PR:A0A087WSY6",
+    "IGKV1D-8": "PR:A0A087WSZ0",
+    "IGKV2-40": "PR:A0A087WW87",
+    "IGKV2D-26": "PR:A0A0A0MRZ7",
+    "IGKV3D-11": "PR:A0A0A0MRZ8",
+    "IGLV5-52": "PR:A0A0A0MRZ9",
+    "IGHV1-45": "PR:A0A0A0MS14",
+    "IGHV3-49": "PR:A0A0A0MS15",
+    "IGKV6D-21": "PR:A0A0A0MT36",
+    "IGLJ1": "PR:A0A0A0MT76",
+    "IGKJ1": "PR:A0A0A0MT89",
+    "IGLV1-36": "PR:A0A0B4J1U3",
     "IGHV6-1": "PR:A0A0B4J1U7",
+    "IGHV3-15": "PR:A0A0B4J1V0",
     "IGHV3-21": "PR:A0A0B4J1V1",
+    "IGHV2-26": "PR:A0A0B4J1V2",
+    "IGHV3-73": "PR:A0A0B4J1V6",
+    "IGHV3-74": "PR:A0A0B4J1X5",
+    "IGHV3-43": "PR:A0A0B4J1X8",
+    "IGLV9-49": "PR:A0A0B4J1Y8",
+    "IGHV3-72": "PR:A0A0B4J1Y9",
+    "IGKV1D-43": "PR:A0A0B4J1Z2",
+    "IGKV1D-13": "PR:A0A0B4J2D9",
+    "IGHV1-69D": "PR:A0A0B4J2H0",
+    "IGKV6-21": "PR:A0A0C4DH24",
+    "IGKV3D-20": "PR:A0A0C4DH25",
+    "IGHV1-3": "PR:A0A0C4DH29",
     "IGHV1-18": "PR:A0A0C4DH31",
+    "IGHV3-20": "PR:A0A0C4DH32",
+    "IGHV1-24": "PR:A0A0C4DH33",
+    "IGHV4-28": "PR:A0A0C4DH34",
     "IGHV5-51": "PR:A0A0C4DH38",
+    "IGHV1-58": "PR:A0A0C4DH39",
+    "IGHV4-61": "PR:A0A0C4DH41",
+    "IGHV3-66": "PR:A0A0C4DH42",
+    "IGKV3D-7": "PR:A0A0C4DH55",
+    "IGHJ1": "PR:A0A0C4DH62",
+    "IGKV1-8": "PR:A0A0C4DH67",
+    "IGKV2-24": "PR:A0A0C4DH68",
+    "IGKV1-9": "PR:A0A0C4DH69",
+    "IGKV1-6": "PR:A0A0C4DH72",
+    "IGKV1-12": "PR:A0A0C4DH73",
+    "IGHV1-69-2": "PR:A0A0G2JMI3",
+    "IGLV5-39": "PR:A0A0G2JS06",
+    "IGHV7-4-1": "PR:A0A0J9YVY3",
+    "IGHV5-10-1": "PR:A0A0J9YXX1",
+    "IGKV2-29": "PR:A2NJV5",
+    "IGKV1D-33": "PR:P01593",
+    "IGKV1-33": "PR:P01594",
+    "IGKV1-39": "PR:P01597",
+    "IGKV1-17": "PR:P01599",
+    "IGKV1D-16": "PR:P01601",
+    "IGKV1-5": "PR:P01602",
+    "IGKV1D-12": "PR:P01611",
+    "IGKV2D-40": "PR:P01614",
+    "IGKV2D-28": "PR:P01615",
+    "IGKV3-20": "PR:P01619",
+    "IGKV3-15": "PR:P01624",
+    "IGLV1-44": "PR:P01699",
+    "IGLV1-47": "PR:P01700",
+    "IGLV1-51": "PR:P01701",
+    "IGLV1-40": "PR:P01703",
+    "IGLV2-14": "PR:P01704",
+    "IGLV2-23": "PR:P01705",
+    "IGLV2-11": "PR:P01706",
+    "IGLV2-8": "PR:P01709",
+    "IGLV3-19": "PR:P01714",
+    "IGLV3-1": "PR:P01715",
+    "IGLV3-25": "PR:P01717",
+    "IGLV3-27": "PR:P01718",
+    "IGLV6-57": "PR:P01721",
+    "IGHV1-69": "PR:P01742",
+    "IGHV1-46": "PR:P01743",
     "IGHV3-11": "PR:P01762",
+    "IGHV3-48": "PR:P01763",
     "IGHV3-23": "PR:P01764",
+    "IGHV3-13": "PR:P01766",
+    "IGHV3-53": "PR:P01767",
+    "IGHV3-30": "PR:P01768",
+    "IGHV3-33": "PR:P01772",
     "IGHV3-7": "PR:P01780",
+    "IGHV3-9": "PR:P01782",
+    "IGHV2-70": "PR:P01814",
     "IGHV2-5": "PR:P01817",
     "IGHV4-39": "PR:P01824",
     "IGHV4-59": "PR:P01825",
-    "IGHV1-8": "PR:P0DP01"
+    "IGHE": "PR:P01854",
+    "IGHG1": "PR:P01857",
+    "IGHG2": "PR:P01859",
+    "IGHG3": "PR:P01860",
+    "IGHG4": "PR:P01861",
+    "IGHM": "PR:P01871",
+    "IGHA1": "PR:P01876",
+    "IGHA2": "PR:P01877",
+    "IGHD": "PR:P01880",
+    "IGLV7-43": "PR:P04211",
+    "IGKV1-16": "PR:P04430",
+    "IGKV1D-39": "PR:P04432",
+    "IGKV3-11": "PR:P04433",
+    "IGKV2-30": "PR:P06310",
+    "IGKV4-1": "PR:P06312",
+    "IGKV5-2": "PR:P06315",
+    "IGHV4-34": "PR:P06331",
+    "IGHD1-1": "PR:P0DOY5",
+    "IGHV1-8": "PR:P0DP01",
+    "IGHV3-30-3": "PR:P0DP02",
+    "IGHV3-30-5": "PR:P0DP03",
+    "IGHV3-43D": "PR:P0DP04",
+    "IGHV4-30-4": "PR:P0DP06",
+    "IGHV4-31": "PR:P0DP07",
+    "IGHV4-38-2": "PR:P0DP08",
+    "IGKV1-13": "PR:P0DP09",
+    "IGHV1-2": "PR:P23083",
+    "IGLV3-21": "PR:P80748"
   }
 }

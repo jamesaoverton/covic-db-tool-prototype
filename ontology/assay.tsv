@@ -8,4 +8,4 @@ OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off ra
 OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM
 ONTIE:0003550	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M
 ONTIE:0003551	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM
-ONTIE:0003552	ACE 2 response; percent blocking	float_threshold_na	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent
+ONTIE:0003552	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent
