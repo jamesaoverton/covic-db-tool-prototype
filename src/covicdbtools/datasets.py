@@ -269,6 +269,7 @@ def submit(name, email, dataset_id, table):
     response = validate(dataset_id, table)
     if failed(response):
         return response
+    table = response["table"]  # remove blank rows
 
     assay_headers = get_assay_headers(dataset_id)
     assays = []

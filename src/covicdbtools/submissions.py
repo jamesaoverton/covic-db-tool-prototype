@@ -80,19 +80,43 @@ def validate(headers, table):
     rows = []
     unique = defaultdict(set)
 
+    columns = set()
+    for header in headers:
+        try:
+            columns.add(header["label"])
+        except KeyError as e:
+            raise Exception(f"Bad header {header}", e)
+
+    new_table = []
     for i in range(0, len(table)):
         row = table[i]
+
+        # Skip blank rows
         values = ""
         for value in row.values():
             values += str(value).strip()
         if values == "":
             continue
+        new_table.append(row)
+
+        extra_columns = set(row.keys()) - columns
+        if extra_columns:
+            extra = ", ".join(extra_columns)
+            errors.append(f"Extra columns not allowed: {extra}")
+
+        missing_columns = columns - set(row.keys())
+        if missing_columns:
+            missing = ", ".join(missing_columns)
+            errors.append(f"Missing columns: {missing}")
 
         newrow = []
         for header in headers:
             column = header["label"]
-            value = str(row[column]).strip() if column in row else ""
             error = None
+            if column not in row:
+                # Should be handled above
+                continue
+            value = str(row[column]).strip()
             if "required" in header and header["required"] and value == "":
                 error = f"Missing required value in column '{column}'"
             elif "unique" in header and header["unique"] and value in unique[column]:
@@ -114,7 +138,13 @@ def validate(headers, table):
 
         rows.append(newrow)
 
+    table = new_table
     grid = {"headers": [headers], "rows": rows}
+    unique_errors = []
+    for error in errors:
+        if error not in unique_errors:
+            unique_errors.append(error)
+    errors = unique_errors
     error_count = len(errors)
     if error_count > 0:
         return failure(

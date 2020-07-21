@@ -50,3 +50,20 @@ def test_examples():
     example = "antibodies-submission-invalid-highlighted"
     excel = workbooks.read("examples/{0}.xlsx".format(example))
     assert tsv == excel
+
+
+def test_pathological():
+    tests = ["missing-columns", "extra-columns"]
+    for test in tests:
+        path = f"tests/invalid-antibodies/{test}.tsv"
+        table = tables.read_tsv(path)
+        response = antibodies.validate(table)
+        assert failed(response)
+
+    test = "blank-rows"
+    path = f"tests/invalid-antibodies/{test}.tsv"
+    table = tables.read_tsv(path)
+    response = antibodies.validate(table)
+    assert succeeded(response)
+    tables.print_tsv(response["table"])
+    assert len(response["table"]) == 9

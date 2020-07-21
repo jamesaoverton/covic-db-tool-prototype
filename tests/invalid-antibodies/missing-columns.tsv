@@ -1,0 +1,11 @@
+Antibody name	Host	Isotype	Light chain	Antibody details	Structural data	Antibody comment
+VD-Crotty 1	Homo sapiens	IgA	kappa	Spike protein binding affinity		
+VD-Crotty 2	Homo sapiens	IgD	lambda	inhibition of ACE2 binding	3	
+VD-Crotty 3	Mus musculus	IgG		ELISA for Spike	6	
+VD-Crotty 4	Homo sapiens	IgG2a		IC50 value		
+VD-Crotty 5	Mus musculus	IgA1	kappa	Neutralization assay platform	5	A comment
+VD-Crotty 6	Mus musculus	IgA	kappa	Epitope binning data		
+VD-Crotty 7	Homo sapiens	IgE		Epitope competition data	1	
+VD-Crotty 8	Mus musculus	IgA2	lambda		4	Another comment
+VD-Crotty 9	Homo sapiens	IgG1				
+VD-Crotty 10	Mus musculus	IgM			2	
