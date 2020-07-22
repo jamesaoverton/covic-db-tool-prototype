@@ -126,10 +126,11 @@ def fill(rows=[]):
     """Fill the antibodies submission template, returning a list of grids."""
     instructions_rows = []
     instructions = """CoVIC-DB Antibodies Submission
-Version 1.2.2
+Version 1.2.3
 
 Add your antibodies to the 'Antibodies' sheet.
-Do not change the headers of the 'Antibodies' sheet.
+Please use consecutive rows (no blank rows).
+Do not edit the header row of the 'Antibodies' sheet.
 Do not edit the other sheets.
 """
     for line in instructions.strip().splitlines():
