@@ -95,7 +95,7 @@ build/robot-tree.jar: | build
 #
 # These tables are stored in Google Sheets, and downloaded as TSV files.
 
-ONTOLOGY_SHEETS = core host isotype light_chain heavy_chain_germline assay qualitative_measure
+ONTOLOGY_SHEETS = core host isotype light_chain heavy_chain_germline assay parameter qualitative_measure
 SHEETS = prefix field $(ONTOLOGY_SHEETS)
 SHEET_TSVS = $(foreach o,$(SHEETS),ontology/$(o).tsv)
 

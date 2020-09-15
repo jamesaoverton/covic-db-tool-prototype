@@ -22,6 +22,7 @@ isoforms = {}
 light_chains = {}
 heavy_chain_germline = {}
 assays = {}
+parameters = {}
 qualitative_measures = {}
 labels = {}
 ids = {}
@@ -124,6 +125,7 @@ def validate(config):
         "hosts",
         "isotypes",
         "assays",
+        "parameters",
         "qualitative_measures",
         "labels",
         "ids",
@@ -149,6 +151,7 @@ def build(
     light_chain_tsv_path,
     heavy_chain_germline_tsv_path,
     assays_tsv_path,
+    parameters_tsv_path,
     qualitative_measures_tsv_path,
     labels_tsv_path,
 ):
@@ -162,6 +165,7 @@ def build(
     config["light_chains"] = read_terms(light_chain_tsv_path)
     config["heavy_chain_germline"] = read_terms(heavy_chain_germline_tsv_path)
     config["assays"] = read_terms(assays_tsv_path)
+    config["parameters"] = read_terms(parameters_tsv_path)
     config["qualitative_measures"] = read_terms(qualitative_measures_tsv_path)
     config["labels"] = read_labels(labels_tsv_path)
     config["ids"] = read_ids(labels_tsv_path)
@@ -189,7 +193,7 @@ def read(config_json_path="config.json"):
 def load(config):
     """Load a new config into the global dictionaries."""
     global prefixes, core, hosts, isotypes, light_chains, heavy_chain_germline
-    global assays, qualitative_measures, fields, labels, ids
+    global assays, parameters, qualitative_measures, fields, labels, ids
     prefixes = config["prefixes"]
     core = config["core"]
     hosts = config["hosts"]
@@ -197,6 +201,7 @@ def load(config):
     light_chains = config["light_chains"]
     heavy_chain_germline = config["heavy_chain_germline"]
     assays = config["assays"]
+    parameters = config["parameters"]
     qualitative_measures = config["qualitative_measures"]
     fields = config["fields"]
     labels = config["labels"]
@@ -251,6 +256,7 @@ def main():
     parser.add_argument("light_chain", type=str, help="The light_chain table")
     parser.add_argument("heavy_chain_germline", type=str, help="The heavy_chain_germline table")
     parser.add_argument("assay", type=str, help="The assay table")
+    parser.add_argument("parameter", type=str, help="The parameter table")
     parser.add_argument("qualitative_measure", type=str, help="The qualitative_measure table")
     parser.add_argument("label", type=str, help="The label table")
     parser.add_argument("output", type=str, help="The output JSON file")
@@ -265,6 +271,7 @@ def main():
         args.light_chain,
         args.heavy_chain_germline,
         args.assay,
+        args.parameter,
         args.qualitative_measure,
         args.label,
     )

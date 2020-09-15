@@ -34,7 +34,7 @@
       "label": "Antibody label",
       "type": "label",
       "description": "the COVIC label for the antibody",
-      "example": "COVIC 1",
+      "example": "COVIC-1",
       "comment": "blinded",
       "used in": "antibodies.tsv"
     },
@@ -273,6 +273,12 @@
     "qualitative measure": {
       "id": "ONTIE:qualitiative-measure",
       "label": "qualitative measure",
+      "type": "owl:Class",
+      "parent": null
+    },
+    "parameter": {
+      "id": "ONTIE:parameter",
+      "label": "parameter",
       "type": "owl:Class",
       "parent": null
     }
@@ -783,7 +789,7 @@
       "units": "nM"
     },
     "dissociation constant; KD in M": {
-      "id": "ONTIE:0003550",
+      "id": "ONTIE:0003554",
       "label": "dissociation constant; KD in M",
       "type": "float_threshold_na",
       "description": "an SPR assay measuring dissociation constant [KD] in M",
@@ -794,7 +800,7 @@
       "units": "M"
     },
     "ACE 2 response; in nM": {
-      "id": "ONTIE:0003551",
+      "id": "ONTIE:0003555",
       "label": "ACE 2 response; in nM",
       "type": "float_threshold_na",
       "description": "a neutralization assay measuring ACE 2 response in nM",
@@ -805,7 +811,7 @@
       "units": "nM"
     },
     "ACE 2 response; percent blocking": {
-      "id": "ONTIE:0003552",
+      "id": "ONTIE:0003556",
       "label": "ACE 2 response; percent blocking",
       "type": "percent",
       "description": "a neutralization assay measuring ACE 2 response in percent blocking",
@@ -814,6 +820,129 @@
       "parent": "assay",
       "technique": "neutralization",
       "units": "percent"
+    },
+    "mAb concentration (ug/mL)": {
+      "id": "ONTIE:0003557",
+      "label": "mAb concentration (ug/mL)",
+      "type": "integer",
+      "description": "the amount of antibody dissolved in the solution being tested, reported in ug/mL",
+      "example": "2000",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "ug/mL"
+    },
+    "neutralization IC50 (ug/mL)": {
+      "id": "ONTIE:0003558",
+      "label": "neutralization IC50 (ug/mL)",
+      "type": "float_na",
+      "description": "a neutralization assay measuring the IC50 of the tested antibody in ug/mL",
+      "example": "1.83",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "ug/mL"
+    },
+    "neutralization IC80 (ug/mL)": {
+      "id": "ONTIE:0003559",
+      "label": "neutralization IC80 (ug/mL)",
+      "type": "float_na",
+      "description": "a neutralization assay measuring the IC80 of the tested antibody in ug/mL",
+      "example": "6.37",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "ug/mL"
+    },
+    "neutralization IC90 (ug/mL)": {
+      "id": "ONTIE:0003560",
+      "label": "neutralization IC90 (ug/mL)",
+      "type": "float_na",
+      "description": "a neutralization assay measuring the IC90 of the tested antibody in ug/mL",
+      "example": "14.12",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "ug/mL"
+    }
+  },
+  "parameters": {
+    "Starting dilution fold": {
+      "id": "ONTIE:0003561",
+      "label": "Starting dilution fold",
+      "type": "integer",
+      "description": "the initial fold change of a solution being diluted",
+      "example": "10",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": null,
+      "units": null
+    },
+    "Starting concentration (ug/mL)": {
+      "id": "ONTIE:0003562",
+      "label": "Starting concentration (ug/mL)",
+      "type": "float",
+      "description": "the initial amount of antibody dissolved in the solution being diluted, reported in ug/mL",
+      "example": "9.9",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": "",
+      "units": "ug/mL"
+    },
+    "4-PL curve parameter A": {
+      "id": "ONTIE:0003563",
+      "label": "4-PL curve parameter A",
+      "type": "float_na",
+      "description": "response value at 0 standard concentration",
+      "example": "-16.66",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": null,
+      "units": null
+    },
+    "4-PL curve parameter B": {
+      "id": "ONTIE:0003564",
+      "label": "4-PL curve parameter B",
+      "type": "float_na",
+      "description": "Hill's slope",
+      "example": "1.055",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": null,
+      "units": null
+    },
+    "4-PL curve parameter C": {
+      "id": "ONTIE:0003565",
+      "label": "4-PL curve parameter C",
+      "type": "float_na",
+      "description": "inflection point",
+      "example": "1.371",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": null,
+      "units": null
+    },
+    "4-PL curve parameter D": {
+      "id": "ONTIE:0003566",
+      "label": "4-PL curve parameter D",
+      "type": "float_na",
+      "description": "response value for infinite standard concentration",
+      "example": "99.11",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": null,
+      "units": null
+    },
+    "4-PL curve R2": {
+      "id": "ONTIE:0003567",
+      "label": "4-PL curve R2",
+      "type": "float_na",
+      "description": "a statistical measure of fit that indicates how much variation of a dependent variable is explained by the independent variable(s)",
+      "example": "0.99",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": null,
+      "units": null
     }
   },
   "qualitative_measures": {
@@ -856,10 +985,22 @@
     "OBI:0001741": "on rate; Ka in M^-1s^-1",
     "OBI:0100026": "organism",
     "ONTIE:0000001": "Mus musculus BALB/C",
-    "ONTIE:0003550": "dissociation constant; KD in M",
-    "ONTIE:0003551": "ACE 2 response; in nM",
-    "ONTIE:0003552": "ACE 2 response; percent blocking",
+    "ONTIE:0003554": "dissociation constant; KD in M",
+    "ONTIE:0003555": "ACE 2 response; in nM",
+    "ONTIE:0003556": "ACE 2 response; percent blocking",
+    "ONTIE:0003557": "mAb concentration (ug/mL)",
+    "ONTIE:0003558": "neutralization IC50 (ug/mL)",
+    "ONTIE:0003559": "neutralization IC80 (ug/mL)",
+    "ONTIE:0003560": "neutralization IC90 (ug/mL)",
+    "ONTIE:0003561": "Starting dilution fold",
+    "ONTIE:0003562": "Starting concentration (ug/mL)",
+    "ONTIE:0003563": "4-PL curve parameter A",
+    "ONTIE:0003564": "4-PL curve parameter B",
+    "ONTIE:0003565": "4-PL curve parameter C",
+    "ONTIE:0003566": "4-PL curve parameter D",
+    "ONTIE:0003567": "4-PL curve R2",
     "ONTIE:negative": "negative",
+    "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
     "ONTIE:qualitiative-measure": "qualitative measure",
     "ONTIE:unknown": "unknown",
@@ -953,10 +1094,22 @@
     "on rate; Ka in M^-1s^-1": "OBI:0001741",
     "organism": "OBI:0100026",
     "Mus musculus BALB/C": "ONTIE:0000001",
-    "dissociation constant; KD in M": "ONTIE:0003550",
-    "ACE 2 response; in nM": "ONTIE:0003551",
-    "ACE 2 response; percent blocking": "ONTIE:0003552",
+    "dissociation constant; KD in M": "ONTIE:0003554",
+    "ACE 2 response; in nM": "ONTIE:0003555",
+    "ACE 2 response; percent blocking": "ONTIE:0003556",
+    "mAb concentration (ug/mL)": "ONTIE:0003557",
+    "neutralization IC50 (ug/mL)": "ONTIE:0003558",
+    "neutralization IC80 (ug/mL)": "ONTIE:0003559",
+    "neutralization IC90 (ug/mL)": "ONTIE:0003560",
+    "Starting dilution fold": "ONTIE:0003561",
+    "Starting concentration (ug/mL)": "ONTIE:0003562",
+    "4-PL curve parameter A": "ONTIE:0003563",
+    "4-PL curve parameter B": "ONTIE:0003564",
+    "4-PL curve parameter C": "ONTIE:0003565",
+    "4-PL curve parameter D": "ONTIE:0003566",
+    "4-PL curve R2": "ONTIE:0003567",
     "negative": "ONTIE:negative",
+    "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",
     "qualitative measure": "ONTIE:qualitiative-measure",
     "unknown": "ONTIE:unknown",

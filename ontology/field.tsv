@@ -1,6 +1,6 @@
 field	label	type	terminology	secret	description	example	comment	used in
 ab_id	Antibody	id			the COVID ID for the antibody	COVIC:1	blinded	antibodies.tsv assays.tsv
-ab_label	Antibody label	label			the COVIC label for the antibody	COVIC 1	blinded	antibodies.tsv
+ab_label	Antibody label	label			the COVIC label for the antibody	COVIC-1	blinded	antibodies.tsv
 ab_name	Antibody name	label		TRUE	the submitter's name for the antibody	VD-Crotty 1	confidential submitter's preferred name	secret/antibodies.tsv
 ab_details	Antibody details	text		TRUE	assay details about the antibody		confidential, unstructured assay details on antibody from the sumbitter	secret/antibodies.tsv
 ab_comment	Antibody comment	text		TRUE	general comments about the antibody		confidential free text about the antibody	secret/antibodies.tsv

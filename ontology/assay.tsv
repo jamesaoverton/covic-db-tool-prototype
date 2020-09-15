@@ -6,6 +6,10 @@ OBI:0000923	SPR				owl:Class	assay
 OBI:0001741	on rate; Ka in M^-1s^-1	float_threshold_na	an SPR assay measuring on rate [Ka] in M^-1s^-1	491000	owl:Class	assay	SPR	M^-1s^-1
 OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off rate [Kd] in 1/s	126	owl:Class	assay	SPR	1/s
 OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM
-ONTIE:0003550	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M
-ONTIE:0003551	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM
-ONTIE:0003552	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent
+ONTIE:0003554	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M
+ONTIE:0003555	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM
+ONTIE:0003556	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent
+ONTIE:0003557	mAb concentration (ug/mL)	integer	the amount of antibody dissolved in the solution being tested, reported in ug/mL	2000	owl:Class	assay		ug/mL
+ONTIE:0003558	neutralization IC50 (ug/mL)	float_na	a neutralization assay measuring the IC50 of the tested antibody in ug/mL	1.83	owl:Class	assay	neutralization	ug/mL
+ONTIE:0003559	neutralization IC80 (ug/mL)	float_na	a neutralization assay measuring the IC80 of the tested antibody in ug/mL	6.37	owl:Class	assay	neutralization	ug/mL
+ONTIE:0003560	neutralization IC90 (ug/mL)	float_na	a neutralization assay measuring the IC90 of the tested antibody in ug/mL	14.12	owl:Class	assay	neutralization	ug/mL

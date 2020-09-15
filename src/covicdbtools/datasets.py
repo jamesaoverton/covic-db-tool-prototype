@@ -47,14 +47,16 @@ def get_assay_headers(dataset_id):
         elif column.startswith("obi_") or column.startswith("ontie_"):
             assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
             stddev = assay_id.replace("_stddev", "")
-            if assay_id in config.labels:
+            if assay_id in config.labels and config.labels[assay_id] in config.assays:
                 header = config.assays[config.labels[assay_id]].copy()
-            elif stddev in config.labels:
+            elif stddev in config.labels and config.labels[stddev] in config.assays:
                 assay_label = config.labels[stddev]
                 header = config.assays[config.labels[stddev]].copy()
                 header["label"] = f"Standard deviation in {header['units']}"
                 header["description"] = f"The standard deviation of the value in '{assay_label}'"
                 header.pop("example", None)
+            elif assay_id in config.labels and config.labels[assay_id] in config.parameters:
+                header = config.parameters[config.labels[assay_id]].copy()
         if not header:
             return failure(f"Unrecognized column '{column}'")
         header["value"] = column

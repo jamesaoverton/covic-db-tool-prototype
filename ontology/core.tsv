@@ -14,3 +14,4 @@ BFO:0000015	process	owl:Class
 OBI:0000011	planned process	owl:Class	process
 OBI:0000070	assay	owl:Class	planned process
 ONTIE:qualitiative-measure	qualitative measure	owl:Class
+ONTIE:parameter	parameter	owl:Class
