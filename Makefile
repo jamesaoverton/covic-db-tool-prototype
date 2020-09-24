@@ -103,7 +103,7 @@ build/CoVIC-DB.xlsx: | build
 	curl -L -o $@ "https://docs.google.com/spreadsheets/d/11ItLLoXY7_r2lDazY4prMERHMb-7czrim91UABnvbYM/export?format=xlsx"
 
 $(SHEET_TSVS): build/CoVIC-DB.xlsx
-	xlsx2csv --delimiter tab --sheetname $(basename $(notdir $@)) $< > $@
+	xlsx2csv --ignoreempty --delimiter tab --sheetname $(basename $(notdir $@)) $< > $@
 
 
 ### Ontology
