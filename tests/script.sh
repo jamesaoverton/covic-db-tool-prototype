@@ -118,7 +118,8 @@ step "Submit Invalid Assays"
 FILE="${EXAMPLES}/spr-submission-invalid.xlsx"
 cvdb submit assays "Jon Yewdell" jyewdell@niaid.nih.gov 1 "${FILE}" \
   > "${RESULT}" && fail "Submit invalid should fail"
-check_result "There were 3 errors
+check_result "There were 4 errors
+Error in row 2: 'COVIC 1' is not a valid COVIC antibody label in column 'Antibody label'
 Error in row 2: 'X' is not of type 'integer' in column 'n'
 Error in row 2: '7000O' is not of type 'float_threshold_na' in column 'Standard deviation in M^-1s^-1'
 Error in row 2: 'Positive' is not a valid term in column 'Qualitiative measure'"

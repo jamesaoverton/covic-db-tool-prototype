@@ -281,7 +281,7 @@ def submit(name, email, dataset_id, table):
             value = header["value"]
             label = header["label"]
             if value == "ab_label":
-                assay["ab_id"] = row[label].replace(" ", ":")
+                assay["ab_id"] = row[label].replace("-", ":")
             else:
                 assay[value] = row[label]
         assays.append(assay)

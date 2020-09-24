@@ -1,6 +1,11 @@
+import re
+
 from collections import defaultdict, OrderedDict
-from covicdbtools import names, grids
+from covicdbtools import config, names, grids
 from covicdbtools.responses import success, failure
+
+covic_id_pattern = re.compile(r"COVIC:\d+")
+covic_label_pattern = re.compile(r"COVIC-\d+")
 
 
 def store(ids, headers, table):
@@ -27,7 +32,7 @@ def validate_field(column, field_type, value):
         return None
 
     elif field_type == "id":
-        if names.is_id(value):
+        if names.is_id(config.prefixes, value):
             return None
         return f"'{value}' is not a valid ID in column '{column}'"
 
@@ -117,7 +122,16 @@ def validate(headers, table):
                 # Should be handled above
                 continue
             value = str(row[column]).strip()
-            if "required" in header and header["required"] and value == "":
+            if "field" in header and header["field"] == "ab_id":
+                if not covic_id_pattern.match(value):
+                    error = f"'{value}' is not a valid COVIC antibody ID in column 'Antibody ID'"
+            elif "field" in header and header["field"] == "ab_label":
+                if not covic_label_pattern.match(value):
+                    error = (
+                        f"'{value}' is not a valid COVIC antibody label "
+                        + "in column 'Antibody label'"
+                    )
+            elif "required" in header and header["required"] and value == "":
                 error = f"Missing required value in column '{column}'"
             elif "unique" in header and header["unique"] and value in unique[column]:
                 error = f"Duplicate value '{value}' is not allowed in column '{column}'"

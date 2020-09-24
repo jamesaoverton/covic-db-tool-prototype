@@ -14,6 +14,7 @@ def test_validate_submission():
     response = datasets.validate("spr", table)
     assert failed(response)
     assert response["errors"] == [
+        "Error in row 2: 'COVIC 1' is not a valid COVIC antibody label in column 'Antibody label'",
         "Error in row 2: 'X' is not of type 'integer' in column 'n'",
         "Error in row 2: '7000O' is not of type 'float_threshold_na'"
         " in column 'Standard deviation in M^-1s^-1'",
