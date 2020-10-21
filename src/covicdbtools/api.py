@@ -3,6 +3,7 @@
 import os
 
 from io import BytesIO
+from collections import OrderedDict
 from covicdbtools import (
     config,
     names,
@@ -166,6 +167,32 @@ def fetch_template(datatype):
     return fill_rows(datatype)
 
 
+def fetch_data(datatype):
+    """Fetch the template for a given datatype."""
+    if datatype.lower() == "antibodies":
+        raise Exception("Not yet implemented")
+    else:
+        result = fill(datatype, "data/staging/datasets/1/assays.tsv")
+        label_table = []
+        headers = datasets.get_assay_headers(datatype)
+        labels = {"ab_id": "Antibody"}
+        for header in headers:
+            field = None
+            if "field" in header:
+                field = header["field"]
+            elif "id" in header:
+                field = header["id"].lower().replace(":", "_")
+            labels[field] = header["label"]
+        for row in result["table"]:
+            new_row = OrderedDict()
+            for column, value in row.items():
+                label = labels.get(column, column)
+                new_row[label] = value
+            label_table.append(new_row)
+        result["label_table"] = label_table
+        return result
+
+
 def validate(datatype, source):
     """Given a datatype and a source,
     validate it and return a response with "grid" and maybe "errors",
@@ -189,6 +216,27 @@ def create_dataset(name, email, columns=[]):
     """Given the submitter's name, email, and an assay_type, create a dataset.
     The response will have a "dataset" key with the new id."""
     return datasets.create(name, email, columns=columns)
+
+
+def set_value(scope, dataset, key, value):
+    """Given a scope (staging or secret), a dataset ID, a key string, and a simle value,
+    that can be represented in YAML,
+    add the key and value to the dataset metadata,
+    maybe overwriting it."""
+    try:
+        datasets.set_value(scope, dataset, key, value)
+        return success()
+    except Exception as e:
+        return failure(e)
+
+
+def get_value(scope, dataset, key=None):
+    """Given a scope (staging or secret), a dataset ID, and an optional key,
+    return the value or values in the 'data' key."""
+    try:
+        return success({"data": datasets.get_value(scope, dataset, key)})
+    except Exception as e:
+        return failure(e)
 
 
 def submit_antibodies(name, email, organization, source):

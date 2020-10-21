@@ -31,7 +31,7 @@ SHELL := bash
 ### General Tasks
 
 .PHONY: all
-all: config examples views
+all: config examples
 
 .PHONY: tidy
 tidy:

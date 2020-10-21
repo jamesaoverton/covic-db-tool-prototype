@@ -12,7 +12,6 @@ from io import BytesIO
 
 from covicdbtools import (
     config,
-    names,
     tables,
     grids,
     workbooks,
@@ -23,14 +22,20 @@ from covicdbtools import (
 from covicdbtools.responses import success, failure, failed
 
 
+def get_staging_path(dataset_id):
+    """Given a dataset ID, return the path to its staging directory."""
+    return os.path.join(config.staging.working_tree_dir, "datasets", dataset_id)
+
+
 def get_assay_headers(dataset_id):
     """Given dataset ID, return the assay headers."""
+    dataset_path = get_staging_path(dataset_id)
     if dataset_id == "spr":
         path = "examples/spr-dataset.yml"
     elif not config.staging:
         raise Exception("CVDB_STAGING directory is not configured")
     else:
-        path = os.path.join(config.staging.working_tree_dir, "datasets", dataset_id, "dataset.yml")
+        path = os.path.join(dataset_path, "dataset.yml")
 
     if not os.path.isfile(path):
         raise Exception(f"File does not exist '{path}'")
@@ -74,51 +79,130 @@ def get_assay_headers(dataset_id):
     return headers
 
 
-def get_status(dataset_id):
-    if not config.staging:
-        raise Exception("CVDB_STAGING directory is not configured")
-    path = os.path.join(config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml")
+def read_dataset_yml(dataset_id):
+    """Given a dataset_id, return the dataset staging metadata."""
+    path = os.path.join(get_staging_path(dataset_id), "dataset.yml")
     if os.path.isfile(path):
         with open(path, "r") as f:
             dataset = yaml.load(f, Loader=yaml.SafeLoader)
-            return dataset.get("Dataset status", "submitted")
+            dataset["Columns"] = get_assay_headers(dataset_id)
+            return dataset
+    raise Exception(f"No dataset found for '{dataset_id}'")
+
+
+def get_value(scope, dataset_id, key=None):
+    """Given a scope (staging or secret), a dataset ID, and an optional key,
+    return the value or values from the dataset metadata."""
+    if scope.casefold() == "secret":
+        return get_secret_value(dataset_id, key)
+    elif scope.casefold() == "staging":
+        return get_staging_value(dataset_id, key)
+    elif scope.casefold() == "all":
+        return get_all_value(dataset_id, key)
+    else:
+        raise ValueError(f"Invalid scope '{scope}' for get_value")
+
+
+def get_all_value(dataset_id, key=None):
+    """Given a dataset ID and an optional key
+    return the value or values from the all dataset metadata."""
+    secrets = get_secret_value(dataset_id, key)
+    if key and key in secrets:
+        return secrets[key]
+    staging = get_staging_value(dataset_id, key)
+    if key and key in staging:
+        return staging[key]
+    if not key:
+        staging["secrets"] = secrets
+        return staging
     return None
 
 
-def set_status(dataset_id, status):
+def get_secret_value(dataset_id, key=None):
+    """Given a dataset ID and an optional key
+    return the value or values from the dataset secret metadata."""
+    if key in ["ds_id"]:
+        return failure(f"Key '{key}' cannot be updated")
+    path = os.path.join(config.secret.working_tree_dir, "datasets.tsv")
+    rows = tables.read_tsv(path)
+    for row in rows:
+        if row["ds_id"] == dataset_id:
+            if key:
+                return row[key]
+            else:
+                return row
+    raise Exception(f"No row found for dataset '{dataset_id}'")
+
+
+def get_staging_value(dataset_id, key=None):
+    """Given a dataset ID and an optional key
+    return the value or values from the dataset staging metadata."""
+    if not config.staging:
+        raise Exception("CVDB_STAGING directory is not configured")
+    dataset = read_dataset_yml(dataset_id)
+    if key:
+        return dataset[key]
+    else:
+        return dataset
+
+
+def set_value(scope, dataset_id, key, value):
+    """Given a scope (staging or secret), a dataset ID, a key string, and a simle value,
+    update the dataset metadata,
+    maybe overwriting it."""
+    if scope.casefold() == "secret":
+        return set_secret_value(dataset_id, key, value)
+    elif scope.casefold() == "staging":
+        return set_staging_value(dataset_id, key, value)
+    else:
+        raise ValueError(f"Invalid scope '{scope}' for set_value")
+
+
+def set_secret_value(dataset_id, key, value):
+    """Given a dataset ID, key, and value,
+    update the secret `datasets.tsv`."""
+    if key in ["ds_id"]:
+        return failure(f"Key '{key}' cannot be updated")
+    path = os.path.join(config.secret.working_tree_dir, "datasets.tsv")
+    rows = tables.read_tsv(path)
+    done = False
+    for row in rows:
+        if row["ds_id"] == dataset_id:
+            row[key] = str(value)
+            done = True
+        elif key not in row:
+            row[key] = None
+    if done:
+        tables.write_tsv(rows, path)
+    else:
+        raise Exception(f"No row found for dataset '{dataset_id}'")
+
+
+def set_staging_value(dataset_id, key, value):
+    """Given a dataset ID, a key string, and a value string,
+    that can be represented in YAML,
+    update the staging `dataset.yml` file."""
     if not config.staging:
         raise Exception("CVDB_STAGING directory is not configured")
     path = os.path.join(config.staging.working_tree_dir, "datasets", str(dataset_id), "dataset.yml")
+    parsed = yaml.load(value, Loader=yaml.SafeLoader)
     with open(path, "r") as f:
         dataset = yaml.load(f, Loader=yaml.SafeLoader)
-        dataset["Dataset status"] = status
+        dataset[key] = parsed
         with open(path, "w") as outfile:
             yaml.dump(dataset, outfile, sort_keys=False)
 
 
-def read_data(dataset_path):
-    dataset_yaml_path = os.path.join(dataset_path, "dataset.yml")
-    with open(dataset_yaml_path, "r") as f:
-        dataset = yaml.load(f, Loader=yaml.SafeLoader)
+def read_data(dataset_id):
+    """Read the metadata and data for a dataset."""
+    dataset = read_dataset_yml(dataset_id)
 
-    fields = []
-    for key, value in dataset.items():
-        iri = None
-        if names.is_id(config.prefixes, value):
-            iri = names.id_to_iri(config.prefixes, value)
-        label = value
-        if isinstance(value, str) and value in config.labels:
-            label = value + " " + config.labels[value]
-        if isinstance(value, list):
-            label = ", ".join(value)
-        fields.append({"field": key, "iri": iri, "label": label, "value": value})
-
-    assays_tsv_path = os.path.join(dataset_path, "assays.tsv")
+    assays_tsv_path = os.path.join(get_staging_path(dataset_id), "assays.tsv")
     assays = []
     for row in tables.read_tsv(assays_tsv_path):
         assays.append(row)
 
-    return {"dataset": dataset, "fields": fields, "assays": assays}
+    return {"dataset": dataset, "assays": assays}
 
 
 def fill(assay_type, rows=[]):
@@ -245,7 +329,7 @@ def create(name, email, columns=[]):
     try:
         dataset = {
             "Dataset ID": f"ds:{dataset_id}",
-            "Dataset status": "submitted",
+            "Dataset status": "configured",
             "Columns": columns,
         }
         path = os.path.join(dataset_path, "dataset.yml")
@@ -294,7 +378,7 @@ def submit(name, email, dataset_id, table):
     dataset_path = os.path.join(config.staging.working_tree_dir, "datasets", str(dataset_id))
     paths = []
     try:
-        set_status(dataset_id, "submitted")
+        set_staging_value(dataset_id, "Dataset status", "submitted")
         path = os.path.join(dataset_path, "dataset.yml")
         paths.append(path)
     except Exception as e:
@@ -331,7 +415,7 @@ def promote(name, email, dataset_id):
     )
     paths = []
     try:
-        set_status(dataset_id, "promoted")
+        set_staging_value(dataset_id, "Dataset status", "promoted")
         path = os.path.join(staging_dataset_path, "dataset.yml")
         paths.append(path)
     except Exception as e:
@@ -377,7 +461,7 @@ if __name__ == "__main__":
     config.update()
     parser = argparse.ArgumentParser(description="Convert dataset text files to HTML")
     parser.add_argument("template", type=str, help="The template to use")
-    parser.add_argument("dataset", type=str, help="The dataset directory")
+    parser.add_argument("dataset", type=str, help="The dataset ID")
     parser.add_argument("output", type=str, help="The output file")
     args = parser.parse_args()
 

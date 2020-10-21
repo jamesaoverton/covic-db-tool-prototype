@@ -107,6 +107,12 @@ check_result "Created dataset 1"
 check_repos "${ROOT}/tests/create-dataset"
 
 
+step "Set dataset metadata"
+cvdb set staging 1 Comment "More information" || fail "Failed to set metadata"
+cvdb get staging 1 Comment > "${RESULT}" || fail "Failed to get metadata"
+check_result "More information"
+
+
 step "Fetch assays template"
 FILE="${TEMP}/spr-submission.xlsx"
 cvdb fetch template 1 "${FILE}" || fail "Failed to fetch"

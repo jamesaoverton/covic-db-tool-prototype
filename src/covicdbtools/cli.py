@@ -64,6 +64,13 @@ def fetch_template(args):
     responses.write(response)
 
 
+def fetch_data(args):
+    """Fetch the filled template for a given data type, then write it."""
+    response = guard(api.fetch_data(args.type))
+    response["path"] = args.output
+    responses.write(response)
+
+
 def maybe_write(response, datatype, output):
     if output and output.endswith(".xlsx"):
         response = guard(api.fill_rows(datatype, response["grid"]["rows"]))
@@ -98,6 +105,18 @@ def create_dataset(args):
     """Create a new dataset with a given assay type."""
     columns = args.columns.split(",")
     guard(api.create_dataset(args.name, args.email, columns=columns))
+
+
+def set_value(args):
+    """Set a metadata value for a dataset."""
+    guard(api.set_value(args.scope, args.dataset, args.key, args.value))
+
+
+def get_value(args):
+    """Get a metadata value for a dataset."""
+    result = api.get_value(args.scope, args.dataset, args.key)
+    guard(result)
+    print(result["data"])
 
 
 def promote_dataset(args):
@@ -135,12 +154,16 @@ def main():
     parser.add_argument("output", help="The Excel file to write")
     parser.set_defaults(func=fill)
 
-    parser = subparsers.add_parser("fetch", help="Fetch an Excel file")
+    parser = subparsers.add_parser("fetch", help="Fetch templates or data")
     subsubparsers = parser.add_subparsers(required=True, dest="cmd")
-    parser = subsubparsers.add_parser("template", help="Fetch an empty Excel template")
+    parser = subsubparsers.add_parser("template", help="Fetch an empty template")
     parser.add_argument("type", help="The type of template to fetch")
     parser.add_argument("output", help="The output file to write")
     parser.set_defaults(func=fetch_template)
+    parser = subsubparsers.add_parser("data", help="Fetch a filled template")
+    parser.add_argument("type", help="The type of template to fetch")
+    parser.add_argument("output", help="The output file to write")
+    parser.set_defaults(func=fetch_data)
 
     parser = subparsers.add_parser("validate", help="Validate data")
     parser.add_argument("type", help="The type of data to validate")
@@ -172,6 +195,25 @@ def main():
     parser.add_argument("email", help="The submitter's email")
     parser.add_argument("--columns", help="The columns for the dataset")
     parser.set_defaults(func=create_dataset)
+
+    parser = subparsers.add_parser("set", help="Set metadata values for a configured dataset")
+    parser.add_argument(
+        "scope", choices=["secret", "staging"], help="The data scope: secret or staging"
+    )
+    parser.add_argument("dataset", help="The dataset ID")
+    parser.add_argument("key", help="The key to set")
+    parser.add_argument("value", help="The value to set")
+    parser.set_defaults(func=set_value)
+
+    parser = subparsers.add_parser("get", help="Get metadata values for a configured dataset")
+    parser.add_argument(
+        "scope",
+        choices=["secret", "staging", "all"],
+        help="The data scope: secret, staging, or all",
+    )
+    parser.add_argument("dataset", help="The dataset ID")
+    parser.add_argument("key", nargs="?", help="The key to get, or none for all data")
+    parser.set_defaults(func=get_value)
 
     parser = subparsers.add_parser("promote", help="Promote data from staging to public")
     subsubparsers = parser.add_subparsers(required=True, dest="cmd")
