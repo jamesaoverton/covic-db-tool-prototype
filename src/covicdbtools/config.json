@@ -731,7 +731,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": null,
-      "units": null
+      "units": null,
+      "notes": null
     },
     "VLP ELISA": {
       "id": "OBI:0000661",
@@ -742,7 +743,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
-      "units": ""
+      "units": "",
+      "notes": null
     },
     "SPR": {
       "id": "OBI:0000923",
@@ -753,7 +755,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
-      "units": ""
+      "units": "",
+      "notes": null
     },
     "on rate; Ka in M^-1s^-1": {
       "id": "OBI:0001741",
@@ -764,7 +767,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",
-      "units": "M^-1s^-1"
+      "units": "M^-1s^-1",
+      "notes": null
     },
     "off rate; Kd in 1/s": {
       "id": "OBI:0001739",
@@ -775,7 +779,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",
-      "units": "1/s"
+      "units": "1/s",
+      "notes": null
     },
     "dissociation constant; KD in nM": {
       "id": "OBI:0001731",
@@ -786,7 +791,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",
-      "units": "nM"
+      "units": "nM",
+      "notes": null
     },
     "dissociation constant; KD in M": {
       "id": "ONTIE:0003554",
@@ -797,7 +803,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "SPR",
-      "units": "M"
+      "units": "M",
+      "notes": null
     },
     "ACE 2 response; in nM": {
       "id": "ONTIE:0003555",
@@ -808,7 +815,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "neutralization",
-      "units": "nM"
+      "units": "nM",
+      "notes": null
     },
     "ACE 2 response; percent blocking": {
       "id": "ONTIE:0003556",
@@ -819,7 +827,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "neutralization",
-      "units": "percent"
+      "units": "percent",
+      "notes": null
     },
     "mAb concentration (ug/mL)": {
       "id": "ONTIE:0003557",
@@ -830,7 +839,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
-      "units": "ug/mL"
+      "units": "ug/mL",
+      "notes": null
     },
     "neutralization IC50 (ug/mL)": {
       "id": "ONTIE:0003558",
@@ -841,7 +851,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "neutralization",
-      "units": "ug/mL"
+      "units": "ug/mL",
+      "notes": null
     },
     "neutralization IC80 (ug/mL)": {
       "id": "ONTIE:0003559",
@@ -852,7 +863,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "neutralization",
-      "units": "ug/mL"
+      "units": "ug/mL",
+      "notes": null
     },
     "neutralization IC90 (ug/mL)": {
       "id": "ONTIE:0003560",
@@ -863,7 +875,239 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "neutralization",
-      "units": "ug/mL"
+      "units": "ug/mL",
+      "notes": null
+    },
+    "ADCP (Phagocytic Score)": {
+      "id": "ONTIE:0003561",
+      "label": "ADCP (Phagocytic Score)",
+      "type": "float",
+      "description": "assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a phagocytic cell using a phagocytic score",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "antibody-dependent cellular phagocytosis  (Phagocytic Score)",
+      "null": [
+        "phagocytic activity",
+        "related, but not exact, is epitope specific"
+      ]
+    },
+    "ADNP (Phagocytic Score)": {
+      "id": "ONTIE:0003562",
+      "label": "ADNP (Phagocytic Score)",
+      "type": "float",
+      "description": "assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on neutrophils using a phagocytic score",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "antibody-dependent neutrophil phagocytosis  (Phagocytic Score)",
+      "null": [
+        "phagocytic activity neutrophils",
+        "related, but not exact, is epitope specific"
+      ]
+    },
+    "ADCD (MFI C3)": {
+      "id": "ONTIE:0003563",
+      "label": "ADCD (MFI C3)",
+      "type": "float",
+      "description": "assay to measure complement component C3b on the surface of target cells using MFI",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "antibody-dependent complement deposition (MFI)",
+      "null": [
+        "complement deposition",
+        "related, but not exact, is epitope specific"
+      ]
+    },
+    "ADNKA % CD107a+": {
+      "id": "ONTIE:0003564",
+      "label": "ADNKA % CD107a+",
+      "type": "float",
+      "description": "assay measuring the percent of NK cells expressing CD107a as a result of antibody binding",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "Ab-dependent NK cell activation CD107a",
+      "null": [
+        "natural killer cell activation",
+        "none"
+      ]
+    },
+    "ADNKA % MIP-1b+": {
+      "id": "ONTIE:0003565",
+      "label": "ADNKA % MIP-1b+",
+      "type": "float",
+      "description": "assay measuring the percent of NK cells expressing MIP-1b using a phagocytic score",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "Ab-dependent NK cell activation MIP-1b",
+      "null": [
+        "natural killer cell activation",
+        "only T cell epitope specific"
+      ]
+    },
+    "mADCP (Phagocytic Score)": {
+      "id": "ONTIE:0003566",
+      "label": "mADCP (Phagocytic Score)",
+      "type": "float",
+      "description": "assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a mouse cell using a phagocytic score",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "antibody-dependent cellular phagocytosis of murine cells  (Phagocytic Score)",
+      "null": [
+        "phagocytic activity mouse cells",
+        "related, but not exact, is epitope specific"
+      ]
+    },
+    "mADNP (Phagocytic Score)": {
+      "id": "ONTIE:0003575",
+      "label": "mADNP (Phagocytic Score)",
+      "type": "float",
+      "description": "assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on a mouse cell using a phagocytic score",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "",
+      "null": [
+        ""
+      ]
+    },
+    "FcgR2aR (MFI)": {
+      "id": "ONTIE:0003567",
+      "label": "FcgR2aR (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for FcgR2aR receptor on human cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "FcgR2aR receptor affinity",
+      "null": [
+        "affinity for human Fc receptor"
+      ]
+    },
+    "FcgR3aV (MFI)": {
+      "id": "ONTIE:0003568",
+      "label": "FcgR3aV (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for FcgR3aV receptor on human cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "FcgR3aV receptor affinity",
+      "null": [
+        "affinity for human Fc receptor"
+      ]
+    },
+    "FcgR2b (MFI)": {
+      "id": "ONTIE:0003569",
+      "label": "FcgR2b (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for FcgR2b receptor on human cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "FcgR2b receptor affinity",
+      "null": [
+        "affinity for human Fc receptor"
+      ]
+    },
+    "FcgR3b (MFI)": {
+      "id": "ONTIE:0003570",
+      "label": "FcgR3b (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for FcgR3b receptor on human cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "FcgR3b receptor affinity",
+      "null": [
+        "affinity for human Fc receptor"
+      ]
+    },
+    "FcRn (MFI)": {
+      "id": "ONTIE:0003571",
+      "label": "FcRn (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for FcRn receptor on human cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "FcRn receptor affinity",
+      "null": [
+        "affinity for human Fc receptor"
+      ]
+    },
+    "mFcR2 (MFI)": {
+      "id": "ONTIE:0003572",
+      "label": "mFcR2 (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for FcR2 receptor on mouse cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "mFcR2 receptor affinity",
+      "null": [
+        "affinity for mouse Fc receptor"
+      ]
+    },
+    "mFcR3 (MFI)": {
+      "id": "ONTIE:0003573",
+      "label": "mFcR3 (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for mFcR3 receptor on mouse cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "mFcR3 receptor affinity",
+      "null": [
+        "affinity for mouse Fc receptor"
+      ]
+    },
+    "mFcR4 (MFI)": {
+      "id": "ONTIE:0003574",
+      "label": "mFcR4 (MFI)",
+      "type": "float",
+      "description": "assay measuring antibody affinity for mFcR receptor on mouse cells using median fluorescence intensity",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "notes": "mFcR4 receptor affinity",
+      "null": [
+        "affinity for mouse Fc receptor"
+      ]
     }
   },
   "parameters": {
@@ -992,13 +1236,21 @@
     "ONTIE:0003558": "neutralization IC50 (ug/mL)",
     "ONTIE:0003559": "neutralization IC80 (ug/mL)",
     "ONTIE:0003560": "neutralization IC90 (ug/mL)",
-    "ONTIE:0003561": "Starting dilution fold",
-    "ONTIE:0003562": "Starting concentration (ug/mL)",
-    "ONTIE:0003563": "4-PL curve parameter A",
-    "ONTIE:0003564": "4-PL curve parameter B",
-    "ONTIE:0003565": "4-PL curve parameter C",
-    "ONTIE:0003566": "4-PL curve parameter D",
+    "ONTIE:0003561": "ADCP (Phagocytic Score)",
+    "ONTIE:0003562": "ADNP (Phagocytic Score)",
+    "ONTIE:0003563": "ADCD (MFI C3)",
+    "ONTIE:0003564": "ADNKA % CD107a+",
+    "ONTIE:0003565": "ADNKA % MIP-1b+",
+    "ONTIE:0003566": "mADCP (Phagocytic Score)",
     "ONTIE:0003567": "4-PL curve R2",
+    "ONTIE:0003568": "FcgR3aV (MFI)",
+    "ONTIE:0003569": "FcgR2b (MFI)",
+    "ONTIE:0003570": "FcgR3b (MFI)",
+    "ONTIE:0003571": "FcRn (MFI)",
+    "ONTIE:0003572": "mFcR2 (MFI)",
+    "ONTIE:0003573": "mFcR3 (MFI)",
+    "ONTIE:0003574": "mFcR4 (MFI)",
+    "ONTIE:0003575": "mADNP (Phagocytic Score)",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
@@ -1101,13 +1353,21 @@
     "neutralization IC50 (ug/mL)": "ONTIE:0003558",
     "neutralization IC80 (ug/mL)": "ONTIE:0003559",
     "neutralization IC90 (ug/mL)": "ONTIE:0003560",
-    "Starting dilution fold": "ONTIE:0003561",
-    "Starting concentration (ug/mL)": "ONTIE:0003562",
-    "4-PL curve parameter A": "ONTIE:0003563",
-    "4-PL curve parameter B": "ONTIE:0003564",
-    "4-PL curve parameter C": "ONTIE:0003565",
-    "4-PL curve parameter D": "ONTIE:0003566",
+    "ADCP (Phagocytic Score)": "ONTIE:0003561",
+    "ADNP (Phagocytic Score)": "ONTIE:0003562",
+    "ADCD (MFI C3)": "ONTIE:0003563",
+    "ADNKA % CD107a+": "ONTIE:0003564",
+    "ADNKA % MIP-1b+": "ONTIE:0003565",
+    "mADCP (Phagocytic Score)": "ONTIE:0003566",
     "4-PL curve R2": "ONTIE:0003567",
+    "FcgR3aV (MFI)": "ONTIE:0003568",
+    "FcgR2b (MFI)": "ONTIE:0003569",
+    "FcgR3b (MFI)": "ONTIE:0003570",
+    "FcRn (MFI)": "ONTIE:0003571",
+    "mFcR2 (MFI)": "ONTIE:0003572",
+    "mFcR3 (MFI)": "ONTIE:0003573",
+    "mFcR4 (MFI)": "ONTIE:0003574",
+    "mADNP (Phagocytic Score)": "ONTIE:0003575",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",
