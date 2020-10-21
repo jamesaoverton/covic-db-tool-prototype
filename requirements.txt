@@ -6,3 +6,4 @@ pytest
 pyyaml
 tabulate
 gitpython
+xlsx2csv
