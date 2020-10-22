@@ -172,7 +172,8 @@ def fetch_data(datatype):
     if datatype.lower() == "antibodies":
         raise Exception("Not yet implemented")
     else:
-        result = fill(datatype, "data/staging/datasets/1/assays.tsv")
+        dataset_path = os.path.join(os.environ.get("CVDB_DATA"), "staging", "datasets", datatype, "assays.tsv")
+        result = fill(datatype, dataset_path)
         label_table = []
         headers = datasets.get_assay_headers(datatype)
         labels = {"ab_id": "Antibody"}
