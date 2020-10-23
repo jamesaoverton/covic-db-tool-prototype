@@ -91,7 +91,10 @@ def read_labels(labels_tsv_path):
     """Read the labels table and return the labels map."""
     labels = {}
     for row in tables.read_tsv(labels_tsv_path):
-        labels[row["ID"]] = row["LABEL"]
+        id = row["ID"]
+        if id in labels:
+            raise Exception(f"Duplicate ID {id}")
+        labels[id] = row["LABEL"]
     return labels
 
 
@@ -104,7 +107,10 @@ def read_ids(labels_tsv_path):
     """Read the labels table and return the IDs map."""
     ids = {}
     for row in tables.read_tsv(labels_tsv_path):
-        ids[row["LABEL"]] = row["ID"]
+        label = row["LABEL"]
+        if label in ids:
+            raise Exception("Duplicate label '{label}'")
+        ids[label] = row["ID"]
     return ids
 
 
@@ -169,6 +175,31 @@ def build(
     config["qualitative_measures"] = read_terms(qualitative_measures_tsv_path)
     config["labels"] = read_labels(labels_tsv_path)
     config["ids"] = read_ids(labels_tsv_path)
+
+    # Check for duplicates
+    term_sets = [
+        "core",
+        "hosts",
+        "isotypes",
+        "light_chains",
+        "heavy_chain_germline",
+        "assays",
+        "parameters",
+        "qualitative_measures",
+    ]
+    ids = set()
+    labels = set()
+    for term_set in term_sets:
+        terms = config[term_set]
+        for label, term in terms.items():
+            id = term["id"]
+            if id in ids:
+                raise Exception(f"Duplicate ID '{id}'")
+            if label in labels:
+                raise Exception(f"Duplicate label '{label}'")
+            ids.add(id)
+            labels.add(label)
+
     return config
 
 

@@ -1,9 +1,9 @@
 id	label	type	description	example	OWL type	parent	technique	units
 ID	LABEL				TYPE	C %
-ONTIE:0003561	Starting dilution fold	integer	the fold change from the starting concentration of a solution being diluted	10	owl:Class	parameter
-ONTIE:0003562	Starting concentration (ug/mL)	float	the initial amount of antibody dissolved in the solution being diluted, reported in ug/mL	9.9	owl:Class	parameter		ug/mL
-ONTIE:0003563	4-PL curve parameter A	float_na	the minimum value that can be obtained	-16.66	owl:Class	parameter
-ONTIE:0003564	4-PL curve parameter B	float_na	Hill's slope of the curve	1.055	owl:Class	parameter
-ONTIE:0003565	4-PL curve parameter C	float_na	inflection point	1.371	owl:Class	parameter
-ONTIE:0003566	4-PL curve parameter D	float_na	the maximum value that can be obtained	99.11	owl:Class	parameter
-ONTIE:0003567	4-PL curve R2	float_na	a statistical measure of fit that indicates how much variation of a dependent variable is explained by the independent variable(s)	0.99	owl:Class	parameter
+ONTIE:0003576	Starting dilution fold	integer	the fold change from the starting concentration of a solution being diluted	10	owl:Class	parameter
+ONTIE:0003577	Starting concentration (ug/mL)	float	the initial amount of antibody dissolved in the solution being diluted, reported in ug/mL	9.9	owl:Class	parameter		ug/mL
+ONTIE:0003578	4-PL curve parameter A	float_na	the minimum value that can be obtained	-16.66	owl:Class	parameter
+ONTIE:0003579	4-PL curve parameter B	float_na	Hill's slope of the curve	1.055	owl:Class	parameter
+ONTIE:0003580	4-PL curve parameter C	float_na	inflection point	1.371	owl:Class	parameter
+ONTIE:0003581	4-PL curve parameter D	float_na	the maximum value that can be obtained	99.11	owl:Class	parameter
+ONTIE:0003582	4-PL curve R2	float_na	a statistical measure of fit that indicates how much variation of a dependent variable is explained by the independent variable(s)	0.99	owl:Class	parameter

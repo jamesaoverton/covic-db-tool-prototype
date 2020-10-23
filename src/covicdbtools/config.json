@@ -1112,7 +1112,7 @@
   },
   "parameters": {
     "Starting dilution fold": {
-      "id": "ONTIE:0003561",
+      "id": "ONTIE:0003576",
       "label": "Starting dilution fold",
       "type": "integer",
       "description": "the fold change from the starting concentration of a solution being diluted",
@@ -1123,7 +1123,7 @@
       "units": null
     },
     "Starting concentration (ug/mL)": {
-      "id": "ONTIE:0003562",
+      "id": "ONTIE:0003577",
       "label": "Starting concentration (ug/mL)",
       "type": "float",
       "description": "the initial amount of antibody dissolved in the solution being diluted, reported in ug/mL",
@@ -1134,7 +1134,7 @@
       "units": "ug/mL"
     },
     "4-PL curve parameter A": {
-      "id": "ONTIE:0003563",
+      "id": "ONTIE:0003578",
       "label": "4-PL curve parameter A",
       "type": "float_na",
       "description": "the minimum value that can be obtained",
@@ -1145,7 +1145,7 @@
       "units": null
     },
     "4-PL curve parameter B": {
-      "id": "ONTIE:0003564",
+      "id": "ONTIE:0003579",
       "label": "4-PL curve parameter B",
       "type": "float_na",
       "description": "Hill's slope of the curve",
@@ -1156,7 +1156,7 @@
       "units": null
     },
     "4-PL curve parameter C": {
-      "id": "ONTIE:0003565",
+      "id": "ONTIE:0003580",
       "label": "4-PL curve parameter C",
       "type": "float_na",
       "description": "inflection point",
@@ -1167,7 +1167,7 @@
       "units": null
     },
     "4-PL curve parameter D": {
-      "id": "ONTIE:0003566",
+      "id": "ONTIE:0003581",
       "label": "4-PL curve parameter D",
       "type": "float_na",
       "description": "the maximum value that can be obtained",
@@ -1178,7 +1178,7 @@
       "units": null
     },
     "4-PL curve R2": {
-      "id": "ONTIE:0003567",
+      "id": "ONTIE:0003582",
       "label": "4-PL curve R2",
       "type": "float_na",
       "description": "a statistical measure of fit that indicates how much variation of a dependent variable is explained by the independent variable(s)",
@@ -1242,7 +1242,7 @@
     "ONTIE:0003564": "ADNKA % CD107a+",
     "ONTIE:0003565": "ADNKA % MIP-1b+",
     "ONTIE:0003566": "mADCP (Phagocytic Score)",
-    "ONTIE:0003567": "4-PL curve R2",
+    "ONTIE:0003567": "FcgR2aR (MFI)",
     "ONTIE:0003568": "FcgR3aV (MFI)",
     "ONTIE:0003569": "FcgR2b (MFI)",
     "ONTIE:0003570": "FcgR3b (MFI)",
@@ -1251,6 +1251,13 @@
     "ONTIE:0003573": "mFcR3 (MFI)",
     "ONTIE:0003574": "mFcR4 (MFI)",
     "ONTIE:0003575": "mADNP (Phagocytic Score)",
+    "ONTIE:0003576": "Starting dilution fold",
+    "ONTIE:0003577": "Starting concentration (ug/mL)",
+    "ONTIE:0003578": "4-PL curve parameter A",
+    "ONTIE:0003579": "4-PL curve parameter B",
+    "ONTIE:0003580": "4-PL curve parameter C",
+    "ONTIE:0003581": "4-PL curve parameter D",
+    "ONTIE:0003582": "4-PL curve R2",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
@@ -1359,7 +1366,7 @@
     "ADNKA % CD107a+": "ONTIE:0003564",
     "ADNKA % MIP-1b+": "ONTIE:0003565",
     "mADCP (Phagocytic Score)": "ONTIE:0003566",
-    "4-PL curve R2": "ONTIE:0003567",
+    "FcgR2aR (MFI)": "ONTIE:0003567",
     "FcgR3aV (MFI)": "ONTIE:0003568",
     "FcgR2b (MFI)": "ONTIE:0003569",
     "FcgR3b (MFI)": "ONTIE:0003570",
@@ -1368,6 +1375,13 @@
     "mFcR3 (MFI)": "ONTIE:0003573",
     "mFcR4 (MFI)": "ONTIE:0003574",
     "mADNP (Phagocytic Score)": "ONTIE:0003575",
+    "Starting dilution fold": "ONTIE:0003576",
+    "Starting concentration (ug/mL)": "ONTIE:0003577",
+    "4-PL curve parameter A": "ONTIE:0003578",
+    "4-PL curve parameter B": "ONTIE:0003579",
+    "4-PL curve parameter C": "ONTIE:0003580",
+    "4-PL curve parameter D": "ONTIE:0003581",
+    "4-PL curve R2": "ONTIE:0003582",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",
