@@ -172,24 +172,22 @@ def fetch_data(datatype):
     if datatype.lower() == "antibodies":
         raise Exception("Not yet implemented")
     else:
-        dataset_path = os.path.join(os.environ.get("CVDB_DATA"), "staging", "datasets", datatype, "assays.tsv")
+        dataset_path = os.path.join(
+            os.environ.get("CVDB_DATA"), "staging", "datasets", datatype, "assays.tsv"
+        )
         result = fill(datatype, dataset_path)
         label_table = []
         headers = datasets.get_assay_headers(datatype)
         labels = {"ab_id": "Antibody"}
         for header in headers:
-            field = None
-            if "field" in header:
-                field = header["field"]
-            elif "id" in header:
-                field = header["id"].lower().replace(":", "_")
-            labels[field] = header["label"]
+            labels[header["value"]] = header["label"]
         for row in result["table"]:
             new_row = OrderedDict()
             for column, value in row.items():
                 label = labels.get(column, column)
                 new_row[label] = value
             label_table.append(new_row)
+        print(label_table[0])
         result["label_table"] = label_table
         return result
 
