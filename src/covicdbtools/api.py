@@ -187,7 +187,6 @@ def fetch_data(datatype):
                 label = labels.get(column, column)
                 new_row[label] = value
             label_table.append(new_row)
-        print(label_table[0])
         result["label_table"] = label_table
         return result
 
