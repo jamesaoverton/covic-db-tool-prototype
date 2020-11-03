@@ -1,12 +1,12 @@
 Antibody name	Host	Isotype	Light chain	Heavy chain germline	Antibody details	Structural data	Antibody comment
-VD-Crotty 1	Homo sapiens	IgA	kappa	IGHV1-8	Spike protein binding affinity		
-VD-Crotty 2	Homo sapiens	IgD	lambda	IGHV1-18	inhibition of ACE2 binding	3	
+VD-Crotty 1	human (Homo sapiens)	IgA	kappa	IGHV1-8	Spike protein binding affinity		
+VD-Crotty 2	human (Homo sapiens)	IgD	lambda	IGHV1-18	inhibition of ACE2 binding	3	
 							
-VD-Crotty 4	Homo sapiens	IgG2a		IGHV3-7	IC50 value		
-VD-Crotty 5	Mus musculus	IgA1	kappa	IGHV3-11	Neutralization assay platform	5	A comment
-VD-Crotty 6	Mus musculus	IgA	kappa		Epitope binning data		
-VD-Crotty 7	Homo sapiens	IgE			Epitope competition data	1	
-VD-Crotty 8	Mus musculus	IgA2	lambda			4	Another comment
-VD-Crotty 9	Homo sapiens	IgG1					
-VD-Crotty 10	Mus musculus	IgM				2	
+VD-Crotty 4	human (Homo sapiens)	IgG2a		IGHV3-7	IC50 value		
+VD-Crotty 5	mouse (Mus musculus)	IgA1	kappa	IGHV3-11	Neutralization assay platform	5	A comment
+VD-Crotty 6	mouse (Mus musculus)	IgA	kappa		Epitope binning data		
+VD-Crotty 7	human (Homo sapiens)	IgE			Epitope competition data	1	
+VD-Crotty 8	mouse (Mus musculus)	IgA2	lambda			4	Another comment
+VD-Crotty 9	human (Homo sapiens)	IgG1					
+VD-Crotty 10	mouse (Mus musculus)	IgM				2	
 							

@@ -284,23 +284,35 @@
     }
   },
   "hosts": {
-    "Homo sapiens": {
+    "chicken (Gallus gallus)": {
+      "id": "NCBITaxon:9031",
+      "label": "chicken (Gallus gallus)",
+      "type": "owl:Class",
+      "parent": "Vertebrata"
+    },
+    "human (Homo sapiens)": {
       "id": "NCBITaxon:9606",
-      "label": "Homo sapiens",
+      "label": "human (Homo sapiens)",
       "type": "owl:Class",
       "parent": "Vertebrata"
     },
-    "Mus musculus": {
+    "llama (Lama glama)": {
+      "id": "NCBITaxon:9844",
+      "label": "llama (Lama glama)",
+      "type": "owl:Class",
+      "parent": "Vertebrata"
+    },
+    "mouse (Mus musculus)": {
       "id": "NCBITaxon:10090",
-      "label": "Mus musculus",
+      "label": "mouse (Mus musculus)",
       "type": "owl:Class",
       "parent": "Vertebrata"
     },
-    "Mus musculus BALB/C": {
-      "id": "ONTIE:0000001",
-      "label": "Mus musculus BALB/C",
+    "alpaca (Vicugna pacos)": {
+      "id": "NCBITaxon:30538",
+      "label": "alpaca (Vicugna pacos)",
       "type": "owl:Class",
-      "parent": "Mus musculus"
+      "parent": "Vertebrata"
     }
   },
   "isotypes": {
@@ -401,6 +413,13 @@
       "type": "owl:Class",
       "parent": "immunoglobulin heavy chain protein",
       "PR label": "IgM heavy chain protein"
+    },
+    "IgY": {
+      "id": "ONTIE:0003584",
+      "label": "IgY",
+      "type": "owl:Class",
+      "parent": "immunoglobulin heavy chain protein",
+      "PR label": "IgY heavy chain protein"
     }
   },
   "light_chains": {
@@ -1212,13 +1231,16 @@
   "labels": {
     "BFO:0000015": "process",
     "BFO:0000040": "material entity",
-    "NCBITaxon:10090": "Mus musculus",
+    "NCBITaxon:10090": "mouse (Mus musculus)",
     "NCBITaxon:10239": "Virus",
     "NCBITaxon:11118": "Coronavirus",
     "NCBITaxon:2697049": "Severe acute respiratory syndrome coronavirus 2",
+    "NCBITaxon:30538": "alpaca (Vicugna pacos)",
     "NCBITaxon:694009": "Severe acute respiratory syndrome-related coronavirus",
     "NCBITaxon:7742": "Vertebrata",
-    "NCBITaxon:9606": "Homo sapiens",
+    "NCBITaxon:9031": "chicken (Gallus gallus)",
+    "NCBITaxon:9606": "human (Homo sapiens)",
+    "NCBITaxon:9844": "llama (Lama glama)",
     "OBI:0000011": "planned process",
     "OBI:0000070": "assay",
     "OBI:0000661": "VLP ELISA",
@@ -1228,7 +1250,6 @@
     "OBI:0001739": "off rate; Kd in 1/s",
     "OBI:0001741": "on rate; Ka in M^-1s^-1",
     "OBI:0100026": "organism",
-    "ONTIE:0000001": "Mus musculus BALB/C",
     "ONTIE:0003554": "dissociation constant; KD in M",
     "ONTIE:0003555": "ACE 2 response; in nM",
     "ONTIE:0003556": "ACE 2 response; percent blocking",
@@ -1258,6 +1279,7 @@
     "ONTIE:0003580": "4-PL curve parameter C",
     "ONTIE:0003581": "4-PL curve parameter D",
     "ONTIE:0003582": "4-PL curve R2",
+    "ONTIE:0003584": "IgY",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
@@ -1336,13 +1358,16 @@
   "ids": {
     "process": "BFO:0000015",
     "material entity": "BFO:0000040",
-    "Mus musculus": "NCBITaxon:10090",
+    "mouse (Mus musculus)": "NCBITaxon:10090",
     "Virus": "NCBITaxon:10239",
     "Coronavirus": "NCBITaxon:11118",
     "Severe acute respiratory syndrome coronavirus 2": "NCBITaxon:2697049",
+    "alpaca (Vicugna pacos)": "NCBITaxon:30538",
     "Severe acute respiratory syndrome-related coronavirus": "NCBITaxon:694009",
     "Vertebrata": "NCBITaxon:7742",
-    "Homo sapiens": "NCBITaxon:9606",
+    "chicken (Gallus gallus)": "NCBITaxon:9031",
+    "human (Homo sapiens)": "NCBITaxon:9606",
+    "llama (Lama glama)": "NCBITaxon:9844",
     "planned process": "OBI:0000011",
     "assay": "OBI:0000070",
     "VLP ELISA": "OBI:0000661",
@@ -1352,7 +1377,6 @@
     "off rate; Kd in 1/s": "OBI:0001739",
     "on rate; Ka in M^-1s^-1": "OBI:0001741",
     "organism": "OBI:0100026",
-    "Mus musculus BALB/C": "ONTIE:0000001",
     "dissociation constant; KD in M": "ONTIE:0003554",
     "ACE 2 response; in nM": "ONTIE:0003555",
     "ACE 2 response; percent blocking": "ONTIE:0003556",
@@ -1382,6 +1406,7 @@
     "4-PL curve parameter C": "ONTIE:0003580",
     "4-PL curve parameter D": "ONTIE:0003581",
     "4-PL curve R2": "ONTIE:0003582",
+    "IgY": "ONTIE:0003584",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",

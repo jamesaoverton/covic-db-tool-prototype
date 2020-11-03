@@ -14,3 +14,4 @@ junk/
 settings.env
 shell.nix
 temp/
+test_data/
