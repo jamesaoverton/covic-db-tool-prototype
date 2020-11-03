@@ -284,27 +284,27 @@
     }
   },
   "hosts": {
-    "chicken (Gallus gallus)": {
-      "id": "NCBITaxon:9031",
-      "label": "chicken (Gallus gallus)",
-      "type": "owl:Class",
-      "parent": "Vertebrata"
-    },
     "human (Homo sapiens)": {
       "id": "NCBITaxon:9606",
       "label": "human (Homo sapiens)",
       "type": "owl:Class",
       "parent": "Vertebrata"
     },
-    "llama (Lama glama)": {
-      "id": "NCBITaxon:9844",
-      "label": "llama (Lama glama)",
-      "type": "owl:Class",
-      "parent": "Vertebrata"
-    },
     "mouse (Mus musculus)": {
       "id": "NCBITaxon:10090",
       "label": "mouse (Mus musculus)",
+      "type": "owl:Class",
+      "parent": "Vertebrata"
+    },
+    "chicken (Gallus gallus)": {
+      "id": "NCBITaxon:9031",
+      "label": "chicken (Gallus gallus)",
+      "type": "owl:Class",
+      "parent": "Vertebrata"
+    },
+    "llama (Lama glama)": {
+      "id": "NCBITaxon:9844",
+      "label": "llama (Lama glama)",
       "type": "owl:Class",
       "parent": "Vertebrata"
     },

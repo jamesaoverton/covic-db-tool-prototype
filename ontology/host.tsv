@@ -1,7 +1,7 @@
 id	label	type	parent
 ID	LABEL	TYPE	C %
-NCBITaxon:9031	chicken (Gallus gallus)	owl:Class	Vertebrata
 NCBITaxon:9606	human (Homo sapiens)	owl:Class	Vertebrata
-NCBITaxon:9844	llama (Lama glama)	owl:Class	Vertebrata
 NCBITaxon:10090	mouse (Mus musculus)	owl:Class	Vertebrata
+NCBITaxon:9031	chicken (Gallus gallus)	owl:Class	Vertebrata
+NCBITaxon:9844	llama (Lama glama)	owl:Class	Vertebrata
 NCBITaxon:30538	alpaca (Vicugna pacos)	owl:Class	Vertebrata
