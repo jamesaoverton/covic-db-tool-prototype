@@ -392,9 +392,7 @@ def submit(name, email, dataset_id, table):
     try:
         config.staging.index.add(paths)
         config.staging.index.commit(
-            f"Submit assays to dataset {dataset_id}",
-            author=author,
-            committer=config.covic,
+            f"Submit assays to dataset {dataset_id}", author=author, committer=config.covic,
         )
     except Exception as e:
         return failure(f"Failed to commit '{path}'", {"exception": e})

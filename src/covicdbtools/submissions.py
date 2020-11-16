@@ -162,7 +162,6 @@ def validate(headers, table):
     error_count = len(errors)
     if error_count > 0:
         return failure(
-            f"There were {error_count} errors",
-            {"errors": errors, "table": table, "grid": grid},
+            f"There were {error_count} errors", {"errors": errors, "table": table, "grid": grid},
         )
     return success({"table": table, "grid": grid})
