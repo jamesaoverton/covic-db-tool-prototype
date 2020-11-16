@@ -1,30 +1,30 @@
-id	label	type	description	example	OWL type	parent	technique	units	notes
+id	label	type	description	example	OWL type	parent	technique	units	sort	notes	notes
 ID	LABEL				TYPE	C %
 OBI:0001643	neutralization				owl:Class	assay
 OBI:0000661	VLP ELISA				owl:Class	assay		
 OBI:0000923	SPR				owl:Class	assay		
-OBI:0001741	on rate; Ka in M^-1s^-1	float_threshold_na	an SPR assay measuring on rate [Ka] in M^-1s^-1	491000	owl:Class	assay	SPR	M^-1s^-1
-OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off rate [Kd] in 1/s	126	owl:Class	assay	SPR	1/s
-OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM
-ONTIE:0003554	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M
-ONTIE:0003555	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM
-ONTIE:0003556	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent
+OBI:0001741	on rate; Ka in M^-1s^-1	float_threshold_na	an SPR assay measuring on rate [Ka] in M^-1s^-1	491000	owl:Class	assay	SPR	M^-1s^-1	descending
+OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off rate [Kd] in 1/s	126	owl:Class	assay	SPR	1/s	ascending
+OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM	ascending
+ONTIE:0003554	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M	ascending
+ONTIE:0003555	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM	ascending
+ONTIE:0003556	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent	descending
 ONTIE:0003557	mAb concentration (ug/mL)	integer	the amount of antibody dissolved in the solution being tested, reported in ug/mL	2000	owl:Class	assay		ug/mL
-ONTIE:0003558	neutralization IC50 (ug/mL)	float_na	a neutralization assay measuring the IC50 of the tested antibody in ug/mL	1.83	owl:Class	assay	neutralization	ug/mL
-ONTIE:0003559	neutralization IC80 (ug/mL)	float_na	a neutralization assay measuring the IC80 of the tested antibody in ug/mL	6.37	owl:Class	assay	neutralization	ug/mL
-ONTIE:0003560	neutralization IC90 (ug/mL)	float_na	a neutralization assay measuring the IC90 of the tested antibody in ug/mL	14.12	owl:Class	assay	neutralization	ug/mL
-ONTIE:0003561	ADCP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a phagocytic cell using a phagocytic score		owl:Class	assay			antibody-dependent cellular phagocytosis  (Phagocytic Score)	phagocytic activity	related, but not exact, is epitope specific
-ONTIE:0003562	ADNP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on neutrophils using a phagocytic score		owl:Class	assay			antibody-dependent neutrophil phagocytosis  (Phagocytic Score)	phagocytic activity neutrophils	related, but not exact, is epitope specific
-ONTIE:0003563	ADCD (MFI C3)	float	assay to measure complement component C3b on the surface of target cells using MFI		owl:Class	assay			antibody-dependent complement deposition (MFI)	complement deposition	related, but not exact, is epitope specific
-ONTIE:0003564	ADNKA % CD107a+	float	assay measuring the percent of NK cells expressing CD107a as a result of antibody binding		owl:Class	assay			Ab-dependent NK cell activation CD107a	natural killer cell activation	none
-ONTIE:0003565	ADNKA % MIP-1b+	float	assay measuring the percent of NK cells expressing MIP-1b using a phagocytic score		owl:Class	assay			Ab-dependent NK cell activation MIP-1b	natural killer cell activation	only T cell epitope specific
-ONTIE:0003566	mADCP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a mouse cell using a phagocytic score		owl:Class	assay			antibody-dependent cellular phagocytosis of murine cells  (Phagocytic Score)	phagocytic activity mouse cells	related, but not exact, is epitope specific
-ONTIE:0003575	mADNP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on a mouse cell using a phagocytic score		owl:Class	assay				
-ONTIE:0003567	FcgR2aR (MFI)	float	assay measuring antibody affinity for FcgR2aR receptor on human cells using median fluorescence intensity		owl:Class	assay			FcgR2aR receptor affinity	affinity for human Fc receptor
-ONTIE:0003568	FcgR3aV (MFI)	float	assay measuring antibody affinity for FcgR3aV receptor on human cells using median fluorescence intensity		owl:Class	assay			FcgR3aV receptor affinity	affinity for human Fc receptor
-ONTIE:0003569	FcgR2b (MFI)	float	assay measuring antibody affinity for FcgR2b receptor on human cells using median fluorescence intensity		owl:Class	assay			FcgR2b receptor affinity	affinity for human Fc receptor
-ONTIE:0003570	FcgR3b (MFI)	float	assay measuring antibody affinity for FcgR3b receptor on human cells using median fluorescence intensity		owl:Class	assay			FcgR3b receptor affinity	affinity for human Fc receptor
-ONTIE:0003571	FcRn (MFI)	float	assay measuring antibody affinity for FcRn receptor on human cells using median fluorescence intensity		owl:Class	assay			FcRn receptor affinity	affinity for human Fc receptor
-ONTIE:0003572	mFcR2 (MFI)	float	assay measuring antibody affinity for FcR2 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			mFcR2 receptor affinity	affinity for mouse Fc receptor
-ONTIE:0003573	mFcR3 (MFI)	float	assay measuring antibody affinity for mFcR3 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			mFcR3 receptor affinity	affinity for mouse Fc receptor
-ONTIE:0003574	mFcR4 (MFI)	float	assay measuring antibody affinity for mFcR receptor on mouse cells using median fluorescence intensity		owl:Class	assay			mFcR4 receptor affinity	affinity for mouse Fc receptor
+ONTIE:0003558	neutralization IC50 (ug/mL)	float_na	a neutralization assay measuring the IC50 of the tested antibody in ug/mL	1.83	owl:Class	assay	neutralization	ug/mL	ascending
+ONTIE:0003559	neutralization IC80 (ug/mL)	float_na	a neutralization assay measuring the IC80 of the tested antibody in ug/mL	6.37	owl:Class	assay	neutralization	ug/mL	ascending
+ONTIE:0003560	neutralization IC90 (ug/mL)	float_na	a neutralization assay measuring the IC90 of the tested antibody in ug/mL	14.12	owl:Class	assay	neutralization	ug/mL	ascending
+ONTIE:0003561	ADCP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a phagocytic cell using a phagocytic score		owl:Class	assay			descending	antibody-dependent cellular phagocytosis  (Phagocytic Score)	phagocytic activity
+ONTIE:0003562	ADNP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on neutrophils using a phagocytic score		owl:Class	assay			descending	antibody-dependent neutrophil phagocytosis  (Phagocytic Score)	phagocytic activity neutrophils
+ONTIE:0003563	ADCD (MFI C3)	float	assay to measure complement component C3b on the surface of target cells using MFI		owl:Class	assay			descending	antibody-dependent complement deposition (MFI)	complement deposition
+ONTIE:0003564	ADNKA % CD107a+	float	assay measuring the percent of NK cells expressing CD107a as a result of antibody binding		owl:Class	assay			descending	Ab-dependent NK cell activation CD107a	natural killer cell activation
+ONTIE:0003565	ADNKA % MIP-1b+	float	assay measuring the percent of NK cells expressing MIP-1b using a phagocytic score		owl:Class	assay			descending	Ab-dependent NK cell activation MIP-1b	only T cell epitope specific
+ONTIE:0003566	mADCP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a mouse cell using a phagocytic score		owl:Class	assay			descending	antibody-dependent cellular phagocytosis of murine cells  (Phagocytic Score)	related, but not exact, is epitope specific
+ONTIE:0003575	mADNP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on a mouse cell using a phagocytic score		owl:Class	assay			descending		
+ONTIE:0003567	FcgR2aR (MFI)	float	assay measuring antibody affinity for FcgR2aR receptor on human cells using median fluorescence intensity		owl:Class	assay			ascending	FcgR2aR receptor affinity	affinity for human Fc receptor
+ONTIE:0003568	FcgR3aV (MFI)	float	assay measuring antibody affinity for FcgR3aV receptor on human cells using median fluorescence intensity		owl:Class	assay			ascending	FcgR3aV receptor affinity	affinity for human Fc receptor
+ONTIE:0003569	FcgR2b (MFI)	float	assay measuring antibody affinity for FcgR2b receptor on human cells using median fluorescence intensity		owl:Class	assay			ascending	FcgR2b receptor affinity	affinity for human Fc receptor
+ONTIE:0003570	FcgR3b (MFI)	float	assay measuring antibody affinity for FcgR3b receptor on human cells using median fluorescence intensity		owl:Class	assay			ascending	FcgR3b receptor affinity	affinity for human Fc receptor
+ONTIE:0003571	FcRn (MFI)	float	assay measuring antibody affinity for FcRn receptor on human cells using median fluorescence intensity		owl:Class	assay			ascending	FcRn receptor affinity	affinity for human Fc receptor
+ONTIE:0003572	mFcR2 (MFI)	float	assay measuring antibody affinity for FcR2 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			ascending	mFcR2 receptor affinity	affinity for mouse Fc receptor
+ONTIE:0003573	mFcR3 (MFI)	float	assay measuring antibody affinity for mFcR3 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			ascending	mFcR3 receptor affinity	affinity for mouse Fc receptor
+ONTIE:0003574	mFcR4 (MFI)	float	assay measuring antibody affinity for mFcR receptor on mouse cells using median fluorescence intensity		owl:Class	assay			ascending	mFcR4 receptor affinity	affinity for mouse Fc receptor

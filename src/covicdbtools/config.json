@@ -751,7 +751,7 @@
       "parent": "assay",
       "technique": null,
       "units": null,
-      "notes": null
+      "sort": null
     },
     "VLP ELISA": {
       "id": "OBI:0000661",
@@ -763,7 +763,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": null
+      "sort": null
     },
     "SPR": {
       "id": "OBI:0000923",
@@ -775,7 +775,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": null
+      "sort": null
     },
     "on rate; Ka in M^-1s^-1": {
       "id": "OBI:0001741",
@@ -787,7 +787,7 @@
       "parent": "assay",
       "technique": "SPR",
       "units": "M^-1s^-1",
-      "notes": null
+      "sort": "descending"
     },
     "off rate; Kd in 1/s": {
       "id": "OBI:0001739",
@@ -799,7 +799,7 @@
       "parent": "assay",
       "technique": "SPR",
       "units": "1/s",
-      "notes": null
+      "sort": "ascending"
     },
     "dissociation constant; KD in nM": {
       "id": "OBI:0001731",
@@ -811,7 +811,7 @@
       "parent": "assay",
       "technique": "SPR",
       "units": "nM",
-      "notes": null
+      "sort": "ascending"
     },
     "dissociation constant; KD in M": {
       "id": "ONTIE:0003554",
@@ -823,7 +823,7 @@
       "parent": "assay",
       "technique": "SPR",
       "units": "M",
-      "notes": null
+      "sort": "ascending"
     },
     "ACE 2 response; in nM": {
       "id": "ONTIE:0003555",
@@ -835,7 +835,7 @@
       "parent": "assay",
       "technique": "neutralization",
       "units": "nM",
-      "notes": null
+      "sort": "ascending"
     },
     "ACE 2 response; percent blocking": {
       "id": "ONTIE:0003556",
@@ -847,7 +847,7 @@
       "parent": "assay",
       "technique": "neutralization",
       "units": "percent",
-      "notes": null
+      "sort": "descending"
     },
     "mAb concentration (ug/mL)": {
       "id": "ONTIE:0003557",
@@ -859,7 +859,7 @@
       "parent": "assay",
       "technique": "",
       "units": "ug/mL",
-      "notes": null
+      "sort": null
     },
     "neutralization IC50 (ug/mL)": {
       "id": "ONTIE:0003558",
@@ -871,7 +871,7 @@
       "parent": "assay",
       "technique": "neutralization",
       "units": "ug/mL",
-      "notes": null
+      "sort": "ascending"
     },
     "neutralization IC80 (ug/mL)": {
       "id": "ONTIE:0003559",
@@ -883,7 +883,7 @@
       "parent": "assay",
       "technique": "neutralization",
       "units": "ug/mL",
-      "notes": null
+      "sort": "ascending"
     },
     "neutralization IC90 (ug/mL)": {
       "id": "ONTIE:0003560",
@@ -895,7 +895,7 @@
       "parent": "assay",
       "technique": "neutralization",
       "units": "ug/mL",
-      "notes": null
+      "sort": "ascending"
     },
     "ADCP (Phagocytic Score)": {
       "id": "ONTIE:0003561",
@@ -907,11 +907,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "antibody-dependent cellular phagocytosis  (Phagocytic Score)",
-      "null": [
-        "phagocytic activity",
-        "related, but not exact, is epitope specific"
-      ]
+      "sort": "descending"
     },
     "ADNP (Phagocytic Score)": {
       "id": "ONTIE:0003562",
@@ -923,11 +919,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "antibody-dependent neutrophil phagocytosis  (Phagocytic Score)",
-      "null": [
-        "phagocytic activity neutrophils",
-        "related, but not exact, is epitope specific"
-      ]
+      "sort": "descending"
     },
     "ADCD (MFI C3)": {
       "id": "ONTIE:0003563",
@@ -939,11 +931,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "antibody-dependent complement deposition (MFI)",
-      "null": [
-        "complement deposition",
-        "related, but not exact, is epitope specific"
-      ]
+      "sort": "descending"
     },
     "ADNKA % CD107a+": {
       "id": "ONTIE:0003564",
@@ -955,11 +943,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "Ab-dependent NK cell activation CD107a",
-      "null": [
-        "natural killer cell activation",
-        "none"
-      ]
+      "sort": "descending"
     },
     "ADNKA % MIP-1b+": {
       "id": "ONTIE:0003565",
@@ -971,11 +955,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "Ab-dependent NK cell activation MIP-1b",
-      "null": [
-        "natural killer cell activation",
-        "only T cell epitope specific"
-      ]
+      "sort": "descending"
     },
     "mADCP (Phagocytic Score)": {
       "id": "ONTIE:0003566",
@@ -987,11 +967,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "antibody-dependent cellular phagocytosis of murine cells  (Phagocytic Score)",
-      "null": [
-        "phagocytic activity mouse cells",
-        "related, but not exact, is epitope specific"
-      ]
+      "sort": "descending"
     },
     "mADNP (Phagocytic Score)": {
       "id": "ONTIE:0003575",
@@ -1003,10 +979,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "",
-      "null": [
-        ""
-      ]
+      "sort": "descending"
     },
     "FcgR2aR (MFI)": {
       "id": "ONTIE:0003567",
@@ -1018,10 +991,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "FcgR2aR receptor affinity",
-      "null": [
-        "affinity for human Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "FcgR3aV (MFI)": {
       "id": "ONTIE:0003568",
@@ -1033,10 +1003,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "FcgR3aV receptor affinity",
-      "null": [
-        "affinity for human Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "FcgR2b (MFI)": {
       "id": "ONTIE:0003569",
@@ -1048,10 +1015,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "FcgR2b receptor affinity",
-      "null": [
-        "affinity for human Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "FcgR3b (MFI)": {
       "id": "ONTIE:0003570",
@@ -1063,10 +1027,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "FcgR3b receptor affinity",
-      "null": [
-        "affinity for human Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "FcRn (MFI)": {
       "id": "ONTIE:0003571",
@@ -1078,10 +1039,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "FcRn receptor affinity",
-      "null": [
-        "affinity for human Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "mFcR2 (MFI)": {
       "id": "ONTIE:0003572",
@@ -1093,10 +1051,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "mFcR2 receptor affinity",
-      "null": [
-        "affinity for mouse Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "mFcR3 (MFI)": {
       "id": "ONTIE:0003573",
@@ -1108,10 +1063,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "mFcR3 receptor affinity",
-      "null": [
-        "affinity for mouse Fc receptor"
-      ]
+      "sort": "ascending"
     },
     "mFcR4 (MFI)": {
       "id": "ONTIE:0003574",
@@ -1123,10 +1075,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "notes": "mFcR4 receptor affinity",
-      "null": [
-        "affinity for mouse Fc receptor"
-      ]
+      "sort": "ascending"
     }
   },
   "parameters": {

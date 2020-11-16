@@ -78,6 +78,8 @@ def read_terms(terms_tsv_path):
     for row in tables.read_tsv(terms_tsv_path):
         if row["id"] == "ID":
             continue
+        if "notes" in row:
+            del row["notes"]
         terms[row["label"]] = row
     return terms
 
