@@ -7,7 +7,8 @@ from covicdbtools import config, tables, grids, templates
 
 
 def read_data(
-    antibodies_tsv_path, dataset_path,
+    antibodies_tsv_path,
+    dataset_path,
 ):
     # ab_list = antibodies.read_antibodies(config.labels, antibodies_tsv_path)
     ab_table = tables.read_tsv(antibodies_tsv_path)
@@ -60,5 +61,7 @@ if __name__ == "__main__":
 
     grid = read_data(args.antibodies, args.datasets)
     templates.write_html(
-        args.template, {"message": grid["message"], "html": grids.grid_to_html(grid)}, args.output,
+        args.template,
+        {"message": grid["message"], "html": grids.grid_to_html(grid)},
+        args.output,
     )
