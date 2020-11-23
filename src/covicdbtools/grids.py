@@ -131,7 +131,11 @@ def table_to_grid(prefixes, fields, table):
         newrow = []
         for key, value in row.items():
             cell = None
-            if key.endswith("_id"):
+            if key == "ab_id":
+                iri = names.id_to_iri(prefixes, value)
+                label = value.replace(":", "-")
+                cell = {"iri": iri, "label": label, "value": value}
+            elif key.endswith("_id"):
                 iri = ""
                 if value:
                     iri = names.id_to_iri(prefixes, value)
