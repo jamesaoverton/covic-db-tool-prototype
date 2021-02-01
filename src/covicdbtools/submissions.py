@@ -4,8 +4,8 @@ from collections import defaultdict, OrderedDict
 from covicdbtools import config, names, grids
 from covicdbtools.responses import success, failure
 
-covic_id_pattern = re.compile(r"COVIC:\d+")
-covic_label_pattern = re.compile(r"COVIC-\d+")
+covic_id_pattern = re.compile(r"^COVIC:\d+$")
+covic_label_pattern = re.compile(r"^COVIC-\d+$")
 
 
 def store(ids, headers, table):
@@ -123,6 +123,7 @@ def validate(headers, table):
                 continue
             value = str(row[column]).strip()
             if "field" in header and header["field"] == "ab_id":
+                print("VALUE", value)
                 if not covic_id_pattern.match(value):
                     error = f"'{value}' is not a valid COVIC antibody ID in column 'Antibody ID'"
             elif "field" in header and header["field"] == "ab_label":
