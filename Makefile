@@ -55,7 +55,10 @@ PYTHON_FILES := src/covicdbtools tests
 
 .PHONY: test
 test:
-	pytest tests
+	rm -rf temp
+	CVDB_DATA=temp/ cvdb initialize
+	cp tests/submit-antibodies/data/staging/antibodies.tsv temp/staging/
+	CVDB_DATA=temp/ pytest tests
 	rm -rf temp
 	tests/script.sh
 
