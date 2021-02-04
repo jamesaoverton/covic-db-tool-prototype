@@ -1,0 +1,6 @@
+id	label	type	parent
+ID	LABEL	TYPE	C %
+ONTIE:0003591	ethical euthanization	owl:Class
+ONTIE:0003592	euthanized as planned	owl:Class
+ONTIE:0003593	unplanned death	owl:Class
+ONTIE:0003594	survived until end	owl:Class

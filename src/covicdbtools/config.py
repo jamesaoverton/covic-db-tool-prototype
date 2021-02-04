@@ -24,6 +24,8 @@ heavy_chain_germline = {}
 assays = {}
 parameters = {}
 qualitative_measures = {}
+death_reason = {}
+animal_model_strain = {}
 labels = {}
 ids = {}
 
@@ -151,6 +153,8 @@ def validate(config):
         "assays",
         "parameters",
         "qualitative_measures",
+        "death_reason",
+        "animal_model_strain",
         "labels",
         "ids",
     ]:
@@ -177,6 +181,8 @@ def build(
     assays_tsv_path,
     parameters_tsv_path,
     qualitative_measures_tsv_path,
+    death_reason_tsv_path,
+    animal_model_strain_tsv_path,
     labels_tsv_path,
 ):
     """Read TSV files and return a new config dictionary."""
@@ -191,6 +197,8 @@ def build(
     config["assays"] = read_terms(assays_tsv_path)
     config["parameters"] = read_terms(parameters_tsv_path)
     config["qualitative_measures"] = read_terms(qualitative_measures_tsv_path)
+    config["death_reason"] = read_terms(death_reason_tsv_path)
+    config["animal_model_strain"] = read_terms(animal_model_strain_tsv_path)
     config["labels"] = read_labels(labels_tsv_path)
     config["ids"] = read_ids(labels_tsv_path)
 
@@ -204,6 +212,8 @@ def build(
         "assays",
         "parameters",
         "qualitative_measures",
+        "death_reason",
+        "animal_model_strain",
     ]
     ids = set()
     labels = set()
@@ -212,9 +222,9 @@ def build(
         for label, term in terms.items():
             id = term["id"]
             if id in ids:
-                raise Exception(f"Duplicate ID '{id}'")
+                raise Exception(f"Duplicate ID '{id}' in term set '{term_set}'")
             if label in labels:
-                raise Exception(f"Duplicate label '{label}'")
+                raise Exception(f"Duplicate label '{label}' in term set '{term_set}'")
             ids.add(id)
             labels.add(label)
 
@@ -242,7 +252,8 @@ def read(config_json_path="config.json"):
 def load(config):
     """Load a new config into the global dictionaries."""
     global prefixes, core, hosts, isotypes, light_chains, heavy_chain_germline
-    global assays, parameters, qualitative_measures, fields, labels, ids
+    global assays, parameters, qualitative_measures, death_reason, animal_model_strain
+    global fields, labels, ids
     prefixes = config["prefixes"]
     core = config["core"]
     hosts = config["hosts"]
@@ -252,6 +263,8 @@ def load(config):
     assays = config["assays"]
     parameters = config["parameters"]
     qualitative_measures = config["qualitative_measures"]
+    death_reason = config["death_reason"]
+    animal_model_strain = config["animal_model_strain"]
     fields = config["fields"]
     labels = config["labels"]
     ids = config["ids"]
@@ -307,6 +320,8 @@ def main():
     parser.add_argument("assay", type=str, help="The assay table")
     parser.add_argument("parameter", type=str, help="The parameter table")
     parser.add_argument("qualitative_measure", type=str, help="The qualitative_measure table")
+    parser.add_argument("death_reason", type=str, help="The death_reason table")
+    parser.add_argument("animal_model_strain", type=str, help="The animal_model_strain table")
     parser.add_argument("label", type=str, help="The label table")
     parser.add_argument("output", type=str, help="The output JSON file")
     args = parser.parse_args()
@@ -322,6 +337,8 @@ def main():
         args.assay,
         args.parameter,
         args.qualitative_measure,
+        args.death_reason,
+        args.animal_model_strain,
         args.label,
     )
     result = validate(config)

@@ -189,6 +189,161 @@
       "description": "the status of the experiment",
       "example": "approved",
       "used in": "assays.tsv"
+    },
+    "batch": {
+      "field": "batch",
+      "label": "Batch",
+      "type": "text",
+      "description": "the batch identifier",
+      "example": "1"
+    },
+    "dose_mg_kg": {
+      "field": "dose_mg_kg",
+      "label": "Dose (mg/kg)",
+      "type": "float",
+      "description": "a dosage in mg/kg of ",
+      "example": "10"
+    },
+    "subject": {
+      "field": "subject",
+      "label": "Subject",
+      "type": "text",
+      "description": "a subject ID",
+      "example": "Animal 1"
+    },
+    "animal_model_strain": {
+      "field": "animal_model_strain",
+      "label": "Animal Model Strain",
+      "type": "text",
+      "terminology": "animal_model_strain",
+      "description": "the animal model used",
+      "example": "Syrian hamster"
+    },
+    "day_of_death": {
+      "field": "day_of_death",
+      "label": "Day of death",
+      "type": "integer",
+      "description": "the day on which the subject died",
+      "example": "3"
+    },
+    "death_reason": {
+      "field": "death_reason",
+      "label": "Death reason",
+      "type": "text",
+      "terminology": "death_reason",
+      "description": "the reason that the subject died",
+      "example": "euthanized as planned"
+    },
+    "weight_day_0": {
+      "field": "weight_day_0",
+      "label": "Weight day 0",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 0",
+      "example": "100"
+    },
+    "weight_day_1": {
+      "field": "weight_day_1",
+      "label": "Weight day 1",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 1",
+      "example": "100"
+    },
+    "weight_day_2": {
+      "field": "weight_day_2",
+      "label": "Weight day 2",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 2",
+      "example": "100"
+    },
+    "weight_day_3": {
+      "field": "weight_day_3",
+      "label": "Weight day 3",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 3",
+      "example": "100"
+    },
+    "weight_day_4": {
+      "field": "weight_day_4",
+      "label": "Weight day 4",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 4",
+      "example": "100"
+    },
+    "weight_day_5": {
+      "field": "weight_day_5",
+      "label": "Weight day 5",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 5",
+      "example": "100"
+    },
+    "weight_day_6": {
+      "field": "weight_day_6",
+      "label": "Weight day 6",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 6",
+      "example": "100"
+    },
+    "weight_day_7": {
+      "field": "weight_day_7",
+      "label": "Weight day 7",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 7",
+      "example": "100"
+    },
+    "weight_day_8": {
+      "field": "weight_day_8",
+      "label": "Weight day 8",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 8",
+      "example": "100"
+    },
+    "weight_day_9": {
+      "field": "weight_day_9",
+      "label": "Weight day 9",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 9",
+      "example": "100"
+    },
+    "weight_day_10": {
+      "field": "weight_day_10",
+      "label": "Weight day 10",
+      "type": "float_na",
+      "description": "the weight of the subject in grams on day 10",
+      "example": "100"
+    },
+    "titer_nasal_day_2": {
+      "field": "titer_nasal_day_2",
+      "label": "Viral titer nasal turbinates day 2",
+      "type": "float_na",
+      "description": "viral titer nasal turbinates day 2 in PFU/ml",
+      "example": "1000"
+    },
+    "titer_nasal_day_4": {
+      "field": "titer_nasal_day_4",
+      "label": "Viral titer nasal turbinates day 4",
+      "type": "float_na",
+      "description": "viral titer nasal turbinates day 4 in PFU/ml",
+      "example": "1000"
+    },
+    "titer_lung_day_2": {
+      "field": "titer_lung_day_2",
+      "label": "Viral titer lung day 2",
+      "type": "float_na",
+      "description": "viral titer lung day 2 in PFU/ml",
+      "example": "1000"
+    },
+    "titer_lung_day_4": {
+      "field": "titer_lung_day_4",
+      "label": "Viral titer lung day 4",
+      "type": "float_na",
+      "description": "viral titer lung day 4 in PFU/ml",
+      "example": "1000"
+    },
+    "morphology": {
+      "field": "morphology",
+      "label": "Morphologic diagnosis/findings",
+      "type": "text",
+      "description": "morphologic diagnosis/findings"
     }
   },
   "core": {
@@ -991,7 +1146,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "FcgR3aV (MFI)": {
       "id": "ONTIE:0003568",
@@ -1003,7 +1158,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "FcgR2b (MFI)": {
       "id": "ONTIE:0003569",
@@ -1015,7 +1170,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "FcgR3b (MFI)": {
       "id": "ONTIE:0003570",
@@ -1027,7 +1182,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "FcRn (MFI)": {
       "id": "ONTIE:0003571",
@@ -1039,7 +1194,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "mFcR2 (MFI)": {
       "id": "ONTIE:0003572",
@@ -1051,7 +1206,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "mFcR3 (MFI)": {
       "id": "ONTIE:0003573",
@@ -1063,7 +1218,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
     },
     "mFcR4 (MFI)": {
       "id": "ONTIE:0003574",
@@ -1075,7 +1230,279 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "ascending"
+      "sort": "descending"
+    },
+    "antibody cross-blocking assay": {
+      "id": "OBI:0001699",
+      "label": "antibody cross-blocking assay",
+      "type": "",
+      "description": "A competitive inhibition of binding assay in which two antibodies that are known to bind the same antigen are tested for the ability of one antibody to inhibit binding of the other antibody to the antigen, thereby determining if they have overlapping binding sites.",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "descending"
+    },
+    "Inflammation": {
+      "id": "ONTIE:0003583",
+      "label": "Inflammation",
+      "type": "score_0_5",
+      "description": "in vivo protection assay based on inflammation score of 0-5",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "Edema": {
+      "id": "ONTIE:0003584",
+      "label": "Edema",
+      "type": "score_0_5",
+      "description": "in vivo protection assay based on edema score of 0-5",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "Vasculitis": {
+      "id": "ONTIE:0003585",
+      "label": "Vasculitis",
+      "type": "score_0_5",
+      "description": "in vivo protection assay based on vasculitis score of 0-5",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "Necrosis": {
+      "id": "ONTIE:0003586",
+      "label": "Necrosis",
+      "type": "score_0_5",
+      "description": "in vivo protection assay based on necrosis score of 0-5",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "Hemorrhage": {
+      "id": "ONTIE:0003587",
+      "label": "Hemorrhage",
+      "type": "score_0_5",
+      "description": "in vivo protection assay based on hemorrhage score of 0-5",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "weight": {
+      "id": "ONTIE:0003588",
+      "label": "weight",
+      "type": "float",
+      "description": "in vivo protection assay based on weight of organism in grams",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "viral titer nasal turbinates": {
+      "id": "ONTIE:0003589",
+      "label": "viral titer nasal turbinates",
+      "type": "float",
+      "description": "in vivo protection assay based on viral titer in nasal turbinates measured in PFU/ml",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "viral titer lung": {
+      "id": "ONTIE:0003590",
+      "label": "viral titer lung",
+      "type": "float",
+      "description": "in vivo protection assay based on viral titer in lung tissue measured in PFU/ml",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "",
+      "null": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    "null": {
+      "id": " ",
+      "label": null,
+      "type": null,
+      "description": null,
+      "example": null,
+      "OWL type": null,
+      "parent": null,
+      "technique": null,
+      "units": null,
+      "sort": null
     }
   },
   "parameters": {
@@ -1177,9 +1604,54 @@
       "parent": "qualitative measure"
     }
   },
+  "death_reason": {
+    "ethical euthanization": {
+      "id": "ONTIE:0003591",
+      "label": "ethical euthanization",
+      "type": "owl:Class",
+      "parent": null
+    },
+    "euthanized as planned": {
+      "id": "ONTIE:0003592",
+      "label": "euthanized as planned",
+      "type": "owl:Class",
+      "parent": null
+    },
+    "unplanned death": {
+      "id": "ONTIE:0003593",
+      "label": "unplanned death",
+      "type": "owl:Class",
+      "parent": null
+    },
+    "survived until end": {
+      "id": "ONTIE:0003594",
+      "label": "survived until end",
+      "type": "owl:Class",
+      "parent": null
+    }
+  },
+  "animal_model_strain": {
+    "Syrian hamster": {
+      "id": "NCBITaxon:10036",
+      "label": "Syrian hamster",
+      "type": "owl:Class",
+      "parent": "",
+      "synonym": "",
+      "": ""
+    },
+    "K18 hACE2 transgenic mice": {
+      "id": "ONTIE:0003595",
+      "label": "K18 hACE2 transgenic mice",
+      "type": "owl:Class",
+      "parent": "Mus musculus C57BL/6 x SJL",
+      "synonym": "B6.Cg-Tg(K18-ACE2)2Prlmn/J",
+      "": ""
+    }
+  },
   "labels": {
     "BFO:0000015": "process",
     "BFO:0000040": "material entity",
+    "NCBITaxon:10036": "Syrian hamster",
     "NCBITaxon:10090": "mouse (Mus musculus)",
     "NCBITaxon:10239": "Virus",
     "NCBITaxon:11118": "Coronavirus",
@@ -1195,6 +1667,7 @@
     "OBI:0000661": "VLP ELISA",
     "OBI:0000923": "SPR",
     "OBI:0001643": "neutralization",
+    "OBI:0001699": "antibody cross-blocking assay",
     "OBI:0001731": "dissociation constant; KD in nM",
     "OBI:0001739": "off rate; Kd in 1/s",
     "OBI:0001741": "on rate; Ka in M^-1s^-1",
@@ -1228,6 +1701,19 @@
     "ONTIE:0003580": "4-PL curve parameter C",
     "ONTIE:0003581": "4-PL curve parameter D",
     "ONTIE:0003582": "4-PL curve R2",
+    "ONTIE:0003583": "Inflammation",
+    "ONTIE:0003584": "Edema",
+    "ONTIE:0003585": "Vasculitis",
+    "ONTIE:0003586": "Necrosis",
+    "ONTIE:0003587": "Hemorrhage",
+    "ONTIE:0003588": "weight",
+    "ONTIE:0003589": "viral titer nasal turbinates",
+    "ONTIE:0003590": "viral titer lung",
+    "ONTIE:0003591": "ethical euthanization",
+    "ONTIE:0003592": "euthanized as planned",
+    "ONTIE:0003593": "unplanned death",
+    "ONTIE:0003594": "survived until end",
+    "ONTIE:0003595": "K18 hACE2 transgenic mice",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
@@ -1307,6 +1793,7 @@
   "ids": {
     "process": "BFO:0000015",
     "material entity": "BFO:0000040",
+    "Syrian hamster": "NCBITaxon:10036",
     "mouse (Mus musculus)": "NCBITaxon:10090",
     "Virus": "NCBITaxon:10239",
     "Coronavirus": "NCBITaxon:11118",
@@ -1322,6 +1809,7 @@
     "VLP ELISA": "OBI:0000661",
     "SPR": "OBI:0000923",
     "neutralization": "OBI:0001643",
+    "antibody cross-blocking assay": "OBI:0001699",
     "dissociation constant; KD in nM": "OBI:0001731",
     "off rate; Kd in 1/s": "OBI:0001739",
     "on rate; Ka in M^-1s^-1": "OBI:0001741",
@@ -1355,6 +1843,19 @@
     "4-PL curve parameter C": "ONTIE:0003580",
     "4-PL curve parameter D": "ONTIE:0003581",
     "4-PL curve R2": "ONTIE:0003582",
+    "Inflammation": "ONTIE:0003583",
+    "Edema": "ONTIE:0003584",
+    "Vasculitis": "ONTIE:0003585",
+    "Necrosis": "ONTIE:0003586",
+    "Hemorrhage": "ONTIE:0003587",
+    "weight": "ONTIE:0003588",
+    "viral titer nasal turbinates": "ONTIE:0003589",
+    "viral titer lung": "ONTIE:0003590",
+    "ethical euthanization": "ONTIE:0003591",
+    "euthanized as planned": "ONTIE:0003592",
+    "unplanned death": "ONTIE:0003593",
+    "survived until end": "ONTIE:0003594",
+    "K18 hACE2 transgenic mice": "ONTIE:0003595",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",

@@ -1,0 +1,4 @@
+id	label	type	parent	synonym																					
+ID	LABEL	TYPE																							
+NCBITaxon:10036	Syrian hamster	owl:Class																							
+ONTIE:0003595	K18 hACE2 transgenic mice	owl:Class	Mus musculus C57BL/6 x SJL	B6.Cg-Tg(K18-ACE2)2Prlmn/J																					
