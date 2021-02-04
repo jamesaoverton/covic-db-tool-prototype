@@ -43,6 +43,15 @@ def validate_field(column, field_type, value):
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
+    elif field_type == "score_0_5":
+        try:
+            x = int(value)
+            if x < 0 or x > 5:
+                return f"'{value}' is not in range 0-5 in '{column}'"
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
     elif field_type == "float":
         try:
             _ = float(value)
@@ -108,6 +117,7 @@ def validate(headers, table):
         new_table.append(row)
 
         extra_columns = set(row.keys()) - columns
+        extra_columns.discard(None)
         if extra_columns:
             extra = ", ".join(extra_columns)
             errors.append(f"Extra columns not allowed: {extra}")

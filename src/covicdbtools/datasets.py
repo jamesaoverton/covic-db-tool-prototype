@@ -252,7 +252,7 @@ Columns:
             "active": True,
             "activeCell": "A2",
             "headers": [assay_headers],
-            "rows": rows,
+            "rows": [row[0 : len(assay_headers)] for row in rows],
         },
         terminology_grid,
     ]

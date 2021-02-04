@@ -119,6 +119,8 @@ def table_to_grid(prefixes, fields, table):
 
     headers = []
     for key in table[0].keys():
+        if not isinstance(key, str):
+            raise Exception(f"Bad key '{key}' in table '{table[0]}'")
         if not (key.endswith("_label") and names.label_key_to_id_key(key) in table[0]):
             label = key
             if key in fields:
