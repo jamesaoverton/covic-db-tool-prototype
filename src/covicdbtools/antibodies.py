@@ -210,12 +210,7 @@ def submit(name, email, organization, table):
     if os.path.isfile(path):
         secret = tables.read_tsv(path)
 
-    if not config.staging:
-        return failure("CVDB_STAGING directory is not configured")
-    blind = []
-    path = os.path.join(config.staging.working_tree_dir, "antibodies.tsv")
-    if os.path.isfile(path):
-        blind = tables.read_tsv(path)
+    blind = config.read_blinded_antibodies()
 
     if len(secret) != len(blind):
         return failure(f"Different number of antibody rows: {len(secret)} != {len(blind)}")

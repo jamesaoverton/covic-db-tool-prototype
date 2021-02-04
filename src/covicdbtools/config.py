@@ -116,6 +116,22 @@ def read_ids(labels_tsv_path):
     return ids
 
 
+# # Antibodies
+#
+# Read the table of blinded antibodies from Staging.
+
+
+def read_blinded_antibodies():
+    "Return a list of dicts of blinded antibodies"
+    if not staging:
+        raise Exception("CVDB_STAGING directory is not configured")
+    blind = []
+    path = os.path.join(staging.working_tree_dir, "antibodies.tsv")
+    if os.path.isfile(path):
+        blind = tables.read_tsv(path)
+    return blind
+
+
 # # Configuration
 #
 # A configuration object is just a dictionary with certain keys.

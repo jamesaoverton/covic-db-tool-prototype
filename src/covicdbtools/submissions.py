@@ -84,6 +84,9 @@ def validate(headers, table):
     errors = []
     rows = []
     unique = defaultdict(set)
+    blinded_antibodies = config.read_blinded_antibodies()
+    ab_ids = [x["ab_id"] for x in blinded_antibodies]
+    ab_labels = [x["ab_id"].replace(":", "-") for x in blinded_antibodies]
 
     columns = set()
     for header in headers:
@@ -123,14 +126,22 @@ def validate(headers, table):
                 continue
             value = str(row[column]).strip()
             if "field" in header and header["field"] == "ab_id":
-                print("VALUE", value)
                 if not covic_id_pattern.match(value):
                     error = f"'{value}' is not a valid COVIC antibody ID in column 'Antibody ID'"
+                elif value not in ab_ids:
+                    error = (
+                        f"'{value}' is not a registered COVIC antibody ID in column 'Antibody ID'"
+                    )
             elif "field" in header and header["field"] == "ab_label":
                 if not covic_label_pattern.match(value):
                     error = (
                         f"'{value}' is not a valid COVIC antibody label "
                         + "in column 'Antibody label'"
+                    )
+                elif value not in ab_labels:
+                    error = (
+                        f"'{value}' is not a registered COVIC antibody label "
+                        + "in column 'Antibody ID'"
                     )
             elif "required" in header and header["required"] and value == "":
                 error = f"Missing required value in column '{column}'"
