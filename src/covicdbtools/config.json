@@ -438,6 +438,20 @@
       "parent": null
     }
   },
+  "ab_controls": {
+    "isotype control": {
+      "id": "ONTIE:0003596",
+      "label": "isotype control",
+      "type": "owl:Class",
+      "parent": null
+    },
+    "mock-treated PBS-control": {
+      "id": "ONTIE:0003597",
+      "label": "mock-treated PBS-control",
+      "type": "owl:Class",
+      "parent": null
+    }
+  },
   "hosts": {
     "human (Homo sapiens)": {
       "id": "NCBITaxon:9606",
@@ -1714,6 +1728,8 @@
     "ONTIE:0003593": "unplanned death",
     "ONTIE:0003594": "survived until end",
     "ONTIE:0003595": "K18 hACE2 transgenic mice",
+    "ONTIE:0003596": "isotype control",
+    "ONTIE:0003597": "mock-treated PBS-control",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
@@ -1856,6 +1872,8 @@
     "unplanned death": "ONTIE:0003593",
     "survived until end": "ONTIE:0003594",
     "K18 hACE2 transgenic mice": "ONTIE:0003595",
+    "isotype control": "ONTIE:0003596",
+    "mock-treated PBS-control": "ONTIE:0003597",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",

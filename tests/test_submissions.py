@@ -14,6 +14,7 @@ def test_validate():
     table = [
         {"Antibody": "COVIC:1 Foo", "Antibody label": "COVIC-6 (batch1)"},
         {"Antibody": "  COVIC:1 Foo", "Antibody label": "  COVIC-6 (batch1)"},
+        {"Antibody": "ONTIE:0003596", "Antibody label": "isotype control"},
     ]
     result = submissions.validate(headers, table)
     assert "errors" in result

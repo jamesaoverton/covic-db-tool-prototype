@@ -1,11 +1,6 @@
-import re
-
 from collections import defaultdict, OrderedDict
 from covicdbtools import config, names, grids
 from covicdbtools.responses import success, failure
-
-covic_id_pattern = re.compile(r"^COVIC:\d+$")
-covic_label_pattern = re.compile(r"^COVIC-\d+$")
 
 
 def store(ids, headers, table):
@@ -94,8 +89,12 @@ def validate(headers, table):
     rows = []
     unique = defaultdict(set)
     blinded_antibodies = config.read_blinded_antibodies()
-    ab_ids = [x["ab_id"] for x in blinded_antibodies]
-    ab_labels = [x["ab_id"].replace(":", "-") for x in blinded_antibodies]
+    ab_ids = [x["ab_id"] for x in blinded_antibodies] + [
+        x["id"] for x in config.ab_controls.values()
+    ]
+    ab_labels = [x["ab_id"].replace(":", "-") for x in blinded_antibodies] + list(
+        config.ab_controls.keys()
+    )
 
     columns = set()
     for header in headers:
@@ -136,22 +135,16 @@ def validate(headers, table):
                 continue
             value = str(row[column]).strip()
             if "field" in header and header["field"] == "ab_id":
-                if not covic_id_pattern.match(value):
-                    error = f"'{value}' is not a valid COVIC antibody ID in column 'Antibody ID'"
-                elif value not in ab_ids:
+                if value not in ab_ids:
                     error = (
-                        f"'{value}' is not a registered COVIC antibody ID in column 'Antibody ID'"
+                        f"'{value}' is not a valid COVIC antibody ID or control antibody ID "
+                        + "in column 'Antibody ID'"
                     )
             elif "field" in header and header["field"] == "ab_label":
-                if not covic_label_pattern.match(value):
+                if value not in ab_labels:
                     error = (
-                        f"'{value}' is not a valid COVIC antibody label "
+                        f"'{value}' is not a valid COVIC antibody label or control antibody label "
                         + "in column 'Antibody label'"
-                    )
-                elif value not in ab_labels:
-                    error = (
-                        f"'{value}' is not a registered COVIC antibody label "
-                        + "in column 'Antibody ID'"
                     )
             elif "required" in header and header["required"] and value == "":
                 error = f"Missing required value in column '{column}'"

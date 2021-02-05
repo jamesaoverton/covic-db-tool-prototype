@@ -17,6 +17,7 @@ from covicdbtools import tables
 fields = {}
 prefixes = {}
 core = {}
+ab_controls = {}
 hosts = {}
 isoforms = {}
 light_chains = {}
@@ -148,6 +149,7 @@ def validate(config):
         "fields",
         "prefixes",
         "core",
+        "ab_controls",
         "hosts",
         "isotypes",
         "assays",
@@ -174,6 +176,7 @@ def build(
     prefixes_tsv_path,
     fields_tsv_path,
     core_tsv_path,
+    ab_controls_tsv_path,
     hosts_tsv_path,
     isotypes_tsv_path,
     light_chain_tsv_path,
@@ -190,6 +193,7 @@ def build(
     config["prefixes"] = read_prefixes(prefixes_tsv_path)
     config["fields"] = read_fields(fields_tsv_path)
     config["core"] = read_terms(core_tsv_path)
+    config["ab_controls"] = read_terms(ab_controls_tsv_path)
     config["hosts"] = read_terms(hosts_tsv_path)
     config["isotypes"] = read_terms(isotypes_tsv_path)
     config["light_chains"] = read_terms(light_chain_tsv_path)
@@ -205,6 +209,7 @@ def build(
     # Check for duplicates
     term_sets = [
         "core",
+        "ab_controls",
         "hosts",
         "isotypes",
         "light_chains",
@@ -251,11 +256,12 @@ def read(config_json_path="config.json"):
 
 def load(config):
     """Load a new config into the global dictionaries."""
-    global prefixes, core, hosts, isotypes, light_chains, heavy_chain_germline
+    global prefixes, core, ab_controls, hosts, isotypes, light_chains, heavy_chain_germline
     global assays, parameters, qualitative_measures, death_reason, animal_model_strain
     global fields, labels, ids
     prefixes = config["prefixes"]
     core = config["core"]
+    ab_controls = config["ab_controls"]
     hosts = config["hosts"]
     isotypes = config["isotypes"]
     light_chains = config["light_chains"]
@@ -313,6 +319,7 @@ def main():
     parser.add_argument("prefix", type=str, help="The prefix table")
     parser.add_argument("field", type=str, help="The field table")
     parser.add_argument("core", type=str, help="The core table")
+    parser.add_argument("ab_control", type=str, help="The ab_control table")
     parser.add_argument("host", type=str, help="The host table")
     parser.add_argument("isotype", type=str, help="The isotype table")
     parser.add_argument("light_chain", type=str, help="The light_chain table")
@@ -330,6 +337,7 @@ def main():
         args.prefix,
         args.field,
         args.core,
+        args.ab_control,
         args.host,
         args.isotype,
         args.light_chain,
