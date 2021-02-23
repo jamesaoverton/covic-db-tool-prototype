@@ -84,7 +84,7 @@ build build/datasets:
 #
 # We use development versions of ROBOT for this project.
 
-PREFIXES := --prefix "ONTIE: https://ontology.iedb.org/ontology/ONTIE_"
+PREFIXES := --prefix "ONTIE: https://ontology.iedb.org/ontology/ONTIE_" --prefix "REF: https://cvdb.ontodev.com/reference-antibody/"
 ROBOT := java -jar build/robot.jar $(PREFIXES)
 
 build/robot.jar: | build

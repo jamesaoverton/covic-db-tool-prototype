@@ -3,3 +3,6 @@ ID	LABEL	TYPE	C %
 ONTIE:positive	positive	owl:Class	qualitative measure
 ONTIE:negative	negative	owl:Class	qualitative measure
 ONTIE:unknown	unknown	owl:Class	qualitative measure
+ONTIE:weak	weak	owl:Class	positive
+ONTIE:moderate	moderate	owl:Class	positive
+ONTIE:strong	strong	owl:Class	positive

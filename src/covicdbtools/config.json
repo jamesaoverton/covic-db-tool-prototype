@@ -17,7 +17,8 @@
     "CoVIC": "https://cvdb.ontodev.com/antibody/",
     "ds": "https://cvdb.ontodev.com/dataset/",
     "org": "https://cvdb.ontodev.com/organization/",
-    "user": "https://cvdb.ontodev.com/user/"
+    "user": "https://cvdb.ontodev.com/user/",
+    "REF": "https://cvdb.ontodev.com/reference-antibody/"
   },
   "fields": {
     "ab_id": {
@@ -439,17 +440,85 @@
     }
   },
   "ab_controls": {
+    "REF-1": {
+      "id": "REF:1",
+      "label": "REF-1",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "benchmark",
+      "display": "TRUE"
+    },
+    "REF-2": {
+      "id": "REF:2",
+      "label": "REF-2",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "benchmark",
+      "display": "TRUE"
+    },
     "isotype control": {
       "id": "ONTIE:0003596",
       "label": "isotype control",
       "type": "owl:Class",
-      "parent": null
+      "parent": "material entity",
+      "control type": "negative control",
+      "display": null
     },
     "mock-treated PBS-control": {
       "id": "ONTIE:0003597",
       "label": "mock-treated PBS-control",
       "type": "owl:Class",
-      "parent": null
+      "parent": "material entity",
+      "control type": "buffer control",
+      "display": null
+    },
+    "PBS": {
+      "id": "ONTIE:0003598",
+      "label": "PBS",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "buffer control",
+      "display": null
+    },
+    "KZ52": {
+      "id": "ONTIE:0003599",
+      "label": "KZ52",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "negative control",
+      "display": null
+    },
+    "CR3022": {
+      "id": "ONTIE:0003600",
+      "label": "CR3022",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "positive control",
+      "display": null
+    },
+    "Convalescent Plasma 1": {
+      "id": "ONTIE:0003601",
+      "label": "Convalescent Plasma 1",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": null,
+      "display": null
+    },
+    "Convalescent Plasma 2": {
+      "id": "ONTIE:0003602",
+      "label": "Convalescent Plasma 2",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": null,
+      "display": null
+    },
+    "Negative Plasma": {
+      "id": "ONTIE:0003603",
+      "label": "Negative Plasma",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "negative control",
+      "display": null
     }
   },
   "hosts": {
@@ -1616,6 +1685,24 @@
       "label": "unknown",
       "type": "owl:Class",
       "parent": "qualitative measure"
+    },
+    "weak": {
+      "id": "ONTIE:weak",
+      "label": "weak",
+      "type": "owl:Class",
+      "parent": "positive"
+    },
+    "moderate": {
+      "id": "ONTIE:moderate",
+      "label": "moderate",
+      "type": "owl:Class",
+      "parent": "positive"
+    },
+    "strong": {
+      "id": "ONTIE:strong",
+      "label": "strong",
+      "type": "owl:Class",
+      "parent": "positive"
     }
   },
   "death_reason": {
@@ -1730,11 +1817,20 @@
     "ONTIE:0003595": "K18 hACE2 transgenic mice",
     "ONTIE:0003596": "isotype control",
     "ONTIE:0003597": "mock-treated PBS-control",
+    "ONTIE:0003598": "PBS",
+    "ONTIE:0003599": "KZ52",
+    "ONTIE:0003600": "CR3022",
+    "ONTIE:0003601": "Convalescent Plasma 1",
+    "ONTIE:0003602": "Convalescent Plasma 2",
+    "ONTIE:0003603": "Negative Plasma",
+    "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
     "ONTIE:positive": "positive",
     "ONTIE:qualitiative-measure": "qualitative measure",
+    "ONTIE:strong": "strong",
     "ONTIE:unknown": "unknown",
+    "ONTIE:weak": "weak",
     "PR:000000001": "protein",
     "PR:000050174": "immunoglobulin heavy chain protein",
     "PR:000050175": "immunoglobulin light chain protein",
@@ -1804,7 +1900,9 @@
     "PR:P0DP06": "IGHV4-30-4",
     "PR:P0DP07": "IGHV4-31",
     "PR:P0DP08": "IGHV4-38-2",
-    "PR:P23083": "IGHV1-2"
+    "PR:P23083": "IGHV1-2",
+    "REF:1": "REF-1",
+    "REF:2": "REF-2"
   },
   "ids": {
     "process": "BFO:0000015",
@@ -1874,11 +1972,20 @@
     "K18 hACE2 transgenic mice": "ONTIE:0003595",
     "isotype control": "ONTIE:0003596",
     "mock-treated PBS-control": "ONTIE:0003597",
+    "PBS": "ONTIE:0003598",
+    "KZ52": "ONTIE:0003599",
+    "CR3022": "ONTIE:0003600",
+    "Convalescent Plasma 1": "ONTIE:0003601",
+    "Convalescent Plasma 2": "ONTIE:0003602",
+    "Negative Plasma": "ONTIE:0003603",
+    "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
     "positive": "ONTIE:positive",
     "qualitative measure": "ONTIE:qualitiative-measure",
+    "strong": "ONTIE:strong",
     "unknown": "ONTIE:unknown",
+    "weak": "ONTIE:weak",
     "protein": "PR:000000001",
     "immunoglobulin heavy chain protein": "PR:000050174",
     "immunoglobulin light chain protein": "PR:000050175",
@@ -1948,6 +2055,8 @@
     "IGHV4-30-4": "PR:P0DP06",
     "IGHV4-31": "PR:P0DP07",
     "IGHV4-38-2": "PR:P0DP08",
-    "IGHV1-2": "PR:P23083"
+    "IGHV1-2": "PR:P23083",
+    "REF-1": "REF:1",
+    "REF-2": "REF:2"
   }
 }
