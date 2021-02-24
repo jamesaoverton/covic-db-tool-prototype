@@ -240,7 +240,7 @@ Columns:
 """
     for header in assay_headers:
         example = ""
-        if "example" in header:
+        if "example" in header and header["example"].strip():
             example = f" (e.g. {header['example']})"
         instructions += f"- {header['label']}: {header['description']}{example}\n"
 
