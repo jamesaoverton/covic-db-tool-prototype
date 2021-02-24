@@ -358,7 +358,7 @@
       "label": "Mutation",
       "type": "mutations",
       "description": "a comma-separated list of mutations in one of these formats:\n    1. point mutation: old amino acid, sequence position, new amino acid\n    2. point deletion: \"del\", sequence position\n    3. range deletion: \"del\", start position, \"-\", end position",
-      "example": "Y48H"
+      "example": "A1C,del2,del3-4"
     }
   },
   "core": {
