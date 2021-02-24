@@ -43,6 +43,6 @@ titer_lung_day_4	Viral titer lung day 4	float_na			viral titer lung day 4 in PFU
 morphology	Morphologic diagnosis/findings	text			morphologic diagnosis/findings
 plaque	Plaque	non-negative integer			plaque pick number	1
 mutation	Mutation	mutations			"a comma-separated list of mutations in one of these formats:
-1. point mutation: old amino acid, sequence location, new amino acid
-2. point deletion: ""del"", sequence location
-2. range deletion: ""del"", start location, ""-"", end location"	Y48H
+    1. point mutation: old amino acid, sequence position, new amino acid
+    2. point deletion: ""del"", sequence position
+    3. range deletion: ""del"", start position, ""-"", end position"	Y48H
