@@ -51,17 +51,40 @@ def get_assay_headers(dataset_id):
             header = config.fields[column].copy()
         elif column.startswith("obi_") or column.startswith("ontie_"):
             assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
-            stddev = assay_id.replace("_stddev", "")
-            if assay_id in config.labels and config.labels[assay_id] in config.assays:
+            root_id = (
+                assay_id.replace("_stddev", "")
+                .replace("_normalized", "")
+                .replace("_qualitative", "")
+            )
+            if root_id not in config.labels:
+                return failure("Unrecognized assay '{root_id}' for column '{column'}")
+            if config.labels[root_id] not in config.assays:
+                return failure("Unrecognized assay '{root_id}' for column '{column'}")
+            root_label = config.labels[root_id]
+
+            if assay_id in config.labels:
                 header = config.assays[config.labels[assay_id]].copy()
-            elif stddev in config.labels and config.labels[stddev] in config.assays:
-                assay_label = config.labels[stddev]
-                header = config.assays[config.labels[stddev]].copy()
-                header["label"] = f"Standard deviation in {header['units']}"
-                header["description"] = f"The standard deviation of the value in '{assay_label}'"
-                header.pop("example", None)
             elif assay_id in config.labels and config.labels[assay_id] in config.parameters:
                 header = config.parameters[config.labels[assay_id]].copy()
+            else:
+                header = config.assays[root_label].copy()
+                if column.endswith("_stddev"):
+                    header["label"] = f"Standard deviation in {header['units']}"
+                    header["description"] = f"The standard deviation of the value in '{root_label}'"
+                    header.pop("example", None)
+                elif column.endswith("_normalized"):
+                    header["label"] = f"{root_label} normalized value"
+                    header["type"] = "score 0-100"
+                    header["description"] = f"The normalized value for '{root_label}' from 0-100"
+                    header.pop("example", None)
+                elif column.endswith("_qualitative"):
+                    header["label"] = f"{root_label} qualitative value"
+                    header["type"] = "text"
+                    header["terminology"] = "qualitative_measures"
+                    header["description"] = f"The qualitative value for '{root_label}'"
+                    header.pop("example", None)
+                else:
+                    header = None
         if not header:
             return failure(f"Unrecognized column '{column}'")
         header["value"] = column
@@ -281,11 +304,20 @@ def create(name, email, columns=[]):
             continue
         if column.startswith("obi_") or column.startswith("ontie_"):
             assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
+            root_id = (
+                assay_id.replace("_stddev", "")
+                .replace("_normalized", "")
+                .replace("_qualitative", "")
+            )
             if assay_id in config.labels:
                 continue
-            stddev = assay_id.replace("_stddev", "")
-            if stddev in config.labels:
-                continue
+            if root_id in config.labels:
+                if column.endswith("_stddev"):
+                    continue
+                if column.endswith("_normalized"):
+                    continue
+                if column.endswith("_qualitative"):
+                    continue
         return failure(f"Unrecognized column '{column}'")
 
     datasets_path = os.path.join(config.staging.working_tree_dir, "datasets")
