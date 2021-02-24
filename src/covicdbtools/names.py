@@ -12,7 +12,7 @@ import re
 
 from collections import OrderedDict
 
-from covicdbtools import tables
+from covicdbtools import config, tables
 
 # # Prefixes
 #
@@ -47,10 +47,20 @@ def increment_id(i):
 
 def id_to_iri(prefixes, i):
     """Given the prefixes map and an ID string, return an IRI string."""
-    prefix, localname = split_id(i)
-    if prefix in prefixes:
-        return prefixes[prefix] + localname
-    return i
+    try:
+        prefix, localname = split_id(i)
+        if prefix in prefixes:
+            return prefixes[prefix] + localname
+        return i
+    except ValueError as e:
+        if i in config.labels:
+            raise ValueError(
+                f"'{i}' is not a valid ID. However it is a valid label, so check that the label has not been confused with the ID."
+            ) from e
+        else:
+            raise ValueError(
+                f"'{i}' is not a valid ID. Expected two words separated by a colon."
+            ) from e
 
 
 # # Concise Tables
