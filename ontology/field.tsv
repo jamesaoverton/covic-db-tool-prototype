@@ -16,14 +16,14 @@ qualitative_measure	Qualitiative measure	label	qualitative_measures		the qualita
 titer	Titer	float			the titer value of the assay	0.52		assays.tsv
 comment	Comment	text			general comments about the assay	did not bind positive control		assays.tsv
 tested_antigen	Tested antigen	label			the name of the tested antigen	Spike protein 1		assays.tsv
-n	n	integer			the number of runs for the assay	6		assays.tsv
+n	n	non-negative integer			the number of runs for the assay	6		assays.tsv
 experiment_identifier	Experiment identifier	text			the ID of the experiment	DU-DMB-00001		assays.tsv
 status	Status	text			the status of the experiment	approved		assays.tsv
 batch	Batch	text			the batch identifier	1
 dose_mg_kg	Dose (mg/kg)	float			a dosage in mg/kg of 	10
 subject	Subject	text			a subject ID	Animal 1
 animal_model_strain	Animal Model Strain	text	animal_model_strain		the animal model used	Syrian hamster
-day_of_death	Day of death	integer			the day on which the subject died	3
+day_of_death	Day of death	non-negative integer			the day on which the subject died	3
 death_reason	Death reason	text	death_reason		the reason that the subject died	euthanized as planned
 weight_day_0	Weight day 0	float_na			the weight of the subject in grams on day 0	100
 weight_day_1	Weight day 1	float_na			the weight of the subject in grams on day 1	100
@@ -41,3 +41,8 @@ titer_nasal_day_4	Viral titer nasal turbinates day 4	float_na			viral titer nasa
 titer_lung_day_2	Viral titer lung day 2	float_na			viral titer lung day 2 in PFU/ml	1000
 titer_lung_day_4	Viral titer lung day 4	float_na			viral titer lung day 4 in PFU/ml	1000
 morphology	Morphologic diagnosis/findings	text			morphologic diagnosis/findings
+plaque	Plaque	non-negative integer			plaque pick number	1
+mutation	Mutation	mutations			"a comma-separated list of mutations in one of these formats:
+1. point mutation: old amino acid, sequence location, new amino acid
+2. point deletion: ""del"", sequence location
+2. range deletion: ""del"", start location, ""-"", end location"	Y48H

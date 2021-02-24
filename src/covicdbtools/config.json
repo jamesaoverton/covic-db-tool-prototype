@@ -170,7 +170,7 @@
     "n": {
       "field": "n",
       "label": "n",
-      "type": "integer",
+      "type": "non-negative integer",
       "description": "the number of runs for the assay",
       "example": "6",
       "used in": "assays.tsv"
@@ -223,7 +223,7 @@
     "day_of_death": {
       "field": "day_of_death",
       "label": "Day of death",
-      "type": "integer",
+      "type": "non-negative integer",
       "description": "the day on which the subject died",
       "example": "3"
     },
@@ -345,6 +345,20 @@
       "label": "Morphologic diagnosis/findings",
       "type": "text",
       "description": "morphologic diagnosis/findings"
+    },
+    "plaque": {
+      "field": "plaque",
+      "label": "Plaque",
+      "type": "non-negative integer",
+      "description": "plaque pick number",
+      "example": "1"
+    },
+    "mutation": {
+      "field": "mutation",
+      "label": "Mutation",
+      "type": "mutations",
+      "description": "a comma-separated list of mutations in one of these formats:\n1. point mutation: old amino acid, sequence location, new amino acid\n2. point deletion: \"del\", sequence location\n2. range deletion: \"del\", start location, \"-\", end location",
+      "example": "Y48H"
     }
   },
   "core": {

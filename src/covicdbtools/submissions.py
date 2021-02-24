@@ -1,3 +1,5 @@
+import re
+
 from collections import defaultdict, OrderedDict
 from covicdbtools import config, names, grids
 from covicdbtools.responses import success, failure
@@ -19,6 +21,35 @@ def store(ids, headers, table):
     return submission
 
 
+def validate_mutation(value):
+    match = re.match(r"^(\w)(\d+)(\w)$", value)
+    if match:
+        # print("point mutation", value)
+        if match[1] not in "ACDEFGHIKLMNPQRSTVWXY":
+            return f"'{value}' is not a valid mutation: old amino acid is not valid"
+        if match[3] not in "ACDEFGHIKLMNPQRSTVWXY":
+            return f"'{value}' is not a valid mutation: old amino acid is not valid"
+        if match[1] == match[3]:
+            return f"'{value}' is not a valid mutation: old and new amino acids are the same"
+        return None
+
+    match = re.match(r"^del\d+$", value)
+    if match:
+        # print("point deletion", value)
+        return None
+
+    match = re.match(r"^del(\d+)-(\d+)$", value)
+    if match:
+        # print("range deletion", value)
+        start = int(match[1])
+        end = int(match[2])
+        if start >= end:
+            return f"'{value}' is not a valid mutation: start position must be before end position"
+        return None
+
+    return f"'{value}' is not a valid mutation"
+
+
 def validate_field(column, field_type, value):
     if field_type == "text":
         return None
@@ -34,6 +65,15 @@ def validate_field(column, field_type, value):
     elif field_type == "integer":
         try:
             _ = int(value)
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
+    elif field_type == "non-negative integer":
+        try:
+            i = int(value)
+            if i < 0:
+                return f"'{value}' must be a non-negative integer in column '{column}'"
             return None
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
@@ -75,6 +115,18 @@ def validate_field(column, field_type, value):
     elif field_type == "percent":
         try:
             _ = float(value)
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
+    elif field_type == "mutations":
+        try:
+            mutations = value.split(",")
+            error = None
+            for mutation in mutations:
+                error = validate_mutation(mutation)
+                if error:
+                    return error
             return None
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"

@@ -55,7 +55,8 @@ def id_to_iri(prefixes, i):
     except ValueError as e:
         if i in config.labels:
             raise ValueError(
-                f"'{i}' is not a valid ID. However it is a valid label, so check that the label has not been confused with the ID."
+                f"'{i}' is not a valid ID. However it is a valid label, so check that the label ",
+                "has not been confused with the ID.",
             ) from e
         else:
             raise ValueError(

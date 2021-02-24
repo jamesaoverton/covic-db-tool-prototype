@@ -19,3 +19,14 @@ def test_validate():
     result = submissions.validate(headers, table)
     assert "errors" in result
     assert len(result["errors"]) == 4
+
+
+def test_validate_mutation():
+    assert submissions.validate_mutation("A1C") is None
+    assert submissions.validate_mutation("del2") is None
+    assert submissions.validate_mutation("del3-4") is None
+
+    assert submissions.validate_mutation("A1B") is not None
+    assert submissions.validate_mutation("A1A") is not None
+    assert submissions.validate_mutation("del") is not None
+    assert submissions.validate_mutation("del2-1") is not None
