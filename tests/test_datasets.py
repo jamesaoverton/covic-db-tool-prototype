@@ -13,6 +13,13 @@ def test_get_assay_header():
     header, error = datasets.get_assay_header("ontie_0003576")
     assert header and not error, "ONTIE:0003576 'Starting dilution fold' is a paramter"
 
+    header, error = datasets.get_assay_header("obi_0001643_foo")
+    assert not header and error, "'_foo' is not a valid suffix"
+
+    header, error = datasets.get_assay_header("obi_0001643_normalized")
+    assert header and not error, "'_normalized' is a valid suffix"
+    assert header["label"] == "neutralization normalized value"
+
 
 def test_validate_submission():
     path = "examples/spr-submission-valid.xlsx"
