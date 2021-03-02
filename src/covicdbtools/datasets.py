@@ -27,6 +27,52 @@ def get_staging_path(dataset_id):
     return os.path.join(config.staging.working_tree_dir, "datasets", dataset_id)
 
 
+def get_assay_header(column):
+    """Given a column name that is an OBI or ONTIE ID
+    (with an optional suffix for stddev, normalized, or qualitative),
+    return the pair of a header dict and an error dict."""
+    header = None
+    assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
+    if assay_id in config.labels and config.labels[assay_id] in config.assays:
+        header = config.assays[config.labels[assay_id]].copy()
+    elif assay_id in config.labels and config.labels[assay_id] in config.parameters:
+        header = config.parameters[config.labels[assay_id]].copy()
+    if header:
+        return header, None
+
+    root_id = assay_id.replace("_stddev", "").replace("_normalized", "").replace("_qualitative", "")
+    if root_id not in config.labels:
+        return None, failure(f"Unrecognized assay '{root_id}' for column '{column}'")
+    root_label = config.labels[root_id]
+
+    if root_label in config.assays:
+        header = config.assays[root_label].copy()
+    elif root_label in config.parameters:
+        header = config.parameters[root_label].copy()
+    else:
+        return None, failure(f"Unrecognized assay '{root_id}' for column '{column}'")
+
+    if column.endswith("_stddev"):
+        header["label"] = f"Standard deviation in {header['units']}"
+        header["description"] = f"The standard deviation of the value in '{root_label}'"
+        header.pop("example", None)
+    elif column.endswith("_normalized"):
+        header["label"] = f"{root_label} normalized value"
+        header["type"] = "score 0-100"
+        header["description"] = f"The normalized value for '{root_label}' from 0-100"
+        header.pop("example", None)
+    elif column.endswith("_qualitative"):
+        header["label"] = f"{root_label} qualitative value"
+        header["type"] = "text"
+        header["terminology"] = "qualitative_measures"
+        header["description"] = f"The qualitative value for '{root_label}'"
+        header.pop("example", None)
+    else:
+        return None, failure(f"Unrecognized assay suffix for column '{column}'")
+
+    return header, None
+
+
 def get_assay_headers(dataset_id):
     """Given dataset ID, return the assay headers."""
     dataset_path = get_staging_path(dataset_id)
@@ -50,43 +96,13 @@ def get_assay_headers(dataset_id):
         if column in config.fields:
             header = config.fields[column].copy()
         elif column.startswith("obi_") or column.startswith("ontie_"):
-            assay_id = column.replace("obi_", "OBI:").replace("ontie_", "ONTIE:")
-            root_id = (
-                assay_id.replace("_stddev", "")
-                .replace("_normalized", "")
-                .replace("_qualitative", "")
-            )
-            if root_id not in config.labels:
-                return failure("Unrecognized assay '{root_id}' for column '{column'}")
-            if config.labels[root_id] not in config.assays:
-                return failure("Unrecognized assay '{root_id}' for column '{column'}")
-            root_label = config.labels[root_id]
-
-            if assay_id in config.labels:
-                header = config.assays[config.labels[assay_id]].copy()
-            elif assay_id in config.labels and config.labels[assay_id] in config.parameters:
-                header = config.parameters[config.labels[assay_id]].copy()
-            else:
-                header = config.assays[root_label].copy()
-                if column.endswith("_stddev"):
-                    header["label"] = f"Standard deviation in {header['units']}"
-                    header["description"] = f"The standard deviation of the value in '{root_label}'"
-                    header.pop("example", None)
-                elif column.endswith("_normalized"):
-                    header["label"] = f"{root_label} normalized value"
-                    header["type"] = "score 0-100"
-                    header["description"] = f"The normalized value for '{root_label}' from 0-100"
-                    header.pop("example", None)
-                elif column.endswith("_qualitative"):
-                    header["label"] = f"{root_label} qualitative value"
-                    header["type"] = "text"
-                    header["terminology"] = "qualitative_measures"
-                    header["description"] = f"The qualitative value for '{root_label}'"
-                    header.pop("example", None)
-                else:
-                    header = None
+            header, error = get_assay_header(column)
+            if error:
+                return error
         if not header:
             return failure(f"Unrecognized column '{column}'")
+        if not isinstance(header, dict):
+            return failure(f"Error processing column '{column}': {header}")
         header["value"] = column
         header["locked"] = True
         if "terminology" in header and header["terminology"] != "":

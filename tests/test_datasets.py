@@ -3,6 +3,17 @@ from covicdbtools.responses import succeeded, failed
 from .test_requests import UploadedFile
 
 
+def test_get_assay_header():
+    header, error = datasets.get_assay_header("foo")
+    assert not header and error, "'foo' is not an assay"
+
+    header, error = datasets.get_assay_header("obi_0001643")
+    assert header and not error, "OBI:0001643 'neutralization' is an assay"
+
+    header, error = datasets.get_assay_header("ontie_0003576")
+    assert header and not error, "ONTIE:0003576 'Starting dilution fold' is a paramter"
+
+
 def test_validate_submission():
     path = "examples/spr-submission-valid.xlsx"
     table = workbooks.read(path, "Dataset")
