@@ -405,6 +405,14 @@ def submit(name, email, dataset_id, table):
         return response
     table = response["table"]  # remove blank rows
 
+    ab_ids = {}
+    for ab in config.read_blinded_antibodies():
+        ab_id = ab["ab_id"]
+        ab_label = ab_id.replace(":", "-")
+        ab_ids[ab_label] = ab_id
+    for row in config.ab_controls.values():
+        ab_ids[row["label"]] = row["id"]
+
     assay_headers = get_assay_headers(dataset_id)
     assays = []
     for row in table:
@@ -413,7 +421,7 @@ def submit(name, email, dataset_id, table):
             value = header["value"]
             label = header["label"]
             if value == "ab_label":
-                assay["ab_id"] = row[label].replace("-", ":")
+                assay["ab_id"] = ab_ids[row[label]]
             else:
                 assay[value] = row[label]
         assays.append(assay)
