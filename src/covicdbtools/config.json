@@ -510,17 +510,17 @@
       "control type": "positive control",
       "display": null
     },
-    "Convalescent Plasma 1": {
+    "convalescent plasma 1": {
       "id": "ONTIE:0003601",
-      "label": "Convalescent Plasma 1",
+      "label": "convalescent plasma 1",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": null,
       "display": null
     },
-    "Convalescent Plasma 2": {
+    "convalescent plasma 2": {
       "id": "ONTIE:0003602",
-      "label": "Convalescent Plasma 2",
+      "label": "convalescent plasma 2",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": null,
@@ -1834,8 +1834,8 @@
     "ONTIE:0003598": "PBS",
     "ONTIE:0003599": "KZ52",
     "ONTIE:0003600": "CR3022",
-    "ONTIE:0003601": "Convalescent Plasma 1",
-    "ONTIE:0003602": "Convalescent Plasma 2",
+    "ONTIE:0003601": "convalescent plasma 1",
+    "ONTIE:0003602": "convalescent plasma 2",
     "ONTIE:0003603": "Negative Plasma",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
@@ -1989,8 +1989,8 @@
     "PBS": "ONTIE:0003598",
     "KZ52": "ONTIE:0003599",
     "CR3022": "ONTIE:0003600",
-    "Convalescent Plasma 1": "ONTIE:0003601",
-    "Convalescent Plasma 2": "ONTIE:0003602",
+    "convalescent plasma 1": "ONTIE:0003601",
+    "convalescent plasma 2": "ONTIE:0003602",
     "Negative Plasma": "ONTIE:0003603",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",

@@ -7,6 +7,6 @@ ONTIE:0003597	mock-treated PBS-control	owl:Class	material entity	buffer control
 ONTIE:0003598	PBS	owl:Class	material entity	buffer control
 ONTIE:0003599	KZ52	owl:Class	material entity	negative control
 ONTIE:0003600	CR3022	owl:Class	material entity	positive control
-ONTIE:0003601	Convalescent Plasma 1	owl:Class	material entity
-ONTIE:0003602	Convalescent Plasma 2	owl:Class	material entity
+ONTIE:0003601	convalescent plasma 1	owl:Class	material entity
+ONTIE:0003602	convalescent plasma 2	owl:Class	material entity
 ONTIE:0003603	Negative Plasma	owl:Class	material entity	negative control
