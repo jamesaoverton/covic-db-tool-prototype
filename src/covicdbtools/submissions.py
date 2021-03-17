@@ -87,6 +87,15 @@ def validate_field(column, field_type, value):
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
+    elif field_type == "score 0-1":
+        try:
+            x = float(value)
+            if x < 0 or x > 1:
+                return f"'{value}' is not in range 0-1 in '{column}'"
+            return None
+        except ValueError:
+            return f"'{value}' is not of type '{field_type}' in column '{column}'"
+
     elif field_type == "score 0-100":
         try:
             x = int(value)

@@ -58,8 +58,8 @@ def get_assay_header(column):
         header.pop("example", None)
     elif column.endswith("_normalized"):
         header["label"] = f"{root_label} normalized value"
-        header["type"] = "score 0-100"
-        header["description"] = f"The normalized value for '{root_label}' from 0-100"
+        header["type"] = "score 0-1"
+        header["description"] = f"The normalized value for '{root_label}' from 0-1"
         header.pop("example", None)
     elif column.endswith("_qualitative"):
         header["label"] = f"{root_label} qualitative value"

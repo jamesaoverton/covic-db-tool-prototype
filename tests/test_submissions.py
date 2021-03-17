@@ -21,6 +21,16 @@ def test_validate():
     assert len(result["errors"]) == 4
 
 
+def test_validate_field():
+    assert submissions.validate_field("foo", "score 0-1", "0.00000") is None
+    assert submissions.validate_field("foo", "score 0-1", "1.00000") is None
+    assert submissions.validate_field("foo", "score 0-1", "0") is None
+
+    assert submissions.validate_field("foo", "score 0-1", "X") is not None
+    assert submissions.validate_field("foo", "score 0-1", "1.00001") is not None
+    assert submissions.validate_field("foo", "score 0-1", "-1.00001") is not None
+
+
 def test_validate_mutation():
     assert submissions.validate_mutation("A1C") is None
     assert submissions.validate_mutation("del2") is None
