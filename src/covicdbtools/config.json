@@ -454,17 +454,17 @@
     }
   },
   "ab_controls": {
-    "REF-1": {
+    "CC12.3": {
       "id": "REF:1",
-      "label": "REF-1",
+      "label": "CC12.3",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": "benchmark",
       "display": "TRUE"
     },
-    "REF-2": {
+    "CC12.14": {
       "id": "REF:2",
-      "label": "REF-2",
+      "label": "CC12.14",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": "benchmark",
@@ -526,9 +526,9 @@
       "control type": null,
       "display": null
     },
-    "Negative Plasma": {
+    "negative plasma": {
       "id": "ONTIE:0003603",
-      "label": "Negative Plasma",
+      "label": "negative plasma",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": "negative control",
@@ -1836,7 +1836,7 @@
     "ONTIE:0003600": "CR3022",
     "ONTIE:0003601": "convalescent plasma 1",
     "ONTIE:0003602": "convalescent plasma 2",
-    "ONTIE:0003603": "Negative Plasma",
+    "ONTIE:0003603": "negative plasma",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
@@ -1915,8 +1915,8 @@
     "PR:P0DP07": "IGHV4-31",
     "PR:P0DP08": "IGHV4-38-2",
     "PR:P23083": "IGHV1-2",
-    "REF:1": "REF-1",
-    "REF:2": "REF-2"
+    "REF:1": "CC12.3",
+    "REF:2": "CC12.14"
   },
   "ids": {
     "process": "BFO:0000015",
@@ -1991,7 +1991,7 @@
     "CR3022": "ONTIE:0003600",
     "convalescent plasma 1": "ONTIE:0003601",
     "convalescent plasma 2": "ONTIE:0003602",
-    "Negative Plasma": "ONTIE:0003603",
+    "negative plasma": "ONTIE:0003603",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
@@ -2070,7 +2070,7 @@
     "IGHV4-31": "PR:P0DP07",
     "IGHV4-38-2": "PR:P0DP08",
     "IGHV1-2": "PR:P23083",
-    "REF-1": "REF:1",
-    "REF-2": "REF:2"
+    "CC12.3": "REF:1",
+    "CC12.14": "REF:2"
   }
 }
