@@ -359,6 +359,13 @@
       "type": "mutations",
       "description": "a comma-separated list of mutations in one of these formats:\n    1. point mutation: old amino acid, sequence position, new amino acid\n    2. point deletion: \"del\", sequence position\n    3. range deletion: \"del\", start position, \"-\", end position",
       "example": "A1C,del2,del3-4"
+    },
+    "virus_backbone": {
+      "field": "virus_backbone",
+      "label": "Virus Backbone",
+      "type": "text",
+      "description": "virus backbone identifier",
+      "example": "WA-1"
     }
   },
   "core": {
@@ -1001,9 +1008,9 @@
       "example": "",
       "OWL type": "owl:Class",
       "parent": "assay",
-      "technique": null,
-      "units": null,
-      "sort": null
+      "technique": "",
+      "units": "",
+      "sort": ""
     },
     "VLP ELISA": {
       "id": "OBI:0000661",
@@ -1015,7 +1022,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": null
+      "sort": ""
     },
     "SPR": {
       "id": "OBI:0000923",
@@ -1027,7 +1034,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": null
+      "sort": ""
     },
     "on rate; Ka in M^-1s^-1": {
       "id": "OBI:0001741",
@@ -1111,7 +1118,7 @@
       "parent": "assay",
       "technique": "",
       "units": "ug/mL",
-      "sort": null
+      "sort": ""
     },
     "neutralization IC50 (ug/mL)": {
       "id": "ONTIE:0003558",
@@ -1351,26 +1358,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "Edema": {
       "id": "ONTIE:0003584",
@@ -1382,26 +1370,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "Vasculitis": {
       "id": "ONTIE:0003585",
@@ -1413,26 +1382,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "Necrosis": {
       "id": "ONTIE:0003586",
@@ -1444,26 +1394,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "Hemorrhage": {
       "id": "ONTIE:0003587",
@@ -1475,26 +1406,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "weight": {
       "id": "ONTIE:0003588",
@@ -1506,26 +1418,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "viral titer nasal turbinates": {
       "id": "ONTIE:0003589",
@@ -1537,26 +1430,7 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
     "viral titer lung": {
       "id": "ONTIE:0003590",
@@ -1568,38 +1442,31 @@
       "parent": "assay",
       "technique": "",
       "units": "",
-      "sort": "",
-      "null": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ]
+      "sort": ""
     },
-    "null": {
-      "id": " ",
-      "label": null,
-      "type": null,
-      "description": null,
-      "example": null,
-      "OWL type": null,
-      "parent": null,
-      "technique": null,
-      "units": null,
-      "sort": null
+    "neutralization IC50 (ng/mL)": {
+      "id": "ONTIE:0003609",
+      "label": "neutralization IC50 (ng/mL)",
+      "type": "float_threshold_na",
+      "description": "a neutralization assay measuring the IC50 of the tested antibody in ng/mL",
+      "example": "1830",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "ng/mL",
+      "sort": "ascending"
+    },
+    "neutralization IC80 (ng/mL)": {
+      "id": "ONTIE:0003610",
+      "label": "neutralization IC80 (ng/mL)",
+      "type": "float_threshold_na",
+      "description": "a neutralization assay measuring the IC80 of the tested antibody in ng/mL",
+      "example": "6370",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "neutralization",
+      "units": "ng/mL",
+      "sort": "ascending"
     }
   },
   "parameters": {
@@ -1611,8 +1478,8 @@
       "example": "10",
       "OWL type": "owl:Class",
       "parent": "parameter",
-      "technique": null,
-      "units": null
+      "technique": "",
+      "units": ""
     },
     "Starting concentration (ug/mL)": {
       "id": "ONTIE:0003577",
@@ -1633,8 +1500,8 @@
       "example": "-16.66",
       "OWL type": "owl:Class",
       "parent": "parameter",
-      "technique": null,
-      "units": null
+      "technique": "",
+      "units": ""
     },
     "4-PL curve parameter B": {
       "id": "ONTIE:0003579",
@@ -1644,8 +1511,8 @@
       "example": "1.055",
       "OWL type": "owl:Class",
       "parent": "parameter",
-      "technique": null,
-      "units": null
+      "technique": "",
+      "units": ""
     },
     "4-PL curve parameter C": {
       "id": "ONTIE:0003580",
@@ -1655,8 +1522,8 @@
       "example": "1.371",
       "OWL type": "owl:Class",
       "parent": "parameter",
-      "technique": null,
-      "units": null
+      "technique": "",
+      "units": ""
     },
     "4-PL curve parameter D": {
       "id": "ONTIE:0003581",
@@ -1666,8 +1533,8 @@
       "example": "99.11",
       "OWL type": "owl:Class",
       "parent": "parameter",
-      "technique": null,
-      "units": null
+      "technique": "",
+      "units": ""
     },
     "4-PL curve R2": {
       "id": "ONTIE:0003582",
@@ -1677,8 +1544,41 @@
       "example": "0.99",
       "OWL type": "owl:Class",
       "parent": "parameter",
-      "technique": null,
-      "units": null
+      "technique": "",
+      "units": ""
+    },
+    "ULOD (ng/mL)": {
+      "id": "ONTIE:0003611",
+      "label": "ULOD (ng/mL)",
+      "type": "float_threshold_na",
+      "description": "the upper limit of detection in ng/ml",
+      "example": ">25000",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": "",
+      "units": "ng/ml"
+    },
+    "LLOD (ng/mL)": {
+      "id": "ONTIE:0003612",
+      "label": "LLOD (ng/mL)",
+      "type": "float_threshold_na",
+      "description": "the lower limit of detection in ng/ml",
+      "example": "<0.003",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": "",
+      "units": "ng/ml"
+    },
+    "MPI (%) ": {
+      "id": "ONTIE:0003613",
+      "label": "MPI (%) ",
+      "type": "float_threshold_na",
+      "description": "the maximum percent inhibition",
+      "example": "95",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": "",
+      "units": "%"
     }
   },
   "qualitative_measures": {
@@ -1837,6 +1737,11 @@
     "ONTIE:0003601": "convalescent plasma 1",
     "ONTIE:0003602": "convalescent plasma 2",
     "ONTIE:0003603": "negative plasma",
+    "ONTIE:0003609": "neutralization IC50 (ng/mL)",
+    "ONTIE:0003610": "neutralization IC80 (ng/mL)",
+    "ONTIE:0003611": "ULOD (ng/mL)",
+    "ONTIE:0003612": "LLOD (ng/mL)",
+    "ONTIE:0003613": "MPI (%) ",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
@@ -1992,6 +1897,11 @@
     "convalescent plasma 1": "ONTIE:0003601",
     "convalescent plasma 2": "ONTIE:0003602",
     "negative plasma": "ONTIE:0003603",
+    "neutralization IC50 (ng/mL)": "ONTIE:0003609",
+    "neutralization IC80 (ng/mL)": "ONTIE:0003610",
+    "ULOD (ng/mL)": "ONTIE:0003611",
+    "LLOD (ng/mL)": "ONTIE:0003612",
+    "MPI (%) ": "ONTIE:0003613",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",

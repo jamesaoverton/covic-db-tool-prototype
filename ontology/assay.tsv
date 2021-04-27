@@ -1,18 +1,18 @@
 id	label	type	description	example	OWL type	parent	technique	units	sort	notes	notes
-ID	LABEL				TYPE	C %
-OBI:0001643	neutralization				owl:Class	assay
-OBI:0000661	VLP ELISA				owl:Class	assay		
-OBI:0000923	SPR				owl:Class	assay		
-OBI:0001741	on rate; Ka in M^-1s^-1	float_threshold_na	an SPR assay measuring on rate [Ka] in M^-1s^-1	491000	owl:Class	assay	SPR	M^-1s^-1	descending
-OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off rate [Kd] in 1/s	126	owl:Class	assay	SPR	1/s	ascending
-OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM	ascending
-ONTIE:0003554	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M	ascending
-ONTIE:0003555	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM	ascending
-ONTIE:0003556	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent	descending
-ONTIE:0003557	mAb concentration (ug/mL)	integer	the amount of antibody dissolved in the solution being tested, reported in ug/mL	2000	owl:Class	assay		ug/mL
-ONTIE:0003558	neutralization IC50 (ug/mL)	float_na	a neutralization assay measuring the IC50 of the tested antibody in ug/mL	1.83	owl:Class	assay	neutralization	ug/mL	ascending
-ONTIE:0003559	neutralization IC80 (ug/mL)	float_na	a neutralization assay measuring the IC80 of the tested antibody in ug/mL	6.37	owl:Class	assay	neutralization	ug/mL	ascending
-ONTIE:0003560	neutralization IC90 (ug/mL)	float_na	a neutralization assay measuring the IC90 of the tested antibody in ug/mL	14.12	owl:Class	assay	neutralization	ug/mL	ascending
+ID	LABEL				TYPE	C %					
+OBI:0001643	neutralization				owl:Class	assay					
+OBI:0000661	VLP ELISA				owl:Class	assay					
+OBI:0000923	SPR				owl:Class	assay					
+OBI:0001741	on rate; Ka in M^-1s^-1	float_threshold_na	an SPR assay measuring on rate [Ka] in M^-1s^-1	491000	owl:Class	assay	SPR	M^-1s^-1	descending		
+OBI:0001739	off rate; Kd in 1/s	float_threshold_na	an SPR assay measuring off rate [Kd] in 1/s	126	owl:Class	assay	SPR	1/s	ascending		
+OBI:0001731	dissociation constant; KD in nM	float_threshold_na	an SPR assay measuring dissociation constant [KD] in nM	<.1	owl:Class	assay	SPR	nM	ascending		
+ONTIE:0003554	dissociation constant; KD in M	float_threshold_na	an SPR assay measuring dissociation constant [KD] in M	<.001	owl:Class	assay	SPR	M	ascending		
+ONTIE:0003555	ACE 2 response; in nM	float_threshold_na	a neutralization assay measuring ACE 2 response in nM	0.3049	owl:Class	assay	neutralization	nM	ascending		
+ONTIE:0003556	ACE 2 response; percent blocking	percent	a neutralization assay measuring ACE 2 response in percent blocking	38.35	owl:Class	assay	neutralization	percent	descending		
+ONTIE:0003557	mAb concentration (ug/mL)	integer	the amount of antibody dissolved in the solution being tested, reported in ug/mL	2000	owl:Class	assay		ug/mL			
+ONTIE:0003558	neutralization IC50 (ug/mL)	float_na	a neutralization assay measuring the IC50 of the tested antibody in ug/mL	1.83	owl:Class	assay	neutralization	ug/mL	ascending		
+ONTIE:0003559	neutralization IC80 (ug/mL)	float_na	a neutralization assay measuring the IC80 of the tested antibody in ug/mL	6.37	owl:Class	assay	neutralization	ug/mL	ascending		
+ONTIE:0003560	neutralization IC90 (ug/mL)	float_na	a neutralization assay measuring the IC90 of the tested antibody in ug/mL	14.12	owl:Class	assay	neutralization	ug/mL	ascending		
 ONTIE:0003561	ADCP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis by binding its Fc domain to a specific receptor on a phagocytic cell using a phagocytic score		owl:Class	assay			descending	antibody-dependent cellular phagocytosis  (Phagocytic Score)	phagocytic activity
 ONTIE:0003562	ADNP (Phagocytic Score)	float	assay that measures antibody initiated phagocytosis of neutrophils by binding its Fc domain to a specific receptor on neutrophils using a phagocytic score		owl:Class	assay			descending	antibody-dependent neutrophil phagocytosis  (Phagocytic Score)	phagocytic activity neutrophils
 ONTIE:0003563	ADCD (MFI C3)	float	assay to measure complement component C3b on the surface of target cells using MFI		owl:Class	assay			descending	antibody-dependent complement deposition (MFI)	complement deposition
@@ -28,13 +28,14 @@ ONTIE:0003571	FcRn (MFI)	float	assay measuring antibody affinity for FcRn recept
 ONTIE:0003572	mFcR2 (MFI)	float	assay measuring antibody affinity for FcR2 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			descending	mFcR2 receptor affinity	affinity for mouse Fc receptor
 ONTIE:0003573	mFcR3 (MFI)	float	assay measuring antibody affinity for mFcR3 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			descending	mFcR3 receptor affinity	affinity for mouse Fc receptor
 ONTIE:0003574	mFcR4 (MFI)	float	assay measuring antibody affinity for mFcR receptor on mouse cells using median fluorescence intensity		owl:Class	assay			descending	mFcR4 receptor affinity	affinity for mouse Fc receptor
-OBI:0001699	antibody cross-blocking assay		A competitive inhibition of binding assay in which two antibodies that are known to bind the same antigen are tested for the ability of one antibody to inhibit binding of the other antibody to the antigen, thereby determining if they have overlapping binding sites.		owl:Class	assay			descending
-ONTIE:0003583	Inflammation	score_0_5	in vivo protection assay based on inflammation score of 0-5		owl:Class	assay																						
-ONTIE:0003584	Edema	score_0_5	in vivo protection assay based on edema score of 0-5		owl:Class	assay																						
-ONTIE:0003585	Vasculitis	score_0_5	in vivo protection assay based on vasculitis score of 0-5		owl:Class	assay																						
-ONTIE:0003586	Necrosis	score_0_5	in vivo protection assay based on necrosis score of 0-5		owl:Class	assay																						
-ONTIE:0003587	Hemorrhage	score_0_5	in vivo protection assay based on hemorrhage score of 0-5		owl:Class	assay																						
-ONTIE:0003588	weight	float	in vivo protection assay based on weight of organism in grams		owl:Class	assay																						
-ONTIE:0003589	viral titer nasal turbinates	float	in vivo protection assay based on viral titer in nasal turbinates measured in PFU/ml		owl:Class	assay																						
-ONTIE:0003590	viral titer lung	float	in vivo protection assay based on viral titer in lung tissue measured in PFU/ml		owl:Class	assay																						
- 
+OBI:0001699	antibody cross-blocking assay		A competitive inhibition of binding assay in which two antibodies that are known to bind the same antigen are tested for the ability of one antibody to inhibit binding of the other antibody to the antigen, thereby determining if they have overlapping binding sites.		owl:Class	assay			descending		
+ONTIE:0003583	Inflammation	score_0_5	in vivo protection assay based on inflammation score of 0-5		owl:Class	assay					
+ONTIE:0003584	Edema	score_0_5	in vivo protection assay based on edema score of 0-5		owl:Class	assay					
+ONTIE:0003585	Vasculitis	score_0_5	in vivo protection assay based on vasculitis score of 0-5		owl:Class	assay					
+ONTIE:0003586	Necrosis	score_0_5	in vivo protection assay based on necrosis score of 0-5		owl:Class	assay					
+ONTIE:0003587	Hemorrhage	score_0_5	in vivo protection assay based on hemorrhage score of 0-5		owl:Class	assay					
+ONTIE:0003588	weight	float	in vivo protection assay based on weight of organism in grams		owl:Class	assay					
+ONTIE:0003589	viral titer nasal turbinates	float	in vivo protection assay based on viral titer in nasal turbinates measured in PFU/ml		owl:Class	assay					
+ONTIE:0003590	viral titer lung	float	in vivo protection assay based on viral titer in lung tissue measured in PFU/ml		owl:Class	assay					
+ONTIE:0003609	neutralization IC50 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC50 of the tested antibody in ng/mL	1830	owl:Class	assay	neutralization	ng/mL	ascending		
+ONTIE:0003610	neutralization IC80 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC80 of the tested antibody in ng/mL	6370	owl:Class	assay	neutralization	ng/mL	ascending		

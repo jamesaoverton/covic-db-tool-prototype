@@ -46,3 +46,4 @@ mutation	Mutation	mutations			"a comma-separated list of mutations in one of the
     1. point mutation: old amino acid, sequence position, new amino acid
     2. point deletion: ""del"", sequence position
     3. range deletion: ""del"", start position, ""-"", end position"	A1C,del2,del3-4
+virus_backbone	Virus Backbone	text			virus backbone identifier	WA-1
