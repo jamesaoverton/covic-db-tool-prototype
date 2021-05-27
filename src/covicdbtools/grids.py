@@ -7,7 +7,7 @@
 
 import json
 
-from covicdbtools import names
+from covicdbtools import names, config
 
 
 # # Cells
@@ -135,7 +135,10 @@ def table_to_grid(prefixes, fields, table):
             cell = None
             if key == "ab_id":
                 iri = names.id_to_iri(prefixes, value)
-                label = value.replace(":", "-")
+                if value in config.labels:
+                    label = config.labels[value]
+                else:
+                    label = value.replace(":", "-")
                 cell = {"iri": iri, "label": label, "value": value}
             elif key.endswith("_id"):
                 iri = ""
