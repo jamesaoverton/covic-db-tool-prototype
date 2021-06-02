@@ -113,7 +113,7 @@ def validate_field(column, field_type, value):
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
     elif field_type == "float_na":
-        if value == "" or value.lower() == "na":
+        if value == "" or value.lower() in ["na", "n/a"]:
             return None
         try:
             _ = float(value)
@@ -122,7 +122,7 @@ def validate_field(column, field_type, value):
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
     elif field_type == "float_threshold_na":
-        if value == "" or value.lower() == "na":
+        if value == "" or value.lower() in ["na", "n/a"]:
             return None
         try:
             _ = float(value.lstrip("<>"))
@@ -211,6 +211,8 @@ def validate(headers, table):
                         + "in column 'Antibody ID'"
                     )
             elif "field" in header and header["field"] == "ab_label":
+                if value.lower() in ["na", "n/a"]:
+                    continue
                 if value not in ab_labels:
                     error = (
                         f"'{value}' is not a valid COVIC antibody label or control antibody label "
