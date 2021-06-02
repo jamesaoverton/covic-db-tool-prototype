@@ -366,6 +366,13 @@
       "type": "text",
       "description": "virus backbone identifier",
       "example": "WA-1"
+    },
+    "group": {
+      "field": "group",
+      "label": "Group",
+      "type": "text",
+      "description": "the group identifier",
+      "example": "1"
     }
   },
   "core": {
