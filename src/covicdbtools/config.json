@@ -201,7 +201,7 @@
     "dose_mg_kg": {
       "field": "dose_mg_kg",
       "label": "Dose (mg/kg)",
-      "type": "float",
+      "type": "float_na",
       "description": "a dosage in mg/kg of ",
       "example": "10"
     },
@@ -1358,7 +1358,7 @@
     "Inflammation": {
       "id": "ONTIE:0003583",
       "label": "Inflammation",
-      "type": "score_0_5",
+      "type": "score_0_5_na",
       "description": "in vivo protection assay based on inflammation score of 0-5",
       "example": "",
       "OWL type": "owl:Class",
@@ -1370,7 +1370,7 @@
     "Edema": {
       "id": "ONTIE:0003584",
       "label": "Edema",
-      "type": "score_0_5",
+      "type": "score_0_5_na",
       "description": "in vivo protection assay based on edema score of 0-5",
       "example": "",
       "OWL type": "owl:Class",
@@ -1382,7 +1382,7 @@
     "Vasculitis": {
       "id": "ONTIE:0003585",
       "label": "Vasculitis",
-      "type": "score_0_5",
+      "type": "score_0_5_na",
       "description": "in vivo protection assay based on vasculitis score of 0-5",
       "example": "",
       "OWL type": "owl:Class",
@@ -1394,7 +1394,7 @@
     "Necrosis": {
       "id": "ONTIE:0003586",
       "label": "Necrosis",
-      "type": "score_0_5",
+      "type": "score_0_5_na",
       "description": "in vivo protection assay based on necrosis score of 0-5",
       "example": "",
       "OWL type": "owl:Class",
@@ -1406,7 +1406,7 @@
     "Hemorrhage": {
       "id": "ONTIE:0003587",
       "label": "Hemorrhage",
-      "type": "score_0_5",
+      "type": "score_0_5_na",
       "description": "in vivo protection assay based on hemorrhage score of 0-5",
       "example": "",
       "OWL type": "owl:Class",

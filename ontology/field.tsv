@@ -20,7 +20,7 @@ n	n	non-negative integer			the number of runs for the assay	6		assays.tsv
 experiment_identifier	Experiment identifier	text			the ID of the experiment	DU-DMB-00001		assays.tsv
 status	Status	text			the status of the experiment	approved		assays.tsv
 batch	Batch	text			the batch identifier	1
-dose_mg_kg	Dose (mg/kg)	float			a dosage in mg/kg of 	10
+dose_mg_kg	Dose (mg/kg)	float_na			a dosage in mg/kg of 	10
 subject	Subject	text			a subject ID	Animal 1
 animal_model_strain	Animal Model Strain	text	animal_model_strain		the animal model used	Syrian hamster
 day_of_death	Day of death	non-negative integer			the day on which the subject died	3

@@ -29,11 +29,11 @@ ONTIE:0003572	mFcR2 (MFI)	float	assay measuring antibody affinity for FcR2 recep
 ONTIE:0003573	mFcR3 (MFI)	float	assay measuring antibody affinity for mFcR3 receptor on mouse cells using median fluorescence intensity		owl:Class	assay			descending	mFcR3 receptor affinity	affinity for mouse Fc receptor
 ONTIE:0003574	mFcR4 (MFI)	float	assay measuring antibody affinity for mFcR receptor on mouse cells using median fluorescence intensity		owl:Class	assay			descending	mFcR4 receptor affinity	affinity for mouse Fc receptor
 OBI:0001699	antibody cross-blocking assay		A competitive inhibition of binding assay in which two antibodies that are known to bind the same antigen are tested for the ability of one antibody to inhibit binding of the other antibody to the antigen, thereby determining if they have overlapping binding sites.		owl:Class	assay			descending		
-ONTIE:0003583	Inflammation	score_0_5	in vivo protection assay based on inflammation score of 0-5		owl:Class	assay					
-ONTIE:0003584	Edema	score_0_5	in vivo protection assay based on edema score of 0-5		owl:Class	assay					
-ONTIE:0003585	Vasculitis	score_0_5	in vivo protection assay based on vasculitis score of 0-5		owl:Class	assay					
-ONTIE:0003586	Necrosis	score_0_5	in vivo protection assay based on necrosis score of 0-5		owl:Class	assay					
-ONTIE:0003587	Hemorrhage	score_0_5	in vivo protection assay based on hemorrhage score of 0-5		owl:Class	assay					
+ONTIE:0003583	Inflammation	score_0_5_na	in vivo protection assay based on inflammation score of 0-5		owl:Class	assay					
+ONTIE:0003584	Edema	score_0_5_na	in vivo protection assay based on edema score of 0-5		owl:Class	assay					
+ONTIE:0003585	Vasculitis	score_0_5_na	in vivo protection assay based on vasculitis score of 0-5		owl:Class	assay					
+ONTIE:0003586	Necrosis	score_0_5_na	in vivo protection assay based on necrosis score of 0-5		owl:Class	assay					
+ONTIE:0003587	Hemorrhage	score_0_5_na	in vivo protection assay based on hemorrhage score of 0-5		owl:Class	assay					
 ONTIE:0003588	weight	float	in vivo protection assay based on weight of organism in grams		owl:Class	assay					
 ONTIE:0003589	viral titer nasal turbinates	float	in vivo protection assay based on viral titer in nasal turbinates measured in PFU/ml		owl:Class	assay					
 ONTIE:0003590	viral titer lung	float	in vivo protection assay based on viral titer in lung tissue measured in PFU/ml		owl:Class	assay					
