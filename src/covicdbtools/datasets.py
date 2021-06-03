@@ -420,7 +420,7 @@ def submit(name, email, dataset_id, table):
         for header in assay_headers:
             value = header["value"]
             label = header["label"]
-            if value == "ab_label" and row[label] in ab_ids:
+            if value == "ab_label":
                 assay["ab_id"] = ab_ids[row[label]]
             else:
                 assay[value] = row[label]

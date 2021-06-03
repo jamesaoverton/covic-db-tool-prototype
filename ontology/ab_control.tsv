@@ -10,3 +10,4 @@ ONTIE:0003600	CR3022	owl:Class	material entity	positive control
 ONTIE:0003601	convalescent plasma 1	owl:Class	material entity
 ONTIE:0003602	convalescent plasma 2	owl:Class	material entity
 ONTIE:0003603	negative plasma	owl:Class	material entity	negative control
+ONTIE:0003614	untreated uninfected control	owl:Class	material entity

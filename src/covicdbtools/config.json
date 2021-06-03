@@ -547,6 +547,14 @@
       "parent": "material entity",
       "control type": "negative control",
       "display": null
+    },
+    "untreated uninfected control": {
+      "id": "ONTIE:0003614",
+      "label": "untreated uninfected control",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": null,
+      "display": null
     }
   },
   "hosts": {
@@ -1749,6 +1757,7 @@
     "ONTIE:0003611": "ULOD (ng/mL)",
     "ONTIE:0003612": "LLOD (ng/mL)",
     "ONTIE:0003613": "MPI (%) ",
+    "ONTIE:0003614": "untreated uninfected control",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
@@ -1909,6 +1918,7 @@
     "ULOD (ng/mL)": "ONTIE:0003611",
     "LLOD (ng/mL)": "ONTIE:0003612",
     "MPI (%) ": "ONTIE:0003613",
+    "untreated uninfected control": "ONTIE:0003614",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
