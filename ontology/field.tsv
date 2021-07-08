@@ -48,3 +48,6 @@ mutation	Mutation	mutations			"a comma-separated list of mutations in one of the
     3. range deletion: ""del"", start position, ""-"", end position"	A1C,del2,del3-4
 virus_backbone	Virus Backbone	text			virus backbone identifier	WA-1
 group	Group	text			the group identifier	1
+ref1_ic50	ref1 IC50 (ng/ml)	text			a neutralization assay measuring the IC50 of the ref1 antibody in ng/mL
+ref2_ic50	ref2 IC50 (ng/ml)	text			a neutralization assay measuring the IC50 of the ref2 antibody in ng/mL
+date	Date	text			the date of the assay
