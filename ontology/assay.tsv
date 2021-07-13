@@ -39,4 +39,4 @@ ONTIE:0003589	viral titer nasal turbinates	float	in vivo protection assay based 
 ONTIE:0003590	viral titer lung	float	in vivo protection assay based on viral titer in lung tissue measured in PFU/ml		owl:Class	assay					
 ONTIE:0003609	neutralization IC50 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC50 of the tested antibody in ng/mL	1830	owl:Class	assay	neutralization	ng/mL	ascending		
 ONTIE:0003610	neutralization IC80 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC80 of the tested antibody in ng/mL	6370	owl:Class	assay	neutralization	ng/mL	ascending		
-ONTIE:0003615	neutralization IC90 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC90 of the tested antibody in ng/mL	6370	owl:Class	assay	neutralization	ng/mL	ascending		
+ONTIE:0003635	neutralization IC90 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC90 of the tested antibody in ng/mL	6370	owl:Class	assay	neutralization	ng/mL	ascending		

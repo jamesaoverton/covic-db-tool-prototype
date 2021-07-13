@@ -1502,7 +1502,7 @@
       "sort": "ascending"
     },
     "neutralization IC90 (ng/mL)": {
-      "id": "ONTIE:0003615",
+      "id": "ONTIE:0003635",
       "label": "neutralization IC90 (ng/mL)",
       "type": "float_threshold_na",
       "description": "a neutralization assay measuring the IC90 of the tested antibody in ng/mL",
@@ -1593,7 +1593,7 @@
       "units": ""
     },
     "R^2adj": {
-      "id": "ONTIE:0003616",
+      "id": "ONTIE:0003636",
       "label": "R^2adj",
       "type": "float_na",
       "description": "adjusted R-squared",
@@ -1799,8 +1799,8 @@
     "ONTIE:0003612": "LLOD (ng/mL)",
     "ONTIE:0003613": "MPI (%) ",
     "ONTIE:0003614": "untreated uninfected control",
-    "ONTIE:0003615": "neutralization IC90 (ng/mL)",
-    "ONTIE:0003616": "R^2adj",
+    "ONTIE:0003635": "neutralization IC90 (ng/mL)",
+    "ONTIE:0003636": "R^2adj",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
@@ -1962,8 +1962,8 @@
     "LLOD (ng/mL)": "ONTIE:0003612",
     "MPI (%) ": "ONTIE:0003613",
     "untreated uninfected control": "ONTIE:0003614",
-    "neutralization IC90 (ng/mL)": "ONTIE:0003615",
-    "R^2adj": "ONTIE:0003616",
+    "neutralization IC90 (ng/mL)": "ONTIE:0003635",
+    "R^2adj": "ONTIE:0003636",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",

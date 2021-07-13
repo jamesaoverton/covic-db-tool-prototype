@@ -7,7 +7,7 @@ ONTIE:0003579	4-PL curve parameter B	float_na	Hill's slope of the curve	1.055	ow
 ONTIE:0003580	4-PL curve parameter C	float_na	inflection point	1.371	owl:Class	parameter		
 ONTIE:0003581	4-PL curve parameter D	float_na	the maximum value that can be obtained	99.11	owl:Class	parameter		
 ONTIE:0003582	4-PL curve R2	float_na	a statistical measure of fit that indicates how much variation of a dependent variable is explained by the independent variable(s)	0.99	owl:Class	parameter		
-ONTIE:0003616	R^2adj	float_na	adjusted R-squared		owl:Class	parameter		
+ONTIE:0003636	R^2adj	float_na	adjusted R-squared		owl:Class	parameter		
 ONTIE:0003611	ULOD (ng/mL)	float_threshold_na	the upper limit of detection in ng/ml	>25000	owl:Class	parameter		ng/ml
 ONTIE:0003612	LLOD (ng/mL)	float_threshold_na	the lower limit of detection in ng/ml	<0.003	owl:Class	parameter		ng/ml
 ONTIE:0003613	MPI (%) 	float_threshold_na	the maximum percent inhibition	95	owl:Class	parameter		%
