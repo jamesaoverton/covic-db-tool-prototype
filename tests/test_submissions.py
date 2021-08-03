@@ -26,6 +26,9 @@ def test_validate_field():
     assert submissions.validate_field("foo", "score 0-1", "1.00000") is None
     assert submissions.validate_field("foo", "score 0-1", "0") is None
 
+    mutations = "L18F, D80A, D215G, del241-243, R246I, K417N, E484K, N501Y, D614G, A701V"
+    assert submissions.validate_field("foo", "mutations", mutations) is None
+
     assert submissions.validate_field("foo", "score 0-1", "X") is not None
     assert submissions.validate_field("foo", "score 0-1", "1.00001") is not None
     assert submissions.validate_field("foo", "score 0-1", "-1.00001") is not None

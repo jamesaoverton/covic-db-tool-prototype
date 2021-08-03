@@ -153,7 +153,7 @@ def validate_field(column, field_type, value):
             mutations = value.split(",")
             error = None
             for mutation in mutations:
-                error = validate_mutation(mutation)
+                error = validate_mutation(mutation.strip())
                 if error:
                     return error
             return None
