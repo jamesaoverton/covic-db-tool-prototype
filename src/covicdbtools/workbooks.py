@@ -11,6 +11,7 @@ MAX_EXPECTED_ROWS = 100
 
 
 def read_sheet(ws):
+    """Read a worksheet and return a table."""
     table = []
     header = None
     for row in ws.values:
@@ -19,12 +20,14 @@ def read_sheet(ws):
             continue
         newrow = OrderedDict()
         for i in range(0, min(len(header), len(row))):
-            newrow[header[i]] = row[i] or ""
+            if header[i]:
+                newrow[header[i]] = row[i] or ""
         table.append(newrow)
     return table
 
 
 def read(path, sheet=None):
+    """Load a workbook from a path and read a sheet to return a table."""
     wb = load_workbook(path)
     ws = wb.active
     if sheet:
