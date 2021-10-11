@@ -51,3 +51,4 @@ group	Group	text			the group identifier	1
 ref1_ic50	ref1 IC50 (ng/ml)	text			a neutralization assay measuring the IC50 of the ref1 antibody in ng/mL
 ref2_ic50	ref2 IC50 (ng/ml)	text			a neutralization assay measuring the IC50 of the ref2 antibody in ng/mL
 date	Date	text			the date of the assay
+score_ade_10	Score (for level of ADE at 10 ug/mL)	low_no_mod_high			"a score classifying the ADE at 10 ug/mL: ""Low to No"" (ADE <1000%); ""Moderate"" (ADE 1000-10000%); ""High"" (ADE >10000%)"	Low to No

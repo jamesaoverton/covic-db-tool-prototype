@@ -116,6 +116,11 @@ def validate_field(column, field_type, value):
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
+    elif field_type == "low_no_mod_high":
+        if value not in ["Low to No", "Moderate", "High"]:
+            return f"'{value}' is not one of 'Low to No', 'Moderate', or 'High'"
+        return None
+
     elif field_type == "float":
         try:
             _ = float(value)
