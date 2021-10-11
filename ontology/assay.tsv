@@ -40,6 +40,6 @@ ONTIE:0003590	viral titer lung	float	in vivo protection assay based on viral tit
 ONTIE:0003609	neutralization IC50 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC50 of the tested antibody in ng/mL	1830	owl:Class	assay	neutralization	ng/mL	ascending		neutralization is not a technique it is a readout
 ONTIE:0003610	neutralization IC80 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC80 of the tested antibody in ng/mL	6370	owl:Class	assay	neutralization	ng/mL	ascending		
 ONTIE:0003635	neutralization IC90 (ng/mL)	float_threshold_na	a neutralization assay measuring the IC90 of the tested antibody in ng/mL	6370	owl:Class	assay	neutralization	ng/mL	ascending		
-ONTIE:0003637	ADE 10 ug/mL (% to virus control)	float	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 10ug/ml of antibody 		owl:Class	assay					
-ONTIE:0003638	ADE 1 ug/mL (% to virus control)	float	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 1ug/ml of antibody 		owl:Class	assay					
-ONTIE:0003639	ADE 0.1 ug/mL (% to virus control)	float	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 0.1ug/ml of antibody 		owl:Class	assay					
+ONTIE:0003637	ADE 10 ug/mL (% to virus control)	float	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 10ug/ml of antibody 		owl:Class	assay		ug/mL	ascending		
+ONTIE:0003638	ADE 1 ug/mL (% to virus control)	float	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 1ug/ml of antibody 		owl:Class	assay		ug/mL	ascending		
+ONTIE:0003639	ADE 0.1 ug/mL (% to virus control)	float	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 0.1ug/ml of antibody 		owl:Class	assay		ug/mL	ascending		

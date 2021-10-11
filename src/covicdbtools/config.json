@@ -1529,8 +1529,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
-      "units": "",
-      "sort": ""
+      "units": "ug/mL",
+      "sort": "ascending"
     },
     "ADE 1 ug/mL (% to virus control)": {
       "id": "ONTIE:0003638",
@@ -1541,8 +1541,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
-      "units": "",
-      "sort": ""
+      "units": "ug/mL",
+      "sort": "ascending"
     },
     "ADE 0.1 ug/mL (% to virus control)": {
       "id": "ONTIE:0003639",
@@ -1553,8 +1553,8 @@
       "OWL type": "owl:Class",
       "parent": "assay",
       "technique": "",
-      "units": "",
-      "sort": ""
+      "units": "ug/mL",
+      "sort": "ascending"
     }
   },
   "parameters": {
