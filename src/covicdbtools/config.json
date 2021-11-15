@@ -398,6 +398,20 @@
       "type": "low_no_mod_high",
       "description": "a score classifying the ADE at 10 ug/mL: \"Low to No\" (ADE <1000%); \"Moderate\" (ADE 1000-10000%); \"High\" (ADE >10000%)",
       "example": "Low to No"
+    },
+    "fold_increase_over_virus_control": {
+      "field": "fold_increase_over_virus_control",
+      "label": "Fold increase over virus control",
+      "type": "float_na",
+      "description": "the ratio of the increased mean phagocytosis to the control",
+      "example": "3.2"
+    },
+    "phagocytic_score": {
+      "field": "phagocytic_score",
+      "label": "Phagocytic Score",
+      "type": "weak_mod_strong_na",
+      "description": "a score classifying the phagocytic activity",
+      "example": "weak"
     }
   },
   "core": {
@@ -1555,6 +1569,18 @@
       "technique": "",
       "units": "ug/mL",
       "sort": "ascending"
+    },
+    "Mean Phagocytosis (% infected cells)": {
+      "id": "ONTIE:0003650",
+      "label": "Mean Phagocytosis (% infected cells)",
+      "type": "float_na",
+      "description": "assay measuring the mean percentage of infected cells undergoing phagocytosis",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": ""
     }
   },
   "parameters": {
@@ -1847,6 +1873,7 @@
     "ONTIE:0003637": "ADE 10 ug/mL (% to virus control)",
     "ONTIE:0003638": "ADE 1 ug/mL (% to virus control)",
     "ONTIE:0003639": "ADE 0.1 ug/mL (% to virus control)",
+    "ONTIE:0003650": "Mean Phagocytosis (% infected cells)",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
@@ -2013,6 +2040,7 @@
     "ADE 10 ug/mL (% to virus control)": "ONTIE:0003637",
     "ADE 1 ug/mL (% to virus control)": "ONTIE:0003638",
     "ADE 0.1 ug/mL (% to virus control)": "ONTIE:0003639",
+    "Mean Phagocytosis (% infected cells)": "ONTIE:0003650",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",

@@ -121,6 +121,11 @@ def validate_field(column, field_type, value):
             return f"'{value}' is not one of 'Low to No', 'Moderate', or 'High'"
         return None
 
+    elif field_type == "weak_mod_strong_na":
+        if value not in ["weak", "moderate", "strong", "na"]:
+            return f"'{value}' is not one of 'weak', 'moderate', 'strong', 'na'"
+        return None
+
     elif field_type == "float":
         try:
             _ = float(value)
