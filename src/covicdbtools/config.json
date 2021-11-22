@@ -395,7 +395,7 @@
     "score_ade_10": {
       "field": "score_ade_10",
       "label": "Score (for level of ADE at 10 ug/mL)",
-      "type": "low_no_mod_high",
+      "type": "low_no_mod_high_na",
       "description": "a score classifying the ADE at 10 ug/mL: \"Low to No\" (ADE <1000%); \"Moderate\" (ADE 1000-10000%); \"High\" (ADE >10000%)",
       "example": "Low to No"
     },
@@ -1537,7 +1537,7 @@
     "ADE 10 ug/mL (% to virus control)": {
       "id": "ONTIE:0003637",
       "label": "ADE 10 ug/mL (% to virus control)",
-      "type": "float",
+      "type": "float_na",
       "description": "antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 10ug/ml of antibody ",
       "example": "",
       "OWL type": "owl:Class",
@@ -1549,7 +1549,7 @@
     "ADE 1 ug/mL (% to virus control)": {
       "id": "ONTIE:0003638",
       "label": "ADE 1 ug/mL (% to virus control)",
-      "type": "float",
+      "type": "float_na",
       "description": "antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 1ug/ml of antibody ",
       "example": "",
       "OWL type": "owl:Class",
@@ -1561,7 +1561,7 @@
     "ADE 0.1 ug/mL (% to virus control)": {
       "id": "ONTIE:0003639",
       "label": "ADE 0.1 ug/mL (% to virus control)",
-      "type": "float",
+      "type": "float_na",
       "description": "antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 0.1ug/ml of antibody ",
       "example": "",
       "OWL type": "owl:Class",

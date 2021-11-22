@@ -116,13 +116,13 @@ def validate_field(column, field_type, value):
         except ValueError:
             return f"'{value}' is not of type '{field_type}' in column '{column}'"
 
-    elif field_type == "low_no_mod_high":
-        if value not in ["Low to No", "Moderate", "High"]:
-            return f"'{value}' is not one of 'Low to No', 'Moderate', or 'High'"
+    elif field_type == "low_no_mod_high_na":
+        if value.lower() not in ["low to no", "moderate", "high", "na"]:
+            return f"'{value}' is not one of 'Low to No', 'Moderate', 'High', 'NA'"
         return None
 
     elif field_type == "weak_mod_strong_na":
-        if value not in ["weak", "moderate", "strong", "na"]:
+        if value.lower() not in ["weak", "moderate", "strong", "na"]:
             return f"'{value}' is not one of 'weak', 'moderate', 'strong', 'na'"
         return None
 
