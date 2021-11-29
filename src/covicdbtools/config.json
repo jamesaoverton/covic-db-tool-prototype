@@ -531,9 +531,9 @@
       "control type": "negative control",
       "display": null
     },
-    "mock-treated PBS-control": {
+    "Mock Infected Control": {
       "id": "ONTIE:0003597",
-      "label": "mock-treated PBS-control",
+      "label": "Mock Infected Control",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": "buffer control",
@@ -587,9 +587,9 @@
       "control type": "negative control",
       "display": null
     },
-    "untreated uninfected control": {
+    "Untreated Infected Control": {
       "id": "ONTIE:0003614",
-      "label": "untreated uninfected control",
+      "label": "Untreated Infected Control",
       "type": "owl:Class",
       "parent": "material entity",
       "control type": null,
@@ -1855,7 +1855,7 @@
     "ONTIE:0003594": "survived until end",
     "ONTIE:0003595": "K18 hACE2 transgenic mice",
     "ONTIE:0003596": "isotype control",
-    "ONTIE:0003597": "mock-treated PBS-control",
+    "ONTIE:0003597": "Mock Infected Control",
     "ONTIE:0003598": "PBS",
     "ONTIE:0003599": "KZ52",
     "ONTIE:0003600": "CR3022",
@@ -1867,7 +1867,7 @@
     "ONTIE:0003611": "ULOD (ng/mL)",
     "ONTIE:0003612": "LLOD (ng/mL)",
     "ONTIE:0003613": "MPI (%) ",
-    "ONTIE:0003614": "untreated uninfected control",
+    "ONTIE:0003614": "Untreated Infected Control",
     "ONTIE:0003635": "neutralization IC90 (ng/mL)",
     "ONTIE:0003636": "R^2adj",
     "ONTIE:0003637": "ADE 10 ug/mL (% to virus control)",
@@ -2022,7 +2022,7 @@
     "survived until end": "ONTIE:0003594",
     "K18 hACE2 transgenic mice": "ONTIE:0003595",
     "isotype control": "ONTIE:0003596",
-    "mock-treated PBS-control": "ONTIE:0003597",
+    "Mock Infected Control": "ONTIE:0003597",
     "PBS": "ONTIE:0003598",
     "KZ52": "ONTIE:0003599",
     "CR3022": "ONTIE:0003600",
@@ -2034,7 +2034,7 @@
     "ULOD (ng/mL)": "ONTIE:0003611",
     "LLOD (ng/mL)": "ONTIE:0003612",
     "MPI (%) ": "ONTIE:0003613",
-    "untreated uninfected control": "ONTIE:0003614",
+    "Untreated Infected Control": "ONTIE:0003614",
     "neutralization IC90 (ng/mL)": "ONTIE:0003635",
     "R^2adj": "ONTIE:0003636",
     "ADE 10 ug/mL (% to virus control)": "ONTIE:0003637",
