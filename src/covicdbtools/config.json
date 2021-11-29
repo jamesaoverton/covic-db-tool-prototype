@@ -403,14 +403,14 @@
       "field": "fold_increase_over_virus_control",
       "label": "Fold increase over virus control",
       "type": "float_na",
-      "description": "the ratio of the increased mean phagocytosis to the control",
+      "description": "the ratio of mean phagocytosis for an antibody over the no antibody control",
       "example": "3.2"
     },
     "phagocytic_score": {
       "field": "phagocytic_score",
       "label": "Phagocytic Score",
       "type": "weak_mod_strong_na",
-      "description": "a score classifying the phagocytic activity",
+      "description": "a score classifying the relative phagocytic activity of a mAb",
       "example": "weak"
     }
   },

@@ -52,5 +52,5 @@ ref1_ic50	ref1 IC50 (ng/ml)	text			a neutralization assay measuring the IC50 of 
 ref2_ic50	ref2 IC50 (ng/ml)	text			a neutralization assay measuring the IC50 of the ref2 antibody in ng/mL
 date	Date	text			the date of the assay
 score_ade_10	Score (for level of ADE at 10 ug/mL)	low_no_mod_high_na			"a score classifying the ADE at 10 ug/mL: ""Low to No"" (ADE <1000%); ""Moderate"" (ADE 1000-10000%); ""High"" (ADE >10000%)"	Low to No
-fold_increase_over_virus_control	Fold increase over virus control	float_na			the ratio of the increased mean phagocytosis to the control	3.2
-phagocytic_score	Phagocytic Score	weak_mod_strong_na			a score classifying the phagocytic activity	weak
+fold_increase_over_virus_control	Fold increase over virus control	float_na			the ratio of mean phagocytosis for an antibody over the no antibody control	3.2
+phagocytic_score	Phagocytic Score	weak_mod_strong_na			a score classifying the relative phagocytic activity of a mAb	weak
