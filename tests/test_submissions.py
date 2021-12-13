@@ -12,6 +12,7 @@ def test_validate():
         {"field": "ab_label", "label": "Antibody label", "type": "label"},
     ]
     table = [
+        {"Antibody": "COVIC:1", "Antibody label": "  COVIC-1  "},
         {"Antibody": "COVIC:1 Foo", "Antibody label": "COVIC-6 (batch1)"},
         {"Antibody": "  COVIC:1 Foo", "Antibody label": "  COVIC-6 (batch1)"},
         {"Antibody": "ONTIE:0003596", "Antibody label": "isotype control"},

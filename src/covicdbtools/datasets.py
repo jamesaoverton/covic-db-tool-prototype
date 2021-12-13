@@ -421,6 +421,7 @@ def submit(name, email, dataset_id, table):
             value = header["value"]
             label = header["label"]
             if value == "ab_label":
+                row[label] = row[label].strip()
                 assay["ab_id"] = ab_ids[row[label]]
             else:
                 assay[value] = row[label]
