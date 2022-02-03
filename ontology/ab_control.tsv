@@ -11,3 +11,5 @@ ONTIE:0003601	convalescent plasma 1	owl:Class	material entity
 ONTIE:0003602	convalescent plasma 2	owl:Class	material entity
 ONTIE:0003603	negative plasma	owl:Class	material entity	negative control
 ONTIE:0003614	Untreated Infected Control	owl:Class	material entity
+ONTIE:0003655	infected mock-treated PBS-control	owl:Class	material entity
+ONTIE:0003656	non infected mock-treated PBS-control	owl:Class	material entity

@@ -44,3 +44,6 @@ ONTIE:0003637	ADE 10 ug/mL (% to virus control)	float_na	antibody-dependent enha
 ONTIE:0003638	ADE 1 ug/mL (% to virus control)	float_na	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 1ug/ml of antibody 		owl:Class	assay		ug/mL	ascending		
 ONTIE:0003639	ADE 0.1 ug/mL (% to virus control)	float_na	antibody-dependent enhancement assay measuring percent enhancement compared to virus alone, performed using 0.1ug/ml of antibody 		owl:Class	assay		ug/mL	ascending		
 ONTIE:0003650	Mean Phagocytosis (% infected cells)	float_na	assay measuring the mean percentage of infected cells undergoing phagocytosis		owl:Class	assay					
+ONTIE:0003652	ELISA measuring geometric mean concentration	float_threshold_na	An ELISA measuring the geometric mean concentration of an antibody		owl:Class	assay			ascending		
+ONTIE:0003653	GMC for Pre-Spike IgG ELISA (ELU/mL)	float_threshold_na	An ELISA measuring geometric mean concentration of an IgG antibody against Pre-Spike in ELU/mL		owl:Class	ELISA measuring geometric mean concentration		ELU/mL	ascending		
+ONTIE:0003654	GMC for RBD IgG ELISA (ELU/mL)	float_threshold_na	An ELISA measuring geometric mean concentration of an IgG antibody against RBD in ELU/mL		owl:Class	ELISA measuring geometric mean concentration		ELU/mL	ascending		

@@ -594,6 +594,22 @@
       "parent": "material entity",
       "control type": null,
       "display": null
+    },
+    "infected mock-treated PBS-control": {
+      "id": "ONTIE:0003655",
+      "label": "infected mock-treated PBS-control",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": null,
+      "display": null
+    },
+    "non infected mock-treated PBS-control": {
+      "id": "ONTIE:0003656",
+      "label": "non infected mock-treated PBS-control",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": null,
+      "display": null
     }
   },
   "hosts": {
@@ -1581,6 +1597,42 @@
       "technique": "",
       "units": "",
       "sort": ""
+    },
+    "ELISA measuring geometric mean concentration": {
+      "id": "ONTIE:0003652",
+      "label": "ELISA measuring geometric mean concentration",
+      "type": "float_threshold_na",
+      "description": "An ELISA measuring the geometric mean concentration of an antibody",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "assay",
+      "technique": "",
+      "units": "",
+      "sort": "ascending"
+    },
+    "GMC for Pre-Spike IgG ELISA (ELU/mL)": {
+      "id": "ONTIE:0003653",
+      "label": "GMC for Pre-Spike IgG ELISA (ELU/mL)",
+      "type": "float_threshold_na",
+      "description": "An ELISA measuring geometric mean concentration of an IgG antibody against Pre-Spike in ELU/mL",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "ELISA measuring geometric mean concentration",
+      "technique": "",
+      "units": "ELU/mL",
+      "sort": "ascending"
+    },
+    "GMC for RBD IgG ELISA (ELU/mL)": {
+      "id": "ONTIE:0003654",
+      "label": "GMC for RBD IgG ELISA (ELU/mL)",
+      "type": "float_threshold_na",
+      "description": "An ELISA measuring geometric mean concentration of an IgG antibody against RBD in ELU/mL",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "ELISA measuring geometric mean concentration",
+      "technique": "",
+      "units": "ELU/mL",
+      "sort": "ascending"
     }
   },
   "parameters": {
@@ -1704,6 +1756,17 @@
       "parent": "parameter",
       "technique": "",
       "units": "%"
+    },
+    "geometric mean concentration (ELU/mL)": {
+      "id": "ONTIE:0003657",
+      "label": "geometric mean concentration (ELU/mL)",
+      "type": "float_threshold_na",
+      "description": "The average antibody concentration for a group of subjects calculated by multiplying all values and taking the nth root of this number, where n is the number of subjects with available data.(GMC)",
+      "example": "",
+      "OWL type": "owl:Class",
+      "parent": "parameter",
+      "technique": "",
+      "units": ""
     }
   },
   "qualitative_measures": {
@@ -1874,6 +1937,12 @@
     "ONTIE:0003638": "ADE 1 ug/mL (% to virus control)",
     "ONTIE:0003639": "ADE 0.1 ug/mL (% to virus control)",
     "ONTIE:0003650": "Mean Phagocytosis (% infected cells)",
+    "ONTIE:0003652": "ELISA measuring geometric mean concentration",
+    "ONTIE:0003653": "GMC for Pre-Spike IgG ELISA (ELU/mL)",
+    "ONTIE:0003654": "GMC for RBD IgG ELISA (ELU/mL)",
+    "ONTIE:0003655": "infected mock-treated PBS-control",
+    "ONTIE:0003656": "non infected mock-treated PBS-control",
+    "ONTIE:0003657": "geometric mean concentration (ELU/mL)",
     "ONTIE:moderate": "moderate",
     "ONTIE:negative": "negative",
     "ONTIE:parameter": "parameter",
@@ -2041,6 +2110,12 @@
     "ADE 1 ug/mL (% to virus control)": "ONTIE:0003638",
     "ADE 0.1 ug/mL (% to virus control)": "ONTIE:0003639",
     "Mean Phagocytosis (% infected cells)": "ONTIE:0003650",
+    "ELISA measuring geometric mean concentration": "ONTIE:0003652",
+    "GMC for Pre-Spike IgG ELISA (ELU/mL)": "ONTIE:0003653",
+    "GMC for RBD IgG ELISA (ELU/mL)": "ONTIE:0003654",
+    "infected mock-treated PBS-control": "ONTIE:0003655",
+    "non infected mock-treated PBS-control": "ONTIE:0003656",
+    "geometric mean concentration (ELU/mL)": "ONTIE:0003657",
     "moderate": "ONTIE:moderate",
     "negative": "ONTIE:negative",
     "parameter": "ONTIE:parameter",
