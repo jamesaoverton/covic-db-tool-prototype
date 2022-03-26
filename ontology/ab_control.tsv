@@ -2,6 +2,7 @@ id	label	type	parent	control type	display
 ID	LABEL	TYPE	C %
 REF:1	CC12.3	owl:Class	material entity	benchmark	TRUE
 REF:2	CC12.14	owl:Class	material entity	benchmark	TRUE
+REF:3	mAb-251	owl:Class	material entity	benchmark	TRUE
 ONTIE:0003596	isotype control	owl:Class	material entity	negative control
 ONTIE:0003597	Mock Infected Control	owl:Class	material entity	buffer control
 ONTIE:0003598	PBS	owl:Class	material entity	buffer control

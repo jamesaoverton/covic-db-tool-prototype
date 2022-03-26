@@ -523,6 +523,14 @@
       "control type": "benchmark",
       "display": "TRUE"
     },
+    "mAb-251": {
+      "id": "REF:3",
+      "label": "mAb-251",
+      "type": "owl:Class",
+      "parent": "material entity",
+      "control type": "benchmark",
+      "display": "TRUE"
+    },
     "isotype control": {
       "id": "ONTIE:0003596",
       "label": "isotype control",
@@ -2022,7 +2030,8 @@
     "PR:P0DP08": "IGHV4-38-2",
     "PR:P23083": "IGHV1-2",
     "REF:1": "CC12.3",
-    "REF:2": "CC12.14"
+    "REF:2": "CC12.14",
+    "REF:3": "mAb-251"
   },
   "ids": {
     "process": "BFO:0000015",
@@ -2195,6 +2204,7 @@
     "IGHV4-38-2": "PR:P0DP08",
     "IGHV1-2": "PR:P23083",
     "CC12.3": "REF:1",
-    "CC12.14": "REF:2"
+    "CC12.14": "REF:2",
+    "mAb-251": "REF:3"
   }
 }
