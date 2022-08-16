@@ -47,3 +47,5 @@ ONTIE:0003650	Mean Phagocytosis (% infected cells)	float_na	assay measuring the 
 ONTIE:0003652	ELISA measuring geometric mean concentration	float_threshold_na	An ELISA measuring the geometric mean concentration of an antibody		owl:Class	assay			ascending		
 ONTIE:0003653	GMC for Pre-Spike IgG ELISA (ELU/mL)	float_threshold_na	An ELISA measuring geometric mean concentration of an IgG antibody against Pre-Spike in ELU/mL		owl:Class	ELISA measuring geometric mean concentration		ELU/mL	ascending		
 ONTIE:0003654	GMC for RBD IgG ELISA (ELU/mL)	float_threshold_na	An ELISA measuring geometric mean concentration of an IgG antibody against RBD in ELU/mL		owl:Class	ELISA measuring geometric mean concentration		ELU/mL	ascending		
+ONTIE:0003664	ADNKA % IFNg+	float	assay measuring the percent of NK cells expressing IFNg using a phagocytic score		owl:Class	assay			descending	Ab-dependent NK cell activation IFNg	
+ONTIE:0003665	ADNKA % TNFa+	float	assay measuring the percent of NK cells expressing TNFa using a phagocytic score		owl:Class	assay			descending	Ab-dependent NK cell activation TNFa	

@@ -40,7 +40,12 @@ def get_assay_header(column):
     if header:
         return header, None
 
-    root_id = assay_id.replace("_stddev", "").replace("_normalized", "").replace("_qualitative", "")
+    root_id = (
+        assay_id.replace("_stddev", "")
+        .replace("_normalized", "")
+        .replace("_qualitative", "")
+        .replace("_fold_change", "")
+    )
     if root_id not in config.labels:
         return None, failure(f"Unrecognized assay '{root_id}' for column '{column}'")
     root_label = config.labels[root_id]
@@ -66,6 +71,10 @@ def get_assay_header(column):
         header["type"] = "text"
         header["terminology"] = "qualitative_measures"
         header["description"] = f"The qualitative value for '{root_label}'"
+        header.pop("example", None)
+    elif column.endswith("_fold_change"):
+        header["label"] = f"Fold-change {root_label}"
+        header["description"] = f"The fold-change of '{root_label}' over virus control"
         header.pop("example", None)
     else:
         return None, failure(f"Unrecognized assay suffix for column '{column}'")
@@ -324,6 +333,7 @@ def create(name, email, columns=[]):
                 assay_id.replace("_stddev", "")
                 .replace("_normalized", "")
                 .replace("_qualitative", "")
+                .replace("_fold_change", "")
             )
             if assay_id in config.labels:
                 continue
@@ -333,6 +343,8 @@ def create(name, email, columns=[]):
                 if column.endswith("_normalized"):
                     continue
                 if column.endswith("_qualitative"):
+                    continue
+                if column.endswith("_fold_change"):
                     continue
         return failure(f"Unrecognized column '{column}'")
 
